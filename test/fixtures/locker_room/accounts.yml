@@ -1,0 +1,12 @@
+playing_piano:
+  name: 'Playing the Piano'
+  subdomain: 'piano'
+  owner: oswald
+penguin_patrol:
+  name: 'Penguin Patrol'
+  subdomain: 'penguin'
+  owner: henry
+ice_cream_shop:
+  name: 'Ice Cream Shop'
+  subdomain: 'ice-cream'
+  owner: johnny
