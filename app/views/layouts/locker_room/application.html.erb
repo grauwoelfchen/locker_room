@@ -8,6 +8,14 @@
 </head>
 <body>
 
+<% if current_user %>
+Signed in as <%= current_user.email %>
+<% end %>
+
+<% flash.each do |k, v| %>
+<div class='flash <%=h k %>'><%=h v %></div>
+<% end %>
+
 <%= yield %>
 
 </body>
