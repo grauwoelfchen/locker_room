@@ -1,4 +1,4 @@
 Rails.application.routes.draw do
 
-  mount LockerRoom::Engine => "/locker_room"
+  mount LockerRoom::Engine => "/"
 end
