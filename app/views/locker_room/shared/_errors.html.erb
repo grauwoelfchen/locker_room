@@ -1,0 +1,7 @@
+<div class="error-messages">
+  <ul>
+  <%= resource.errors.each do |attr, e| %>
+    <li class="alert"><%= resource.errors.full_message(attr, e.is_a?(Hash) ? e[:message] : e) %></li>
+  <% end %>
+  </ul>
+</div>
