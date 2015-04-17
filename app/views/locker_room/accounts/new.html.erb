@@ -1,5 +1,8 @@
 <h2>Signup</h2>
 <%= form_for(@account) do |f| %>
+<% if @account.errors.any? %>
+<%= render "locker_room/shared/errors", resource: @account %>
+<% end %>
 <p>
   <%= f.label :name %><br>
   <%= f.text_field :name %>
