@@ -5,6 +5,9 @@ module LockerRoom
     belongs_to :owner, :class_name => "LockerRoom::User"
     accepts_nested_attributes_for :owner
 
+    has_many :members, :class_name => "LockerRoom::Member"
+    has_many :users, :through => :members
+
     validates :name,
       :presence => true
     validates :name,
