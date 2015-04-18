@@ -11,7 +11,7 @@ module LockerRoom
 
     def create
       @account = LockerRoom::Account.new(account_params)
-      if @account.save
+      if @account.save_with_owner
         login(@account.owner.email, owner_params[:password])
         flash[:notice] = "Your account has been successfully created."
         redirect_to locker_room.root_url(:subdomain => @account.subdomain)
