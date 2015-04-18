@@ -74,5 +74,28 @@ module LockerRoom
       message = "is not allowed"
       assert_equal([message], account.errors[:subdomain])
     end
+
+    def test_creation_without_owner
+      account = LockerRoom::Account.new
+      refute(account.save_with_owner)
+      refute(account.persisted?)
+      assert(account.users.empty?)
+    end
+
+    def test_creation_with_an_owner
+      attrs = {
+        :name             => "Unicycle",
+        :subdomain        => "unicycle",
+        :owner_attributes => {
+          :email                 => "daisy@example.org",
+          :password              => "hellyhollyhally",
+          :password_confirmation => "hellyhollyhally"
+        }
+      }
+      account = LockerRoom::Account.new(attrs)
+      assert(account.save_with_owner)
+      assert(account.persisted?)
+      assert_equal(account.owner, account.users.first)
+    end
   end
 end
