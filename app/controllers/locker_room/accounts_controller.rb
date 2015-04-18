@@ -25,9 +25,10 @@ module LockerRoom
 
       def account_params
         params.require(:account).permit(:name, :subdomain, {
-        :owner_attributes => [
-          :email, :password, :password_confirmation
-        ]})
+          :owner_attributes => [
+            :email, :password, :password_confirmation
+          ]
+        })
       end
 
       def owner_params
