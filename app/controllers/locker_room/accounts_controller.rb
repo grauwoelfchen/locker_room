@@ -2,6 +2,8 @@ require_dependency "locker_room/application_controller"
 
 module LockerRoom
   class AccountsController < ApplicationController
+    skip_filter :require_login, :only => [:new, :create]
+
     def new
       @account = LockerRoom::Account.new
       @account.build_owner

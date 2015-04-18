@@ -1,1 +1,16 @@
-# https://en.wikipedia.org/wiki/Oswald_(TV_series)#Characters
+oswald:  
+  email: 'oswald@example.org'
+  salt: <%= salt = "abcdefghijklmnopqrstuvwxyz" %>
+  crypted_password: <%= Sorcery::CryptoProviders::BCrypt.encrypt("ohmygosh", salt) %>
+weenie:
+  email: 'weenie@example.org'
+  salt: <%= salt = "abcdefghijklmnopqrstuvwxyz" %>
+  crypted_password: <%= Sorcery::CryptoProviders::BCrypt.encrypt("bowwow", salt) %>
+henry:
+  email: 'henry@example.org'
+  salt: <%= salt = "abcdefghijklmnopqrstuvwxyz" %>
+  crypted_password: <%= Sorcery::CryptoProviders::BCrypt.encrypt("nomorenoless", salt) %>
+johnny:
+  email: 'johnny@example.org'
+  salt: <%= salt = "abcdefghijklmnopqrstuvwxyz" %>
+  crypted_password: <%= Sorcery::CryptoProviders::BCrypt.encrypt("icecream", salt) %>
