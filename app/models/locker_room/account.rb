@@ -29,5 +29,13 @@ module LockerRoom
     before_validation do
       self.subdomain = subdomain.to_s.downcase
     end
+
+    def save_with_owner(options={})
+      result = save(options)
+      if result
+        self.users << self.owner
+      end
+      result
+    end
   end
 end
