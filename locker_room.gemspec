@@ -7,12 +7,17 @@ Gem::Specification.new do |s|
   s.version     = LockerRoom::VERSION
   s.authors     = ["Yasuhiro Asaka"]
   s.email       = ["grauwoelfchen@gmail.com"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of LockerRoom."
-  s.description = "TODO: Description of LockerRoom."
+  s.homepage    = "https://github.com/grauwoelfchen/locker_room"
   s.license     = "MIT"
+  s.summary     = <<-SUMMARY
+A rails engine which provides account ojects for team and its authentication
+SUMMARY
+  s.description = <<-DESCRIPTION
+LockerRoom is a mountable rails engine which provides
+account objects (account, user) for team and its authentication.
+DESCRIPTION
 
-  s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
+  s.files = Dir["{app,config,db,lib}/**/*", "LICENSE", "Rakefile", "README"]
   s.test_files = Dir["test/**/*"]
 
   s.add_dependency "rails", "~> 4.2.1"
