@@ -37,4 +37,12 @@ class ActiveSupport::TestCase
   end
 end
 
-Capybara.app_host = "http://example.org"
+Capybara.configure do |config|
+  config.app_host = "http://example.org"
+end
+
+class Capybara::Rails::TestCase
+  def setup
+    locker_room.scope.default_url_options[:host] = Capybara.app_host
+  end
+end

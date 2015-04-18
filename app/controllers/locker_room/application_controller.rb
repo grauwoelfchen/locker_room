@@ -1,4 +1,7 @@
 module LockerRoom
-  class ApplicationController < ActionController::Base
+  class ApplicationController < ::ApplicationController
+    protect_from_forgery :with => :exception
+
+    before_filter :require_login
   end
 end
