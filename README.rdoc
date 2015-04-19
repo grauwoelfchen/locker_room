@@ -1,0 +1,49 @@
+= LockerRoom
+
+Home :: https://github.com/grauwoelfchen/locker_room
+Bugs :: https://github.com/grauwoelfchen/locker_room/issues
+
+== Description
+
+LockerRoom is a mountable rails engine which
+provides account objects (account, user) for team and its authentication.
+
+
+== Install
+
+TODO :)
+
+
+== Usage
+
+=== routes
+
+  # config/routes.rb
+  Rails.application.routes.draw do
+    mount LockerRoom::Engine => "/"
+  end
+
+== Dependencies
+
+* sorcery[https://github.com/NoamB/sorcery]
+* houser[https://github.com/radar/houser]
+* enum_accessor[https://github.com/kenn/enum_accessor]
+
+See locker_room.gemspec[https://github.com/grauwoelfchen/locker_room/blob/master/locker_room.gemspec]
+
+
+== ER diagram
+
+{<img src="https://raw.githubusercontent.com/grauwoelfchen/locker_room/master/doc/er.png" alt="ER diagram">}[https://github.com/grauwoelfchen/locker_room/blob/master/doc/er.png]
+
+
+== Changelog
+
+TODO :)
+
+
+== License
+
+MIT
+
+See LICENSE[https://github.com/grauwoelfchen/locker_room/blob/master/LICENSE]
