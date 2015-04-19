@@ -1,5 +1,7 @@
 = LockerRoom
 
+{<img src="https://travis-ci.org/grauwoelfchen/locker_room.svg?branch=master" alt="Build Status" />}[http://travis-ci.org/grauwoelfchen/locker_room]
+
 Home :: https://github.com/grauwoelfchen/locker_room
 Bugs :: https://github.com/grauwoelfchen/locker_room/issues
 
@@ -34,7 +36,7 @@ See locker_room.gemspec[https://github.com/grauwoelfchen/locker_room/blob/master
 
 == ER diagram
 
-{<img src="https://raw.githubusercontent.com/grauwoelfchen/locker_room/master/doc/er.png" alt="ER diagram">}[https://github.com/grauwoelfchen/locker_room/blob/master/doc/er.png]
+{<img src="https://raw.githubusercontent.com/grauwoelfchen/locker_room/master/doc/er.png" alt="ER diagram" />}[https://github.com/grauwoelfchen/locker_room/blob/master/doc/er.png]
 
 
 == Changelog
