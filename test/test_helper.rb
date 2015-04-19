@@ -28,13 +28,19 @@ class ActiveSupport::TestCase
   ActiveRecord::Migration.check_pending!
   DatabaseCleaner.strategy = :truncation
 
-  def setup
+  def before_setup
+    super
     DatabaseCleaner.start
   end
 
-  def teardown
+  def after_teardown
     DatabaseCleaner.clean
+    super
   end
+end
+
+class ActionController::TestCase
+  include Sorcery::TestHelpers::Rails
 end
 
 Capybara.configure do |config|
@@ -42,7 +48,17 @@ Capybara.configure do |config|
 end
 
 class Capybara::Rails::TestCase
-  def setup
+  include SubdomainHelpers
+  include AuthenticationHelpers
+
+  def before_setup
+    @default_host = locker_room.scope.default_url_options[:host]
     locker_room.scope.default_url_options[:host] = Capybara.app_host
+    super
+  end
+
+  def after_teardown
+    super
+    locker_room.scope.default_url_options[:host] = @default_host
   end
 end

@@ -47,23 +47,23 @@ class AccountSignupTest < Capybara::Rails::TestCase
     assert_content("Subdomain is not allowed")
   end
 
-  def test_owner_validation_with_duplicated_email
+  def test_validation_with_duplicated_email
     # TODO
   end
 
-  def test_owner_validation_with_invalid_email
+  def test_validation_with_invalid_email
     # TODO
   end
 
-  def test_owner_validation_with_too_short_password
+  def test_validation_with_too_short_password
     # TODO
   end
 
-  def test_owner_validation_with_invalid_password
+  def test_validation_with_invalid_password
     # TODO
   end
 
-  def test_owner_validation_with_unmatch_password
+  def test_validation_with_unmatch_password
     # TODO
   end
 

@@ -6,17 +6,17 @@ module LockerRoom
 
     def new
       @account = LockerRoom::Account.new
-      @account.build_owner
+      @account.owners.build
     end
 
     def create
-      @account = LockerRoom::Account.new(account_params)
-      if @account.save_with_owner
-        login(@account.owner.email, owner_params[:password])
+      @account = LockerRoom::Account.create_with_owner(account_params)
+      if @account.valid? && owner = @account.owners.first
+        login(owner.email, owner_params[:password])
         flash[:notice] = "Your account has been successfully created."
         redirect_to locker_room.root_url(:subdomain => @account.subdomain)
       else
-        flash[:error] = "Sorry, your account could not be created."
+        flash[:alert] = "Sorry, your account could not be created."
         render :new
       end
     end
@@ -24,15 +24,18 @@ module LockerRoom
     private
 
       def account_params
-        params.require(:account).permit(:name, :subdomain, {
-          :owner_attributes => [
-            :email, :password, :password_confirmation
-          ]
-        })
+        params.require(:account).permit(
+          :name, :subdomain, {
+            :owners_attributes => [
+              :email, :password, :password_confirmation
+            ]
+          }
+        )
       end
 
       def owner_params
-        account_params[:owner_attributes] || {}
+        owners_attributes = account_params[:owners_attributes]
+        (owners_attributes && owners_attributes["0"]) || {}
       end
   end
 end

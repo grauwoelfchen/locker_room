@@ -1,5 +1,6 @@
 require "houser"
 require "sorcery"
+require "enum_accessor"
 
 module LockerRoom
   class Engine < ::Rails::Engine

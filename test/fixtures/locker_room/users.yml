@@ -1,16 +1,20 @@
 oswald:  
+  account: playing_piano
   email: 'oswald@example.org'
   salt: <%= salt = "abcdefghijklmnopqrstuvwxyz" %>
   crypted_password: <%= Sorcery::CryptoProviders::BCrypt.encrypt("ohmygosh", salt) %>
 weenie:
+  account: playing_piano
   email: 'weenie@example.org'
   salt: <%= salt = "abcdefghijklmnopqrstuvwxyz" %>
   crypted_password: <%= Sorcery::CryptoProviders::BCrypt.encrypt("bowwow", salt) %>
 henry:
+  account: penguin_patrol
   email: 'henry@example.org'
   salt: <%= salt = "abcdefghijklmnopqrstuvwxyz" %>
   crypted_password: <%= Sorcery::CryptoProviders::BCrypt.encrypt("nomorenoless", salt) %>
 johnny:
+  account: ice_cream_shop
   email: 'johnny@example.org'
   salt: <%= salt = "abcdefghijklmnopqrstuvwxyz" %>
   crypted_password: <%= Sorcery::CryptoProviders::BCrypt.encrypt("icecream", salt) %>
