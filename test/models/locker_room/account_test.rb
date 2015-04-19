@@ -67,7 +67,7 @@ module LockerRoom
       assert_equal([message], account.errors[:subdomain])
     end
 
-    def test_downcasing_before_validation
+    def test_subdomain_downcase_before_validation
       account = LockerRoom::Account.new(:subdomain => 'TEST')
       refute(account.valid?)
       assert_equal('test', account.subdomain)
@@ -75,9 +75,9 @@ module LockerRoom
       assert_equal([message], account.errors[:subdomain])
     end
 
-    def test_creation_without_owner
-      account = LockerRoom::Account.new
-      refute(account.save_with_owner)
+    def test_creation_without_owners
+      account = LockerRoom::Account.create_with_owner
+      refute(account.valid?)
       refute(account.persisted?)
       assert(account.users.empty?)
     end
@@ -86,16 +86,18 @@ module LockerRoom
       attrs = {
         :name             => "Unicycle",
         :subdomain        => "unicycle",
-        :owner_attributes => {
-          :email                 => "daisy@example.org",
-          :password              => "hellyhollyhally",
-          :password_confirmation => "hellyhollyhally"
+        :owners_attributes => {
+          :"0" => {
+            :email                 => "daisy@example.org",
+            :password              => "hellyhollyhally",
+            :password_confirmation => "hellyhollyhally"
+          }
         }
       }
-      account = LockerRoom::Account.new(attrs)
-      assert(account.save_with_owner)
+      account = LockerRoom::Account.create_with_owner(attrs)
+      assert(account.valid?)
       assert(account.persisted?)
-      assert_equal(account.owner, account.users.first)
+      assert_equal(account.owners, account.users)
     end
   end
 end

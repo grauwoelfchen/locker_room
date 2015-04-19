@@ -23,6 +23,7 @@ DESCRIPTION
   s.add_dependency "rails", "~> 4.2.1"
   s.add_dependency "sorcery"
   s.add_dependency "houser"
+  s.add_dependency "enum_accessor"
 
   s.add_development_dependency "sqlite3"
   s.add_development_dependency "minitest", "~> 5.5"

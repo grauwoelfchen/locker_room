@@ -2,11 +2,15 @@ module LockerRoom
   class Account < ActiveRecord::Base
     EXCLUDED_SUBDOMAINS = %w(admin test www new)
 
-    belongs_to :owner, :class_name => "LockerRoom::User"
-    accepts_nested_attributes_for :owner
-
+    has_many :users,   :class_name => "LockerRoom::User"
     has_many :members, :class_name => "LockerRoom::Member"
-    has_many :users, :through => :members
+    has_many :ownerships,
+      -> { where(:role => LockerRoom::Member.roles[:owner]) },
+      :class_name => "LockerRoom::Member"
+    has_many :owners,
+      :through => :ownerships,
+      :source  => :user
+    accepts_nested_attributes_for :owners
 
     validates :name,
       :presence => true
@@ -30,12 +34,16 @@ module LockerRoom
       self.subdomain = subdomain.to_s.downcase
     end
 
-    def save_with_owner(options={})
-      result = save(options)
-      if result
-        self.users << self.owner
+    def self.create_with_owner(options={})
+      self.transaction do
+        account = new(options)
+        if account.save
+          unless account.owners.first.update_attribute(:account, account)
+            raise ActiveRecord::Rollback
+          end
+        end
+        account
       end
-      result
     end
   end
 end

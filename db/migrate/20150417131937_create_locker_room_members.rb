@@ -3,6 +3,9 @@ class CreateLockerRoomMembers < ActiveRecord::Migration
     create_table :locker_room_members do |t|
       t.integer :account_id
       t.integer :user_id
+      t.integer :role, default: 1, limit: 1
+      t.string  :name
+      t.string  :username
 
       t.timestamps null: false
     end
