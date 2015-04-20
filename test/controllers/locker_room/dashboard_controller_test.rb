@@ -2,8 +2,10 @@ require 'test_helper'
 
 module LockerRoom
   class DashboardControllerTest < ActionController::TestCase
-    # test "the truth" do
-    #   assert true
-    # end
+    def test_index
+      get(:index)
+      assert_template(:index)
+      assert_response(:success)
+    end
   end
 end

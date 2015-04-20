@@ -16,7 +16,7 @@ module LockerRoom
         flash[:notice] = "Your account has been successfully created."
         redirect_to locker_room.root_url(:subdomain => @account.subdomain)
       else
-        flash[:alert] = "Sorry, your account could not be created."
+        flash[:alert] = "Your account could not be created."
         render :new
       end
     end
