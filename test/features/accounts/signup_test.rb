@@ -1,7 +1,7 @@
 require "test_helper"
 
 class AccountSignupTest < Capybara::Rails::TestCase
-  fixtures("locker_room/accounts", "locker_room/members", "locker_room/users")
+  locker_room_fixtures(:accounts, :members, :users)
 
   def test_subdomain_uniqueness_ensuring
     penguin = locker_room_accounts(:penguin_patrol)
@@ -15,7 +15,7 @@ class AccountSignupTest < Capybara::Rails::TestCase
     fill_in("Password confirmation", :with => "ohmygosh")
     click_button("Create Account")
     assert_equal("http://example.org/accounts", page.current_url)
-    assert_content("Sorry, your account could not be created.")
+    assert_content("Your account could not be created.")
     assert_content("Subdomain has already been taken")
   end
 
@@ -29,7 +29,7 @@ class AccountSignupTest < Capybara::Rails::TestCase
     fill_in("Password confirmation", :with => "bowwow")
     click_button("Create Account")
     assert_equal("http://example.org/accounts", page.current_url)
-    assert_content("Sorry, your account could not be created.")
+    assert_content("Your account could not be created.")
     assert_content("Subdomain is not allowed")
   end
 
@@ -43,7 +43,7 @@ class AccountSignupTest < Capybara::Rails::TestCase
     fill_in("Password confirmation", :with => "bowwow")
     click_button("Create Account")
     assert_equal("http://example.org/accounts", page.current_url)
-    assert_content("Sorry, your account could not be created.")
+    assert_content("Your account could not be created.")
     assert_content("Subdomain is not allowed")
   end
 
