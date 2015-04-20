@@ -33,6 +33,20 @@ TODO :)
 
 See locker_room.gemspec[https://github.com/grauwoelfchen/locker_room/blob/master/locker_room.gemspec]
 
+== Test
+
+TestingSupport module provides +within_subdomain+,
++login_user+ and +logout_user+ (from sorcery) at controller or integration.
+
+  # test/test_helper.rb
+  class ActionController::TestCase
+    include LockerRoom::TestingSupport::Controller::SubdomainHelpers
+  end
+
+  class Capybara::Rails::TestCase
+    include LockerRoom::TestingSupport::Integration::SubdomainHelpers
+    include LockerRoom::TestingSupport::Integration::AuthenticationHelpers
+  end
 
 == ER diagram
 
