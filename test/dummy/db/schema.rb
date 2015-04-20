@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150417131937) do
+ActiveRecord::Schema.define(version: 20150420180450) do
 
   create_table "locker_room_accounts", force: :cascade do |t|
     t.string   "name"
@@ -45,5 +45,12 @@ ActiveRecord::Schema.define(version: 20150417131937) do
   end
 
   add_index "locker_room_users", ["account_id", "email"], name: "index_locker_room_users_on_account_id_and_email", unique: true
+
+  create_table "talks", force: :cascade do |t|
+    t.string   "theme"
+    t.integer  "account_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
 end
