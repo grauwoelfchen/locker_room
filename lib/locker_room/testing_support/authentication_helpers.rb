@@ -1,7 +1,7 @@
-# https://github.com/NoamB/sorcery/blob/master/lib/sorcery/test_helpers/rails/integration.rb
 module LockerRoom
   module TestingSupport
     module AuthenticationHelpers
+      # https://github.com/NoamB/sorcery/blob/master/lib/sorcery/test_helpers/rails/integration.rb
       include Sorcery::TestHelpers::Rails::Integration
 
       alias_method :orig_login_user, :login_user
