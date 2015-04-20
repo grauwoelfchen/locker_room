@@ -1,7 +1,7 @@
 require "test_helper"
 
 class AccountScopTest < Capybara::Rails::TestCase
-  fixtures("locker_room/accounts", "locker_room/members", "locker_room/users")
+  locker_room_fixtures(:accounts, :members, :users)
 
   def setup
     @account_piano   = locker_room_accounts(:playing_piano)

@@ -2,7 +2,7 @@ require "test_helper"
 
 module LockerRoom
   class AccountTest < ActiveSupport::TestCase
-    fixtures("locker_room/accounts")
+    locker_room_fixtures(:accounts, :members, :users)
 
     def test_validation_with_without_name
       account = LockerRoom::Account.new(:name => nil)
