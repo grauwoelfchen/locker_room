@@ -1,4 +1,3 @@
-# Configure Rails Environment
 ENV["RAILS_ENV"] = "test"
 
 require File.expand_path("../../test/dummy/config/environment.rb",  __FILE__)
@@ -28,6 +27,8 @@ if ActiveSupport::TestCase.respond_to?(:fixture_path=)
 end
 
 class ActiveSupport::TestCase
+  include FixtureHelpers
+
   ActiveRecord::Migration.check_pending!
   DatabaseCleaner.strategy = :truncation
 
@@ -40,15 +41,11 @@ class ActiveSupport::TestCase
     DatabaseCleaner.clean
     super
   end
-
-  def self.locker_room_fixtures(*fixture_names)
-    fixtures(*fixture_names.map { |name| "locker_room/#{name}" })
-  end
 end
 
 class ActionController::TestCase
   include Controller::SubdomainHelpers
-  include Sorcery::TestHelpers::Rails::Controller
+  include Controller::AuthenticationHelpers
 
   def setup
     @routes = LockerRoom::Engine.routes
