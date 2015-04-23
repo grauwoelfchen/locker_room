@@ -13,7 +13,17 @@ provides account objects (account, user) for team and its authentication.
 
 == Install
 
-TODO :)
+=== setup
+
+TODO ;)
+
+=== migration
+
+  % bundle exec rake railties:install:migrations
+  Copied migration xxxxxxxxxxxxxx_create_locker_room_accounts.locker_room.rb from locker_room
+  Copied migration xxxxxxxxxxxxxx_sorcery_core.locker_room.rb from locker_room
+  Copied migration xxxxxxxxxxxxxx_create_locker_room_members.locker_room.rb from locker_room
+  % bundle exec rake db:migrate
 
 
 == Usage
@@ -25,6 +35,7 @@ TODO :)
     mount LockerRoom::Engine => "/"
   end
 
+
 == Dependencies
 
 * sorcery[https://github.com/NoamB/sorcery]
@@ -33,14 +44,23 @@ TODO :)
 
 See locker_room.gemspec[https://github.com/grauwoelfchen/locker_room/blob/master/locker_room.gemspec]
 
+
 == Test
 
 TestingSupport module provides +within_subdomain+,
-+login_user+ and +logout_user+ (from sorcery) at controller or integration.
++login_user+ and +logout_user+ (from sorcery) at controller and integration.
 
   # test/test_helper.rb
+
+  require "locker_room/testing_support/helpers"
+
+  class ActiveSupport::Testcase
+    include LockerRoom::TestingSupport::FixtureHelpers
+  end
+
   class ActionController::TestCase
     include LockerRoom::TestingSupport::Controller::SubdomainHelpers
+    include LockerRoom::TestingSupport::Controller::AuthenticationHelpers
   end
 
   class Capybara::Rails::TestCase
