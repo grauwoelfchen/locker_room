@@ -12,6 +12,8 @@ require "minitest/rails/capybara"
 require "minitest/pride" if ENV["TEST_PRIDE"].present?
 require "database_cleaner"
 
+require "locker_room/testing_support/helpers"
+
 # Filter out Minitest backtrace while allowing backtrace from other libraries
 # to be shown.
 Minitest.backtrace_filter = Minitest::BacktraceFilter.new
@@ -27,7 +29,7 @@ if ActiveSupport::TestCase.respond_to?(:fixture_path=)
 end
 
 class ActiveSupport::TestCase
-  include FixtureHelpers
+  include LockerRoom::TestingSupport::FixtureHelpers
 
   ActiveRecord::Migration.check_pending!
   DatabaseCleaner.strategy = :truncation
@@ -44,8 +46,8 @@ class ActiveSupport::TestCase
 end
 
 class ActionController::TestCase
-  include Controller::SubdomainHelpers
-  include Controller::AuthenticationHelpers
+  include LockerRoom::TestingSupport::Controller::SubdomainHelpers
+  include LockerRoom::TestingSupport::Controller::AuthenticationHelpers
 
   def setup
     @routes = LockerRoom::Engine.routes
@@ -58,8 +60,8 @@ Capybara.configure do |config|
 end
 
 class Capybara::Rails::TestCase
-  include Integration::SubdomainHelpers
-  include Integration::AuthenticationHelpers
+  include LockerRoom::TestingSupport::Integration::SubdomainHelpers
+  include LockerRoom::TestingSupport::Integration::AuthenticationHelpers
 
   def before_setup
     @default_host = locker_room.scope.default_url_options[:host]
