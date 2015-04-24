@@ -19,6 +19,6 @@
     end
 
     def not_authenticated
-      redirect_to login_url, :alert => "Please signin."
+      redirect_to locker_room.login_url, :alert => "Please signin."
     end
 end
