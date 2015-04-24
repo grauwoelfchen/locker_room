@@ -12,6 +12,7 @@ require "minitest/rails/capybara"
 require "minitest/pride" if ENV["TEST_PRIDE"].present?
 require "database_cleaner"
 
+require "locker_room/testing_support/secret"
 require "locker_room/testing_support/helpers"
 
 # Filter out Minitest backtrace while allowing backtrace from other libraries
