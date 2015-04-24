@@ -30,6 +30,7 @@ end
 
 class ActiveSupport::TestCase
   include LockerRoom::TestingSupport::FixtureHelpers
+  include LockerRoom::TestingSupport::Secret::Helpers
 
   ActiveRecord::Migration.check_pending!
   DatabaseCleaner.strategy = :truncation
@@ -74,3 +75,6 @@ class Capybara::Rails::TestCase
     locker_room.scope.default_url_options[:host] = @default_host
   end
 end
+
+ActiveRecord::FixtureSet.context_class.send(
+  :include, LockerRoom::TestingSupport::Secret::Utilities)

@@ -11,14 +11,16 @@ class AccountScopTest < Capybara::Rails::TestCase
   end
 
   def test_scoped_visibility_for_account_piano
-    login_user(@account_piano.owners.first)
+    user = @account_piano.owners.first
+    login_as(user)
     visit(main_app.talks_url(:subdomain => @account_piano.subdomain))
     assert_content("Musical instrument")
     refute_content("The ice")
   end
 
   def test_scoped_visibility_for_account_penguin
-    login_user(@account_penguin.owners.first)
+    user = @account_penguin.owners.first
+    login_as(user)
     visit(main_app.talks_url(:subdomain => @account_penguin.subdomain))
     refute_content("Musical instrument")
     assert_content("The ice")
