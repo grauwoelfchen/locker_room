@@ -23,7 +23,8 @@ module Utilities
       secret_file = fixture_path + "/locker_room/.secret.yml"
       YAML.load(ERB.new(File.read(secret_file)).result)
     rescue Errno::ENOENT, Psych::SyntaxError
-      raise Secret::FixtureFileNotFoundOrBroken
+      message = "fixtures/locker_room/.secret.yml is not found"
+      raise Secret::FixtureFileNotFoundOrBroken, message
     end
   end
 end
