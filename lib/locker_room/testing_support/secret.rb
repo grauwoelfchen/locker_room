@@ -1,3 +1,6 @@
+require "locker_room/testing_support/secret/utilities"
+require "locker_room/testing_support/secret/helpers"
+
 module LockerRoom
   module TestingSupport
 module Secret
