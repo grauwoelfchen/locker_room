@@ -54,7 +54,7 @@ module LockerRoom
       exclude_subdomains.map do |subdomain|
         account = LockerRoom::Account.new(:subdomain => subdomain)
         refute(account.valid?)
-        message = "is not allowed"
+        message = "#{subdomain} is not allowed"
         error = "subdomain restriction is failed: #{subdomain}"
         assert_equal([message], account.errors[:subdomain], error)
       end
@@ -63,7 +63,7 @@ module LockerRoom
     def test_validation_with_with_invalid_subdomain
       account = LockerRoom::Account.new(:subdomain => '[foo]')
       refute(account.valid?)
-      message = "is not allowed"
+      message = "[foo] is not allowed"
       assert_equal([message], account.errors[:subdomain])
     end
 
@@ -71,7 +71,7 @@ module LockerRoom
       account = LockerRoom::Account.new(:subdomain => 'TEST')
       refute(account.valid?)
       assert_equal('test', account.subdomain)
-      message = "is not allowed"
+      message = "test is not allowed"
       assert_equal([message], account.errors[:subdomain])
     end
 
