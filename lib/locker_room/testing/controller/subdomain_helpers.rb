@@ -1,10 +1,8 @@
 require "rack/mock"
 require "houser/middleware"
 
-require "locker_room/engine"
-
 module LockerRoom
-  module TestingSupport
+  module Testing
     module Controller
 module SubdomainHelpers
   def within_subdomain(subdomain)
