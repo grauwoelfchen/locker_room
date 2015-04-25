@@ -30,7 +30,7 @@ class AccountSignupTest < Capybara::Rails::TestCase
     click_button("Create Account")
     assert_equal("http://example.org/accounts", page.current_url)
     assert_content("Your account could not be created.")
-    assert_content("Subdomain is not allowed")
+    assert_content("Subdomain admin is not allowed")
   end
 
   def test_subdomain_restriction_with_invalid_word
@@ -44,7 +44,7 @@ class AccountSignupTest < Capybara::Rails::TestCase
     click_button("Create Account")
     assert_equal("http://example.org/accounts", page.current_url)
     assert_content("Your account could not be created.")
-    assert_content("Subdomain is not allowed")
+    assert_content("Subdomain <test> is not allowed")
   end
 
   def test_validation_with_duplicated_email
