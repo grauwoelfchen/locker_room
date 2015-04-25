@@ -1,5 +1,5 @@
 module LockerRoom
-  module TestingSupport
+  module Testing
     module Integration
 module SubdomainHelpers
   def within_subdomain(subdomain)
