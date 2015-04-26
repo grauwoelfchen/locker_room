@@ -17,7 +17,7 @@ module LockerRoom
       if @user.save && @user.member.valid?
         login(@user.email, user_params[:password])
         flash[:notice] = "You have signed up successfully."
-        redirect_to locker_room.account_root_url
+        redirect_to locker_room.root_url
       else
         flash[:alert] = "Your user account could not be created."
         render :new
