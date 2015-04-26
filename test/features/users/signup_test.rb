@@ -16,7 +16,6 @@ class UserSignupTest < Capybara::Rails::TestCase
       click_button("Signup")
       assert_content("Your user account could not be created.")
       assert_equal(locker_room.signup_url, page.current_url)
-      logout_user(locker_room.logout_url, :delete)
     end
   end
 

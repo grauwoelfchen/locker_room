@@ -10,6 +10,10 @@ class AccountScopTest < Capybara::Rails::TestCase
     Talk.scoped_to(@account_penguin).create(:theme => "The ice")
   end
 
+  def teardown
+    logout_user
+  end
+
   def test_scoped_visibility_for_account_piano
     user = @account_piano.owners.first
     login_user(user)
