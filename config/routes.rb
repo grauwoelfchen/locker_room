@@ -13,8 +13,8 @@ LockerRoom::Engine.routes.draw do
     end
   end
 
-  get  "/login",  to: "logins#new",      as: nil
-  get  "/login",  to: "logins#create",   as: nil
+  get  "/login",  to: "login#new",       as: nil
+  post "/login",  to: "login#create",    as: nil
   get  "/signup", to: "accounts#new",    as: nil
   post "/signup", to: "accounts#create", as: nil
   root "entrance#index", as: nil
