@@ -41,8 +41,8 @@ TODO ;)
   signup GET    /signup(.:format) locker_room/account/users#new
          POST   /signup(.:format) locker_room/account/users#create
     root GET    /                 locker_room/account/locker#index
-         GET    /login(.:format)  locker_room/logins#new
-         GET    /login(.:format)  locker_room/logins#create
+         GET    /login(.:format)  locker_room/login#new
+         POST   /login(.:format)  locker_room/login#create
          GET    /signup(.:format) locker_room/accounts#new
          POST   /signup(.:format) locker_room/accounts#create
          GET    /                 locker_room/entrance#index
@@ -74,22 +74,22 @@ Testing modules provide +within_subdomain+ with
 Then set `Capybara.app_host` and default_url_options[:host], if you want.
 
   # test/test_helper.rb
-  Capybara.configure do |config|                                                  
-    config.app_host = "http://example.org"                                        
+  Capybara.configure do |config|
+    config.app_host = "http://example.org"
   end
 
   class Capybara::Rails::TestCase
     ...
 
-    def before_setup                                                              
-      @default_host = locker_room.scope.default_url_options[:host]                
-      locker_room.scope.default_url_options[:host] = Capybara.app_host            
-      super                                                                       
-    end                                                                           
-                                                                                  
-    def after_teardown                                                            
-      super                                                                       
-      locker_room.scope.default_url_options[:host] = @default_host                
+    def before_setup
+      @default_host = locker_room.scope.default_url_options[:host]
+      locker_room.scope.default_url_options[:host] = Capybara.app_host
+      super
+    end
+
+    def after_teardown
+      super
+      locker_room.scope.default_url_options[:host] = @default_host
     end
   end
 
