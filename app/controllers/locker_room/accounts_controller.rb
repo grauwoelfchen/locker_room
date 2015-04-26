@@ -23,19 +23,19 @@ module LockerRoom
 
     private
 
-      def account_params
-        params.require(:account).permit(
-          :name, :subdomain, {
-            :owners_attributes => [
-              :email, :password, :password_confirmation
-            ]
-          }
-        )
-      end
+    def account_params
+      params.require(:account).permit(
+        :name, :subdomain, {
+          :owners_attributes => [
+            :email, :password, :password_confirmation
+          ]
+        }
+      )
+    end
 
-      def owner_params
-        owners_attributes = account_params[:owners_attributes]
-        (owners_attributes && owners_attributes["0"]) || {}
-      end
+    def owner_params
+      owners_attributes = account_params[:owners_attributes]
+      (owners_attributes && owners_attributes["0"]) || {}
+    end
   end
 end
