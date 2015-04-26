@@ -1,4 +1,4 @@
 module LockerRoom
-  module DashboardHelper
+  module EntranceHelper
   end
 end

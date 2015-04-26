@@ -19,11 +19,8 @@ TODO ;)
 
 === migration
 
-  % bundle exec rake railties:install:migrations
-  Copied migration xxxxxxxxxxxxxx_create_locker_room_accounts.locker_room.rb from locker_room
-  Copied migration xxxxxxxxxxxxxx_sorcery_core.locker_room.rb from locker_room
-  Copied migration xxxxxxxxxxxxxx_create_locker_room_members.locker_room.rb from locker_room
-  % bundle exec rake db:migrate
+  % rake railties:install:migrations
+  % rake db:migrate
 
 
 == Usage
@@ -35,38 +32,67 @@ TODO ;)
     mount LockerRoom::Engine => "/"
   end
 
-
-== Dependencies
-
-* sorcery[https://github.com/NoamB/sorcery]
-* houser[https://github.com/radar/houser]
-* enum_accessor[https://github.com/kenn/enum_accessor]
-
-See locker_room.gemspec[https://github.com/grauwoelfchen/locker_room/blob/master/locker_room.gemspec]
+  % rake routes
+  Routes for LockerRoom::Engine:
+  logout GET    /logout(.:format) locker_room/account/sessions#destroy
+         DELETE /logout(.:format) locker_room/account/sessions#destroy
+   login GET    /login(.:format)  locker_room/account/sessions#new
+         POST   /login(.:format)  locker_room/account/sessions#create
+  signup GET    /signup(.:format) locker_room/account/users#new
+         POST   /signup(.:format) locker_room/account/users#create
+    root GET    /                 locker_room/account/locker#index
+         GET    /login(.:format)  locker_room/logins#new
+         GET    /login(.:format)  locker_room/logins#create
+         GET    /signup(.:format) locker_room/accounts#new
+         POST   /signup(.:format) locker_room/accounts#create
+         GET    /                 locker_room/entrance#index
 
 
 == Test
 
-TestingSupport module provides +within_subdomain+,
-+login_user+ and +logout_user+ (from sorcery) at controller and integration.
+Testing modules provide +within_subdomain+ with
++login_user+ and +logout_user+ (from sorcery, but its support subdomain) for controller and integration.
 
   # test/test_helper.rb
 
-  require "locker_room/testing_support/helpers"
+  require "locker_room/testing/helpers"
 
   class ActiveSupport::Testcase
-    include LockerRoom::TestingSupport::FixtureHelpers
+    include LockerRoom::Testing::FixtureHelpers
   end
 
   class ActionController::TestCase
-    include LockerRoom::TestingSupport::Controller::SubdomainHelpers
-    include LockerRoom::TestingSupport::Controller::AuthenticationHelpers
+    include LockerRoom::Testing::Controller::SubdomainHelpers
+    include LockerRoom::Testing::Controller::AuthenticationHelpers
   end
 
   class Capybara::Rails::TestCase
-    include LockerRoom::TestingSupport::Integration::SubdomainHelpers
-    include LockerRoom::TestingSupport::Integration::AuthenticationHelpers
+    include LockerRoom::Testing::Integration::SubdomainHelpers
+    include LockerRoom::Testing::Integration::AuthenticationHelpers
   end
+
+Then set `Capybara.app_host` and default_url_options[:host], if you want.
+
+  # test/test_helper.rb
+  Capybara.configure do |config|                                                  
+    config.app_host = "http://example.org"                                        
+  end
+
+  class Capybara::Rails::TestCase
+    ...
+
+    def before_setup                                                              
+      @default_host = locker_room.scope.default_url_options[:host]                
+      locker_room.scope.default_url_options[:host] = Capybara.app_host            
+      super                                                                       
+    end                                                                           
+                                                                                  
+    def after_teardown                                                            
+      super                                                                       
+      locker_room.scope.default_url_options[:host] = @default_host                
+    end
+  end
+
 
 == ER diagram
 

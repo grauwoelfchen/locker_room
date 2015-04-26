@@ -14,7 +14,7 @@ class AccountSignupTest < Capybara::Rails::TestCase
     fill_in("Password",              :with => "ohmygosh", :exact => true)
     fill_in("Password confirmation", :with => "ohmygosh")
     click_button("Create Account")
-    assert_equal("http://example.org/accounts", page.current_url)
+    assert_equal("http://example.org/signup", page.current_url)
     assert_content("Your account could not be created.")
     assert_content("Subdomain has already been taken")
   end
@@ -28,7 +28,7 @@ class AccountSignupTest < Capybara::Rails::TestCase
     fill_in("Password",              :with => "bowwow", :exact => true)
     fill_in("Password confirmation", :with => "bowwow")
     click_button("Create Account")
-    assert_equal("http://example.org/accounts", page.current_url)
+    assert_equal("http://example.org/signup", page.current_url)
     assert_content("Your account could not be created.")
     assert_content("Subdomain admin is not allowed")
   end
@@ -42,7 +42,7 @@ class AccountSignupTest < Capybara::Rails::TestCase
     fill_in("Password",              :with => "bowwow", :exact => true)
     fill_in("Password confirmation", :with => "bowwow")
     click_button("Create Account")
-    assert_equal("http://example.org/accounts", page.current_url)
+    assert_equal("http://example.org/signup", page.current_url)
     assert_content("Your account could not be created.")
     assert_content("Subdomain <test> is not allowed")
   end
@@ -79,5 +79,6 @@ class AccountSignupTest < Capybara::Rails::TestCase
     assert_equal("http://vanilla-dog-biscuits.example.org/", page.current_url)
     assert_content("Your account has been successfully created.")
     assert_content("Signed in as weenie@example.com")
+    logout_user
   end
 end

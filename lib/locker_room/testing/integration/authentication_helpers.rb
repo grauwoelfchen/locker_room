@@ -12,6 +12,19 @@ module AuthenticationHelpers
     end
     orig_login_user(user, route, http_method)
   end
+
+  alias_method :orig_logout_user, :logout_user
+  def logout_user(route=nil, http_method=:get)
+    # subdomain route support
+    if page && !route
+      host = Capybara.app_host.sub(/^https?:\/\//, "")
+      subdomain = page.driver.request.env["HTTP_HOST"].sub(".#{host}", "")
+      if subdomain.present?
+        route = locker_room.logout_url(:subdomain => subdomain)
+      end
+    end
+    orig_logout_user(route, http_method)
+  end
 end
     end
   end
