@@ -1,5 +1,14 @@
 digraph LockerRoom {
   /**
+   * Style
+   *
+   */
+
+  graph [fontname = "DejaVuSansMono" fontsize = 9];
+  node  [fontname = "DejaVuSansMono" fontsize = 9];
+  edge  [fontname = "DejaVuSansMono" fontsize = 9];
+
+  /**
    * Node
    *
    */
@@ -91,13 +100,4 @@ digraph LockerRoom {
 
   {rank=same; Member;};
   {rank=same; Account;User;};
-
-
-  /**
-   * Style
-   *
-   */
-
-  fontname = "Bitstream Vera Sans"
-  fontsize = 8
 }
