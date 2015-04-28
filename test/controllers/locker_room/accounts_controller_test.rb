@@ -41,6 +41,7 @@ module LockerRoom
         user = Minitest::Mock.new
         user.expect(:email, "daisy@example.org")
         account = Minitest::Mock.new
+        account.expect(:create_schema, true)
         account.expect(:valid?, true)
         account.expect(:owners, [user])
         account.expect(:subdomain, "unicycle")

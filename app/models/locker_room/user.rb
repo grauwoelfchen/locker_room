@@ -1,5 +1,7 @@
 module LockerRoom
   class User < ActiveRecord::Base
+    extend ScopedTo
+
     authenticates_with_sorcery!
 
     belongs_to :account

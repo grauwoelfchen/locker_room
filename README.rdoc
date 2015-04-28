@@ -8,7 +8,7 @@ Bugs :: https://github.com/grauwoelfchen/locker_room/issues
 == Description
 
 LockerRoom is a mountable rails engine which
-provides account objects (account, user) for team and its authentication.
+provides account objects (account, user) for team using PostgreSQL's schema.
 
 
 == Install
@@ -102,6 +102,17 @@ Then set `Capybara.app_host` and default_url_options[:host], if you want.
 == Changelog
 
 TODO :)
+
+
+== Development
+
+  % # setup
+  % cp .env.sample .env
+  % cp Procfile.sample Procfile
+
+  % # test
+  % bundle exec foreman run test #=> run `rake test` with environ vars
+  % bundle exec foreman run ruby -I.:test test/models/locker_room/account_test.rb -n /xxx/
 
 
 == License

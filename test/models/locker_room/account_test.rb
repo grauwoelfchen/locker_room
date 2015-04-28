@@ -99,5 +99,26 @@ module LockerRoom
       assert(account.persisted?)
       assert_equal(account.owners, account.users)
     end
+
+    def test_creation_of_schema
+      account = LockerRoom::Account.create!(
+        :name      => "Unicycle",
+        :subdomain => "unicycle"
+      )
+      account.create_schema
+      message = "Schema #{account.schema_name} does not exist"
+      assert(schema_exists?(account), message)
+    end
+
+    private
+
+    def schema_exists?(account)
+      query = %Q(
+SELECT nspname FROM pg_namespace
+WHERE nspname = '#{account.subdomain}'
+      )
+      result = ActiveRecord::Base.connection.select_value(query)
+      result.present?
+    end
   end
 end
