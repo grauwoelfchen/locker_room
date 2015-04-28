@@ -44,5 +44,13 @@ module LockerRoom
         account
       end
     end
+
+    def create_schema
+      Apartment::Tenant.create(schema_name)
+    end
+
+    def schema_name
+      subdomain.gsub(/\-/, "_")
+    end
   end
 end

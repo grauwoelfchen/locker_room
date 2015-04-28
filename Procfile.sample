@@ -1,0 +1,4 @@
+# development
+server: rails server -p $PORT -e development
+# test
+test: rake test
