@@ -1,5 +1,5 @@
 <h2>Signup</h2>
-<%= form_for @account, url:  signup_path, method: :post do |account_form| %>
+<%= form_for @account, url:  signup_path, method: :post, html: {novalidate: "novalidate"} do |account_form| %>
 <% if @account.errors.any? %>
 <%= render "locker_room/shared/errors", resource: @account %>
 <% end %>

@@ -12,13 +12,13 @@ module LockerRoom
     def create
       raise ActiveRecord::RecordNotFound unless current_account
 
-      @user = current_account.users.new(user_params)
-      @user.member.assign_attributes(:account_id => current_account.id)
-      if @user.save && @user.member.valid?
+      @user = current_account.users.create_with_member(user_params)
+      if @user.created?
         login(@user.email, user_params[:password])
         flash[:notice] = "You have signed up successfully."
         redirect_to locker_room.root_url
       else
+        @user.valid? # for password
         flash[:alert] = "Your user account could not be created."
         render :new
       end
