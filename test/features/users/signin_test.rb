@@ -12,12 +12,11 @@ class UserSigninTest < Capybara::Rails::TestCase
       click_button("Continue")
       assert_equal(locker_room.login_url, page.current_url)
       assert_content("Please signin.")
-      assert_equal(locker_room.login_url, page.current_url)
       fill_in("Email",   :with => "henry@example.org")
       fill_in("Password",:with => "secret")
       click_button("Signin")
-      assert_content("Email or password is invalid.")
       assert_equal(locker_room.login_url, page.current_url)
+      assert_content("Email or password is invalid.")
       logout_user(locker_room.logout_url, :delete)
     end
   end
@@ -29,13 +28,13 @@ class UserSigninTest < Capybara::Rails::TestCase
       assert_equal(locker_room.login_url(:subdomain => nil), page.current_url)
       fill_in("Subdomain", :with => account.subdomain)
       click_button("Continue")
-      assert_content("Please signin.")
       assert_equal(locker_room.login_url, page.current_url)
+      assert_content("Please signin.")
       fill_in("Email",   :with => account.owners.first.email)
       fill_in("Password",:with => "invalid")
       click_button("Signin")
-      assert_content("Email or password is invalid.")
       assert_equal(locker_room.login_url, page.current_url)
+      assert_content("Email or password is invalid.")
       logout_user(locker_room.logout_url, :delete)
     end
   end
@@ -48,13 +47,13 @@ class UserSigninTest < Capybara::Rails::TestCase
       assert_equal(locker_room.login_url(:subdomain => nil), page.current_url)
       fill_in("Subdomain", :with => other_account.subdomain)
       click_button("Continue")
-      assert_content("Please signin.")
       assert_equal(locker_room.login_url, page.current_url)
+      assert_content("Please signin.")
       fill_in("Email",   :with => account.owners.first.email)
       fill_in("Password",:with => "secret")
       click_button("Signin")
-      assert_content("Email or password is invalid.")
       assert_equal(locker_room.login_url, page.current_url)
+      assert_content("Email or password is invalid.")
       logout_user(locker_room.logout_url, :delete)
     end
   end
@@ -67,11 +66,12 @@ class UserSigninTest < Capybara::Rails::TestCase
       fill_in("Subdomain", :with => account.subdomain)
       click_button("Continue")
       assert_equal(locker_room.login_url, page.current_url)
+      assert_content("Please signin.")
       fill_in("Email",   :with => account.owners.first.email)
       fill_in("Password",:with => "secret")
       click_button("Signin")
-      assert_content("You are now signed in.")
       assert_equal(locker_room.root_url, page.current_url)
+      assert_content("You are now signed in.")
       logout_user(locker_room.logout_url, :delete)
     end
   end
@@ -83,13 +83,13 @@ class UserSigninTest < Capybara::Rails::TestCase
       assert_equal(locker_room.login_url(:subdomain => nil), page.current_url)
       fill_in("Subdomain", :with => user.account.subdomain)
       click_button("Continue")
-      assert_content("Please signin.")
       assert_equal(locker_room.login_url, page.current_url)
+      assert_content("Please signin.")
       fill_in("Email",   :with => "henry@example.org")
       fill_in("Password",:with => "secret")
       click_button("Signin")
-      assert_content("Email or password is invalid.")
       assert_equal(locker_room.login_url, page.current_url)
+      assert_content("Email or password is invalid.")
       logout_user(locker_room.logout_url, :delete)
     end
   end
@@ -127,19 +127,5 @@ class UserSigninTest < Capybara::Rails::TestCase
       assert_equal(locker_room.root_url, page.current_url)
       logout_user(locker_room.logout_url, :delete)
     end
-  end
-
-  private
-
-  def account_with_schema(account_name)
-    account = locker_room_accounts(account_name)
-    account.create_schema
-    account
-  end
-
-  def user_with_schema(user_name)
-    user = locker_room_users(user_name)
-    user.account.create_schema
-    user
   end
 end

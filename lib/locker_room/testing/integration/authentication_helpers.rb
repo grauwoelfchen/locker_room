@@ -4,6 +4,8 @@ module LockerRoom
 module AuthenticationHelpers
   include Sorcery::TestHelpers::Rails::Integration
 
+  private
+
   alias_method :orig_login_user, :login_user
   def login_user(user=nil, route=nil, http_method=:post)
     # subdomain route support
@@ -24,6 +26,13 @@ module AuthenticationHelpers
       end
     end
     orig_logout_user(route, http_method)
+  end
+
+  def click_logout
+    logout_user(locker_room.logout_url, :delete)
+    # redirect link
+    assert_content("You are being redirected.")
+    click_link("redirected")
   end
 end
     end

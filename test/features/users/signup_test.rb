@@ -35,12 +35,4 @@ class UserSignupTest < Capybara::Rails::TestCase
       logout_user(locker_room.logout_url, :delete)
     end
   end
-
-  private
-
-  def account_with_schema(account_name)
-    account = locker_room_accounts(account_name)
-    account.create_schema
-    account
-  end
 end
