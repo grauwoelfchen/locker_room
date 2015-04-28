@@ -97,7 +97,8 @@ module LockerRoom
       account = LockerRoom::Account.create_with_owner(attrs)
       assert(account.valid?)
       assert(account.persisted?)
-      assert_equal(account.owners, account.users)
+      owner = account.owners.where(:email => "daisy@example.org").take!
+      assert_includes(account.users.pluck(:id), owner.id)
     end
 
     def test_creation_of_schema

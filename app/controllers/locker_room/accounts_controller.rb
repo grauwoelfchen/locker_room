@@ -11,12 +11,14 @@ module LockerRoom
 
     def create
       @account = LockerRoom::Account.create_with_owner(account_params)
-      if @account.valid? && owner = @account.owners.first
+      if @account.created?
+        owner = @account.owners.first
         login(owner.email, owner_params[:password])
         @account.create_schema
         flash[:notice] = "Your account has been successfully created."
         redirect_to locker_room.root_url(:subdomain => @account.subdomain)
       else
+        @account.valid?
         flash[:alert] = "Your account could not be created."
         render :new
       end

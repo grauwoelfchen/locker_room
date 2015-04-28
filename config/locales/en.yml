@@ -1,0 +1,10 @@
+en:
+  activerecord:
+    models:
+      locker_room/account: 'Account'
+      locker_room/user: 'User'
+    attributes:
+      locker_room/account/owners:
+        email: 'Email'
+        password: 'Password'
+        password_confirmation: 'Password confirmation'
