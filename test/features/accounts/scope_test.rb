@@ -33,12 +33,4 @@ class AccountScopTest < Capybara::Rails::TestCase
     refute_content("Musical instrument")
     assert_content("The ice")
   end
-
-  private
-
-  def account_with_schema(account_name)
-    account = locker_room_accounts(account_name)
-    account.create_schema
-    account
-  end
 end
