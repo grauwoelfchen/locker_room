@@ -37,12 +37,17 @@ module LockerRoom
       self.transaction do
         account = new(options)
         if account.save
-          unless account.owners.first.update_attribute(:account, account)
+          owner = account.owners.first
+          unless owner && owner.update_attribute(:account, account)
             raise ActiveRecord::Rollback
           end
         end
         account
       end
+    end
+
+    def created?
+      persisted? && (owner = owners.first) && owner.persisted?
     end
 
     def create_schema

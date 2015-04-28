@@ -39,8 +39,8 @@ class ActiveSupport::TestCase
 
   def after_teardown
     Apartment::Tenant.reset
-    DatabaseCleaner.clean
     clean_all_schema
+    DatabaseCleaner.clean
     super
   end
 
@@ -51,9 +51,10 @@ class ActiveSupport::TestCase
     schemas = connection.query(%Q{
       SELECT 'DROP SCHEMA ' || nspname || ' CASCADE;'
       FROM pg_namespace
-      WHERE nspname != 'public'
-      AND nspname NOT LIKE 'pg_%'
-      AND nspname != 'information_schema';
+      WHERE
+        nspname != 'public' AND
+        nspname != 'information_schema' AND
+        nspname NOT LIKE 'pg_%';
     })
     schemas.each do |query|
       # DROP SCHEMA [NAME] CASCADE;
