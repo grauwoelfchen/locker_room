@@ -13,7 +13,7 @@ module LockerRoom
       raise ActiveRecord::RecordNotFound unless current_account
 
       @user = current_account.users.new(user_params)
-      @user.member.assign_attributes(:account => current_account)
+      @user.member.assign_attributes(:account_id => current_account.id)
       if @user.save && @user.member.valid?
         login(@user.email, user_params[:password])
         flash[:notice] = "You have signed up successfully."

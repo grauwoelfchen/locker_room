@@ -19,13 +19,9 @@ module LockerRoom
     end
 
     def destroy
-      unless current_user
-        redirect_to locker_room.login_url(:subdomain => current_subdomain)
-      else
-        logout
-        redirect_to locker_room.root_url(:subdomain => nil),
-          :notice => "Logged out."
-      end
+      logout
+      redirect_to locker_room.login_url(:subdomain => current_subdomain),
+        :notice => "Logged out."
     end
   end
 end
