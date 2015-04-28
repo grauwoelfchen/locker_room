@@ -4,10 +4,14 @@ class AccountScopTest < Capybara::Rails::TestCase
   locker_room_fixtures(:accounts, :members, :users)
 
   def setup
-    @account_piano   = locker_room_accounts(:playing_piano)
-    @account_penguin = locker_room_accounts(:penguin_patrol)
-    Talk.scoped_to(@account_piano).create(:theme => "Musical instrument")
-    Talk.scoped_to(@account_penguin).create(:theme => "The ice")
+    @account_piano   = account_with_schema(:playing_piano)
+    @account_penguin = account_with_schema(:penguin_patrol)
+
+    Apartment::Tenant.switch!(@account_piano.subdomain)
+    Talk.create(:theme => "Musical instrument")
+    Apartment::Tenant.switch!(@account_penguin.subdomain)
+    Talk.create(:theme => "The ice")
+    Apartment::Tenant.reset
   end
 
   def teardown
@@ -28,5 +32,13 @@ class AccountScopTest < Capybara::Rails::TestCase
     visit(main_app.talks_url(:subdomain => @account_penguin.subdomain))
     refute_content("Musical instrument")
     assert_content("The ice")
+  end
+
+  private
+
+  def account_with_schema(account_name)
+    account = locker_room_accounts(account_name)
+    account.create_schema
+    account
   end
 end

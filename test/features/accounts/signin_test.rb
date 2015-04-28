@@ -16,6 +16,7 @@ class AccountSigninTest < Capybara::Rails::TestCase
     visit(locker_room.login_url(:subdomain => nil))
     assert_equal("http://example.org/login", page.current_url)
     account = locker_room_accounts(:playing_piano)
+    account.create_schema
     fill_in("Subdomain", :with => account.subdomain)
     click_button("Continue")
     login_url = "http://#{account.subdomain}.example.org/login"

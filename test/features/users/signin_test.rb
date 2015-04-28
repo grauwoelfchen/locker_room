@@ -4,7 +4,7 @@ class UserSigninTest < Capybara::Rails::TestCase
   locker_room_fixtures(:accounts, :members, :users)
 
   def test_validation_at_signin_attempt_as_owner_with_invalid_email
-    account = locker_room_accounts(:playing_piano)
+    account = account_with_schema(:playing_piano)
     within_subdomain(account.subdomain) do
       visit(locker_room.login_url(:subdomain => nil))
       assert_equal(locker_room.login_url(:subdomain => nil), page.current_url)
@@ -23,7 +23,7 @@ class UserSigninTest < Capybara::Rails::TestCase
   end
 
   def test_validation_at_signin_attempt_as_owner_with_invalid_password
-    account = locker_room_accounts(:playing_piano)
+    account = account_with_schema(:playing_piano)
     within_subdomain(account.subdomain) do
       visit(locker_room.login_url(:subdomain => nil))
       assert_equal(locker_room.login_url(:subdomain => nil), page.current_url)
@@ -41,8 +41,8 @@ class UserSigninTest < Capybara::Rails::TestCase
   end
 
   def test_validation_at_signin_attempt_as_owner_with_other_subdomain
-    account       = locker_room_accounts(:penguin_patrol)
-    other_account = locker_room_accounts(:playing_piano)
+    account       = account_with_schema(:penguin_patrol)
+    other_account = account_with_schema(:playing_piano)
     within_subdomain(other_account.subdomain) do
       visit(locker_room.login_url(:subdomain => nil))
       assert_equal(locker_room.login_url(:subdomain => nil), page.current_url)
@@ -60,7 +60,7 @@ class UserSigninTest < Capybara::Rails::TestCase
   end
 
   def test_signin_as_owner
-    account = locker_room_accounts(:playing_piano)
+    account = account_with_schema(:playing_piano)
     within_subdomain(account.subdomain) do
       visit(locker_room.login_url(:subdomain => nil))
       assert_equal(locker_room.login_url(:subdomain => nil), page.current_url)
@@ -77,7 +77,7 @@ class UserSigninTest < Capybara::Rails::TestCase
   end
 
   def test_validation_at_signin_attempt_as_member_with_invalid_email
-    user = locker_room_users(:weenie)
+    user = user_with_schema(:weenie)
     within_subdomain(user.account.subdomain) do
       visit(locker_room.login_url(:subdomain => nil))
       assert_equal(locker_room.login_url(:subdomain => nil), page.current_url)
@@ -95,7 +95,7 @@ class UserSigninTest < Capybara::Rails::TestCase
   end
 
   def test_validation_at_signin_attempt_as_member_with_invalid_password
-    user = locker_room_users(:weenie)
+    user = user_with_schema(:weenie)
     within_subdomain(user.account.subdomain) do
       visit(locker_room.login_url(:subdomain => nil))
       assert_equal(locker_room.login_url(:subdomain => nil), page.current_url)
@@ -113,7 +113,7 @@ class UserSigninTest < Capybara::Rails::TestCase
   end
 
   def test_signin_as_member
-    user = locker_room_users(:weenie)
+    user = user_with_schema(:weenie)
     within_subdomain(user.account.subdomain) do
       visit(locker_room.login_url(:subdomain => nil))
       assert_equal(locker_room.login_url(:subdomain => nil), page.current_url)
@@ -127,5 +127,19 @@ class UserSigninTest < Capybara::Rails::TestCase
       assert_equal(locker_room.root_url, page.current_url)
       logout_user(locker_room.logout_url, :delete)
     end
+  end
+
+  private
+
+  def account_with_schema(account_name)
+    account = locker_room_accounts(account_name)
+    account.create_schema
+    account
+  end
+
+  def user_with_schema(user_name)
+    user = locker_room_users(user_name)
+    user.account.create_schema
+    user
   end
 end
