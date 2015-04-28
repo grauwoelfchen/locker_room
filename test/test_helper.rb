@@ -38,8 +38,27 @@ class ActiveSupport::TestCase
   end
 
   def after_teardown
+    Apartment::Tenant.reset
     DatabaseCleaner.clean
+    clean_all_schema
     super
+  end
+
+  private
+
+  def clean_all_schema
+    connection = ActiveRecord::Base.connection.raw_connection
+    schemas = connection.query(%Q{
+      SELECT 'DROP SCHEMA ' || nspname || ' CASCADE;'
+      FROM pg_namespace
+      WHERE nspname != 'public'
+      AND nspname NOT LIKE 'pg_%'
+      AND nspname != 'information_schema';
+    })
+    schemas.each do |query|
+      # DROP SCHEMA [NAME] CASCADE;
+      connection.query(query.values.first)
+    end
   end
 end
 

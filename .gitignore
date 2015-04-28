@@ -9,3 +9,5 @@ test/dummy/.sass-cache
 
 venv
 Gemfile.lock
+.env
+Procfile
