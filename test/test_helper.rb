@@ -30,7 +30,8 @@ class ActiveSupport::TestCase
   include LockerRoom::Testing::FixtureHelpers
 
   ActiveRecord::Migration.check_pending!
-  DatabaseCleaner.strategy = :truncation
+  DatabaseCleaner.clean_with(:truncation)
+  DatabaseCleaner.strategy = :transaction
 
   def before_setup
     super
@@ -44,21 +45,10 @@ class ActiveSupport::TestCase
     super
   end
 
-  private
-
   def clean_all_schema
-    connection = ActiveRecord::Base.connection.raw_connection
-    schemas = connection.query(%Q{
-      SELECT 'DROP SCHEMA ' || nspname || ' CASCADE;'
-      FROM pg_namespace
-      WHERE
-        nspname != 'public' AND
-        nspname != 'information_schema' AND
-        nspname NOT LIKE 'pg_%';
-    })
-    schemas.each do |query|
-      # DROP SCHEMA [NAME] CASCADE;
-      connection.query(query.values.first)
+    LockerRoom::Account.all.map do |account|
+      conn = ActiveRecord::Base.connection
+      conn.query(%Q{DROP SCHEMA IF EXISTS #{account.schema_name} CASCADE;})
     end
   end
 end
