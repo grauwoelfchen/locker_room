@@ -1,0 +1,103 @@
+digraph LockerRoom {
+  /**
+   * Style
+   *
+   */
+
+  graph [fontname = "DejaVuSansMono" fontsize = 9];
+  node  [fontname = "DejaVuSansMono" fontsize = 9];
+  edge  [fontname = "DejaVuSansMono" fontsize = 9];
+
+  /**
+   * Node
+   *
+   */
+
+  node [ // object
+    shape   = record
+    rankdir = LR
+  ]
+
+  Account [
+    label = "{locker_room_accounts|«LockerRoom::Account»\lhas_many: members\lhas_many: users\l\n|{ \
+      {FIELD|name\l|subdomain\l}| \
+      {TYPE|varchar\l|varchar\l}| \
+      {VALUE|\r|\r} \
+    }}"
+  ]
+
+  User [
+    label = "{locker_room_users|«LockerRoom::User»\lbelongs_to: account\lhas_one: member\l\n|{ \
+      {FIELD|account_id\l|email\l|crypted_password\l|salt\l|remember_me_token\l|remember_me_token_expires_at\l|reset_password_token\l|reset_password_token_expires_at\l|activation_state\l|activation_token\l|activation_token_expires_at\l}| \
+      {TYPE|integer\l|varchar\l|varchar\l|varchar\l|varchar\l|datetime\l|varchar\l|datetime\l|varchar\l|varchar\l|datetime\l}| \
+      {VALUE|\r|\r|\r|\r|\r|\r|\r|\r|\r|\r|\r} \
+    }}"
+  ]
+
+  Member [
+    label = "{locker_room_members|«LockerRoom::Member»\lbelongs_to: account\lbelongs_to: user\l\n|{ \
+      {FIELD|account_id\l|user_id\l|role\l|name\l|username\l}| \
+      {TYPE|integer\l|intger\l|integer\l|varchar\l|varchar\l}| \
+      {VALUE|\r|\r|0:owner,1:member,2:viewer\r|\r|\r} \
+    }}"
+  ]
+
+  edge [ // table
+    shape   = record
+    rankdir = LR
+  ]
+
+
+  /**
+   * Relation
+   *
+   */
+
+  edge [ // has_many
+    arrowhead = crow
+    arrowtail = none
+    headlabel = ""
+    taillabel = ""
+    dir       = both
+  ]
+
+  //Account -> Member
+  //Account -> User
+
+  edge [ // belongs_to
+    arrowhead = vee
+    arrowtail = none
+    headlabel = ""
+    taillabel = ""
+    dir       = both
+  ]
+
+  Member -> Account
+  Member -> User
+  User   -> Account
+
+  edge [ // has_one
+    arrowhead = normal
+    arrowtail = none
+    headlabel = ""
+    taillabel = ""
+    dir       = both
+  ]
+
+  edge [ // has_and_belongs_to_many
+    arrowhead = crow
+    arrowtail = vee
+    headlabel = ""
+    taillabel = ""
+    dir       = both
+  ]
+
+
+  /**
+   * Layout
+   *
+   */
+
+  {rank=same; Member;};
+  {rank=same; Account;User;};
+}

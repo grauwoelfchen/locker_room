@@ -21,10 +21,13 @@ DESCRIPTION
   s.test_files = Dir["test/**/*"]
 
   s.add_dependency "rails", "~> 4.2.1"
-  s.add_dependency "sorcery"
-  s.add_dependency "houser"
+  s.add_dependency "pg", "~> 0.18"
+  s.add_dependency "apartment", "~> 1.0"
+  s.add_dependency "enum_accessor", "~> 2.0"
+  s.add_dependency "sorcery","~> 0.9.1"
+  s.add_dependency "houser", "~> 2.0"
 
-  s.add_development_dependency "sqlite3"
+  s.add_development_dependency "foreman"
   s.add_development_dependency "minitest", "~> 5.5"
   s.add_development_dependency "minitest-rails-capybara"
   s.add_development_dependency "database_cleaner"

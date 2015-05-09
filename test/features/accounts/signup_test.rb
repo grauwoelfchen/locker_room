@@ -1,7 +1,7 @@
 require "test_helper"
 
 class AccountSignupTest < Capybara::Rails::TestCase
-  fixtures("locker_room/accounts", "locker_room/members", "locker_room/users")
+  locker_room_fixtures(:accounts, :members, :users)
 
   def test_subdomain_uniqueness_ensuring
     penguin = locker_room_accounts(:penguin_patrol)
@@ -14,8 +14,8 @@ class AccountSignupTest < Capybara::Rails::TestCase
     fill_in("Password",              :with => "ohmygosh", :exact => true)
     fill_in("Password confirmation", :with => "ohmygosh")
     click_button("Create Account")
-    assert_equal("http://example.org/accounts", page.current_url)
-    assert_content("Sorry, your account could not be created.")
+    assert_equal("http://example.org/signup", page.current_url)
+    assert_content("Your account could not be created.")
     assert_content("Subdomain has already been taken")
   end
 
@@ -28,9 +28,9 @@ class AccountSignupTest < Capybara::Rails::TestCase
     fill_in("Password",              :with => "bowwow", :exact => true)
     fill_in("Password confirmation", :with => "bowwow")
     click_button("Create Account")
-    assert_equal("http://example.org/accounts", page.current_url)
-    assert_content("Sorry, your account could not be created.")
-    assert_content("Subdomain is not allowed")
+    assert_equal("http://example.org/signup", page.current_url)
+    assert_content("Your account could not be created.")
+    assert_content("Subdomain admin is not allowed")
   end
 
   def test_subdomain_restriction_with_invalid_word
@@ -42,28 +42,28 @@ class AccountSignupTest < Capybara::Rails::TestCase
     fill_in("Password",              :with => "bowwow", :exact => true)
     fill_in("Password confirmation", :with => "bowwow")
     click_button("Create Account")
-    assert_equal("http://example.org/accounts", page.current_url)
-    assert_content("Sorry, your account could not be created.")
-    assert_content("Subdomain is not allowed")
+    assert_equal("http://example.org/signup", page.current_url)
+    assert_content("Your account could not be created.")
+    assert_content("Subdomain <test> is not allowed")
   end
 
-  def test_owner_validation_with_duplicated_email
+  def test_validation_with_duplicated_email
     # TODO
   end
 
-  def test_owner_validation_with_invalid_email
+  def test_validation_with_invalid_email
     # TODO
   end
 
-  def test_owner_validation_with_too_short_password
+  def test_validation_with_too_short_password
     # TODO
   end
 
-  def test_owner_validation_with_invalid_password
+  def test_validation_with_invalid_password
     # TODO
   end
 
-  def test_owner_validation_with_unmatch_password
+  def test_validation_with_unmatch_password
     # TODO
   end
 
@@ -79,5 +79,6 @@ class AccountSignupTest < Capybara::Rails::TestCase
     assert_equal("http://vanilla-dog-biscuits.example.org/", page.current_url)
     assert_content("Your account has been successfully created.")
     assert_content("Signed in as weenie@example.com")
+    logout_user
   end
 end

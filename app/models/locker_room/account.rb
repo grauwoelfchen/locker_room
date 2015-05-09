@@ -2,40 +2,60 @@ module LockerRoom
   class Account < ActiveRecord::Base
     EXCLUDED_SUBDOMAINS = %w(admin test www new)
 
-    belongs_to :owner, :class_name => "LockerRoom::User"
-    accepts_nested_attributes_for :owner
-
-    has_many :members, :class_name => "LockerRoom::Member"
-    has_many :users, :through => :members
+    has_many :users,   class_name: "LockerRoom::User"
+    has_many :members, class_name: "LockerRoom::Member"
+    has_many :ownerships,
+      -> { where(:role => LockerRoom::Member.roles[:owner]) },
+      class_name: "LockerRoom::Member"
+    has_many :owners,
+      through: :ownerships,
+      source:  :user
+    accepts_nested_attributes_for :owners
 
     validates :name,
-      :presence => true
+      presence: true
     validates :name,
-      :length => {:maximum => 32}
-
+      length: {maximum: 32}
     validates :subdomain,
-      :presence => true, :uniqueness => true
+      presence: true, uniqueness: true
     validates :subdomain,
-      :length => {:maximum => 64}
+      length: {maximum: 64}
     validates :subdomain,
-      :length => {:minimum => 3},
-      :if     => ->(a) { a.subdomain.present? }
+      length: {minimum: 3},
+      if:     ->(a) { a.subdomain.present? }
     validates :subdomain,
-      :exclusion => {in: EXCLUDED_SUBDOMAINS, :message => "is not allowed"}
+      exclusion: {in: EXCLUDED_SUBDOMAINS, message: "%{value} is not allowed"}
     validates :subdomain,
-      :format => {with: /\A[\w\-]+\Z/i, :message => "is not allowed"},
-      :if     => ->(a) { a.subdomain.present? }
+      format: {with: /\A[\w\-]+\Z/i, message: "%{value} is not allowed"},
+      if:     ->(a) { a.subdomain.present? }
 
     before_validation do
       self.subdomain = subdomain.to_s.downcase
     end
 
-    def save_with_owner(options={})
-      result = save(options)
-      if result
-        self.users << self.owner
+    def self.create_with_owner(options={})
+      self.transaction do
+        account = new(options)
+        if account.save
+          owner = account.owners.first
+          unless owner && owner.update_attribute(:account, account)
+            raise ActiveRecord::Rollback
+          end
+        end
+        account
       end
-      result
+    end
+
+    def created?
+      persisted? && (owner = owners.first) && owner.persisted?
+    end
+
+    def create_schema
+      Apartment::Tenant.create(schema_name)
+    end
+
+    def schema_name
+      subdomain.gsub(/\-/, "_")
     end
   end
 end

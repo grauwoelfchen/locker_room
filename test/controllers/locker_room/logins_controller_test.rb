@@ -1,7 +1,7 @@
 require 'test_helper'
 
 module LockerRoom
-  class DashboardControllerTest < ActionController::TestCase
+  class LoginsControllerTest < ActionController::TestCase
     # test "the truth" do
     #   assert true
     # end

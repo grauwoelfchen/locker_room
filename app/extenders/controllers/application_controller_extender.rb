@@ -10,15 +10,15 @@
     end
     helper_method :current_account
 
-    def login_with_subdomain(*args)
+    def login_with_subdomain(*credentials)
       return nil unless current_subdomain
-      return nil unless email = args[0]
+      return nil unless email = credentials[0]
       return nil unless account = current_account
       return nil unless account.users.find_by(:email => email)
-      login(*args)
+      login(*credentials)
     end
 
     def not_authenticated
-      redirect_to login_url, :alert => "Please signin."
+      redirect_to locker_room.login_url, :alert => "Please signin."
     end
 end

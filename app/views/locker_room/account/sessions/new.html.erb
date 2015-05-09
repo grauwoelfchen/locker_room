@@ -1,6 +1,6 @@
 <h2>Signin</h2>
 
-<%= form_tag login_path, method: :post do %>
+<%= form_tag login_path, method: :post, html: {novalidate: "novalidate"} do %>
 <p>
 <%= label_tag :email %><br>
 <%= email_field_tag :email %>
@@ -14,4 +14,4 @@
 </p>
 <% end %>
 
-<%= link_to "New User?", user_signup_path %>
+<%= link_to "New User?", signup_path %>
