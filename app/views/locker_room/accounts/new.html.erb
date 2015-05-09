@@ -1,18 +1,18 @@
 <h2>Signup</h2>
-<%= form_for(@account) do |f| %>
+<%= form_for @account, url:  signup_path, method: :post, html: {novalidate: "novalidate"} do |account_form| %>
 <% if @account.errors.any? %>
 <%= render "locker_room/shared/errors", resource: @account %>
 <% end %>
 <p>
-  <%= f.label :name %><br>
-  <%= f.text_field :name %>
+  <%= account_form.label :name %><br>
+  <%= account_form.text_field :name %>
 </p>
 <p>
-  <%= f.label :subdomain %><br>
-  <%= f.text_field :subdomain %>
+  <%= account_form.label :subdomain %><br>
+  <%= account_form.text_field :subdomain %>
 </p>
-<%= f.fields_for :owner do |owner| %>
-<%= render "locker_room/account/users/form", user: owner %>
+<%= account_form.fields_for :owners do |owners_fields| %>
+<%= render "locker_room/account/users/form", user_form: owners_fields %>
 <% end %>
-<%= f.submit %>
+<%= account_form.submit %>
 <% end %>

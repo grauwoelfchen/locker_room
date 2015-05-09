@@ -1,0 +1,122 @@
+= LockerRoom
+
+{<img src="https://travis-ci.org/grauwoelfchen/locker_room.svg?branch=master" alt="Build Status" />}[http://travis-ci.org/grauwoelfchen/locker_room]
+
+Home :: https://github.com/grauwoelfchen/locker_room
+Bugs :: https://github.com/grauwoelfchen/locker_room/issues
+
+== Description
+
+LockerRoom is a mountable rails engine which
+provides account objects (account, user) for team using PostgreSQL's schema.
+
+
+== Install
+
+=== setup
+
+TODO ;)
+
+=== migration
+
+  % rake railties:install:migrations
+  % rake db:migrate
+
+
+== Usage
+
+=== routes
+
+  # config/routes.rb
+  Rails.application.routes.draw do
+    mount LockerRoom::Engine => "/"
+  end
+
+  % rake routes
+  Routes for LockerRoom::Engine:
+  logout GET    /logout(.:format) locker_room/account/sessions#destroy
+         DELETE /logout(.:format) locker_room/account/sessions#destroy
+   login GET    /login(.:format)  locker_room/account/sessions#new
+         POST   /login(.:format)  locker_room/account/sessions#create
+  signup GET    /signup(.:format) locker_room/account/users#new
+         POST   /signup(.:format) locker_room/account/users#create
+    root GET    /                 locker_room/account/locker#index
+         GET    /login(.:format)  locker_room/login#new
+         POST   /login(.:format)  locker_room/login#create
+         GET    /signup(.:format) locker_room/accounts#new
+         POST   /signup(.:format) locker_room/accounts#create
+         GET    /                 locker_room/entrance#index
+
+
+== Test
+
+Testing modules provide +within_subdomain+ with
++login_user+ and +logout_user+ (from sorcery, but its support subdomain) for controller and integration.
+
+  # test/test_helper.rb
+
+  require "locker_room/testing/helpers"
+
+  class ActiveSupport::Testcase
+    include LockerRoom::Testing::FixtureHelpers
+  end
+
+  class ActionController::TestCase
+    include LockerRoom::Testing::Controller::SubdomainHelpers
+    include LockerRoom::Testing::Controller::AuthenticationHelpers
+  end
+
+  class Capybara::Rails::TestCase
+    include LockerRoom::Testing::Integration::SubdomainHelpers
+    include LockerRoom::Testing::Integration::AuthenticationHelpers
+  end
+
+Then set `Capybara.app_host` and default_url_options[:host], if you want.
+
+  # test/test_helper.rb
+  Capybara.configure do |config|
+    config.app_host = "http://example.org"
+  end
+
+  class Capybara::Rails::TestCase
+    ...
+
+    def before_setup
+      @default_host = locker_room.scope.default_url_options[:host]
+      locker_room.scope.default_url_options[:host] = Capybara.app_host
+      super
+    end
+
+    def after_teardown
+      super
+      locker_room.scope.default_url_options[:host] = @default_host
+    end
+  end
+
+
+== ER diagram
+
+{<img src="https://raw.githubusercontent.com/grauwoelfchen/locker_room/master/doc/er.png" alt="ER diagram" />}[https://github.com/grauwoelfchen/locker_room/blob/master/doc/er.png]
+
+
+== Changelog
+
+TODO :)
+
+
+== Development
+
+  % # setup
+  % cp .env.sample .env
+  % cp Procfile.sample Procfile
+
+  % # test
+  % bundle exec foreman run test #=> run `rake test` with environ vars
+  % bundle exec foreman run ruby -I.:test test/models/locker_room/account_test.rb -n /xxx/
+
+
+== License
+
+MIT
+
+See LICENSE[https://github.com/grauwoelfchen/locker_room/blob/master/LICENSE]
