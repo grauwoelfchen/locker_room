@@ -4,53 +4,51 @@ module LockerRoom
   class AccountTest < ActiveSupport::TestCase
     locker_room_fixtures(:accounts, :members, :users)
 
-    def test_validation_with_without_name
+    def test_validation_without_name
       account = LockerRoom::Account.new(:name => nil)
       refute(account.valid?)
       message = "can't be blank"
       assert_equal([message], account.errors[:name])
     end
 
-    def test_validation_with_with_too_long_name
+    def test_validation_with_too_long_name
       account = LockerRoom::Account.new(:name => "long" * 9)
       refute(account.valid?)
       message = "is too long (maximum is 32 characters)"
       assert_equal([message], account.errors[:name])
     end
 
-    def test_validation_with_without_subdomain
+    def test_validation_without_subdomain
       account = LockerRoom::Account.new(:subdomain => nil)
       refute(account.valid?)
       message = "can't be blank"
       assert_equal([message], account.errors[:subdomain])
     end
 
-    def test_validation_with_with_duplicated_subdomain
-      penguin = locker_room_accounts(:penguin_patrol)
-
-      account = LockerRoom::Account.new(:subdomain => penguin.subdomain)
+    def test_validation_with_duplicated_subdomain
+      other_account = locker_room_accounts(:penguin_patrol)
+      account = LockerRoom::Account.new(:subdomain => other_account.subdomain)
       refute(account.valid?)
       message = "has already been taken"
       assert_equal([message], account.errors[:subdomain])
     end
 
-    def test_validation_with_with_too_short_subdomain
+    def test_validation_with_too_short_subdomain
       account = LockerRoom::Account.new(:subdomain => 'sh')
       refute(account.valid?)
       message = "is too short (minimum is 3 characters)"
       assert_equal([message], account.errors[:subdomain])
     end
 
-    def test_validation_with_with_too_long_subdomain
+    def test_validation_with_too_long_subdomain
       account = LockerRoom::Account.new(:subdomain => 'long' * 17)
       refute(account.valid?)
       message = "is too long (maximum is 64 characters)"
       assert_equal([message], account.errors[:subdomain])
     end
 
-    def test_validation_with_with_restricted_subdomain
+    def test_validation_with_restricted_subdomain
       exclude_subdomains = %w[admin test www new]
-
       exclude_subdomains.map do |subdomain|
         account = LockerRoom::Account.new(:subdomain => subdomain)
         refute(account.valid?)
@@ -60,7 +58,7 @@ module LockerRoom
       end
     end
 
-    def test_validation_with_with_invalid_subdomain
+    def test_validation_with_invalid_subdomain
       account = LockerRoom::Account.new(:subdomain => '[foo]')
       refute(account.valid?)
       message = "[foo] is not allowed"
@@ -83,7 +81,7 @@ module LockerRoom
     end
 
     def test_creation_with_an_owner
-      attrs = {
+      attributes = {
         :name             => "Unicycle",
         :subdomain        => "unicycle",
         :owners_attributes => {
@@ -94,7 +92,7 @@ module LockerRoom
           }
         }
       }
-      account = LockerRoom::Account.create_with_owner(attrs)
+      account = LockerRoom::Account.create_with_owner(attributes)
       assert(account.valid?)
       assert(account.persisted?)
       owner = account.owners.where(:email => "daisy@example.org").take!
