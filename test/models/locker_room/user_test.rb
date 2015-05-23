@@ -4,7 +4,7 @@ module LockerRoom
   class UserTest < ActiveSupport::TestCase
     locker_room_fixtures(:accounts, :members, :users)
 
-    def test_validation_with_without_email
+    def test_validation_without_email
       attributes = {
         :email => nil
       }
@@ -36,7 +36,7 @@ module LockerRoom
       assert_equal([message], user.errors[:email])
     end
 
-    def test_validation_with_with_too_long_email
+    def test_validation_with_too_long_email
       attributes = {
         :email => "long" * 30 + "@example.org"
       }
