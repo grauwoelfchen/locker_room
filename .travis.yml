@@ -13,7 +13,15 @@ scripts:
   - RAILS_ENV=test bundle exec rake test
 notifications:
   email:
-    recipients:
-      - grauwoelfchen@gmail.com
     on_success: change
     on_failure: always
+    recipients:
+      - grauwoelfchen@gmail.com
+  webhooks:
+    on_success: change
+    on_failure: always
+    urls:
+      - secure: CmLUsWVJMXSiYynScQBlpSjXOfMQif0hlfZFmgld8+5vs1nbP6RPi39vDsVzxD21REDN1FIL48AEaYP1HeRFnHmf+qQKebcRhsKoxphhSv71rhFspsxWTlI3FTFdtywx2UICq7fHOAcbzx4q2OiUyays3cTLsVojBCZiPAqpScw=
+env:
+  global:
+  - TRAVIS_SECURE_ENV_VARS=true
