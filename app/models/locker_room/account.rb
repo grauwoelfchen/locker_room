@@ -15,19 +15,20 @@ module LockerRoom
     validates :name,
       presence: true
     validates :name,
-      length: {maximum: 32}
+      length:      {maximum: 32},
+      allow_blank: true
     validates :subdomain,
-      presence: true, uniqueness: true
+      presence: true
     validates :subdomain,
-      length: {maximum: 64}
+      length:      {minimum: 3, maximum: 64},
+      uniqueness:  true,
+      allow_blank: true
     validates :subdomain,
-      length: {minimum: 3},
-      if:     ->(a) { a.subdomain.present? }
-    validates :subdomain,
-      exclusion: {in: EXCLUDED_SUBDOMAINS, message: "%{value} is not allowed"}
-    validates :subdomain,
-      format: {with: /\A[\w\-]+\Z/i, message: "%{value} is not allowed"},
-      if:     ->(a) { a.subdomain.present? }
+      exclusion:   {in: EXCLUDED_SUBDOMAINS,
+                     message: "%{value} is not allowed"},
+      format:      {with: /\A[\w\-]+\Z/i,
+                    message: "%{value} is not allowed"},
+      allow_blank: true
 
     before_validation do
       self.subdomain = subdomain.to_s.downcase
