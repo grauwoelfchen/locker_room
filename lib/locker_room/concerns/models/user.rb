@@ -16,27 +16,23 @@ module User
     validates :email,
       presence: true
     validates :email,
-      uniqueness: {scope: [:account_id]},
-      if:         ->(u) { u.email.present? }
+      uniqueness:  {scope: [:account_id]},
+      format:      {with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i},
+      allow_blank: true
     validates :email,
-      format: {with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i},
-      if:     ->(u) { u.email.present? }
-    validates :email,
-      length: {maximum: 128},
-      if:     ->(u) { u.email.present? && u.errors[:email].empty? }
-
+      length:      {maximum: 128},
+      allow_blank: true,
+      if:          ->(u) { u.errors[:email].empty? }
     validates :password,
       presence: true,
       unless:   ->(u) { u.skip_password }
     validates :password,
-      length: {minimum: 6},
-      if:     ->(u) { u.password.present? }
-    validates :password,
+      length:       {minimum: 6},
       confirmation: true,
-      if:           ->(u) { u.password.present? }
+      allow_blank:  true
     validates :password_confirmation,
       presence: true,
-      if:       ->(u) { u.password.present? }
+      if:       "password.present?"
 
     attr_accessor :skip_password
   end
