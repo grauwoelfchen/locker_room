@@ -28,17 +28,17 @@ digraph LockerRoom {
 
   User [
     label = "{locker_room_users|«LockerRoom::User»\lbelongs_to: account\lhas_one: member\l\n|{ \
-      {FIELD|account_id\l|email\l|crypted_password\l|salt\l|remember_me_token\l|remember_me_token_expires_at\l|reset_password_token\l|reset_password_token_expires_at\l|activation_state\l|activation_token\l|activation_token_expires_at\l}| \
-      {TYPE|integer\l|varchar\l|varchar\l|varchar\l|varchar\l|datetime\l|varchar\l|datetime\l|varchar\l|varchar\l|datetime\l}| \
-      {VALUE|\r|\r|\r|\r|\r|\r|\r|\r|\r|\r|\r} \
+      {FIELD|account_id\l|username\l|email\l|crypted_password\l|salt\l|remember_me_token\l|remember_me_token_expires_at\l|reset_password_token\l|reset_password_token_expires_at\l|activation_state\l|activation_token\l|activation_token_expires_at\l}| \
+      {TYPE|integer\l|varchar\l|varchar\l|varchar\l|varchar\l|varchar\l|datetime\l|varchar\l|datetime\l|varchar\l|varchar\l|datetime\l}| \
+      {VALUE|\r|\r|\r|\r|\r|\r|\r|\r|\r|\r|\r|\r} \
     }}"
   ]
 
   Member [
     label = "{locker_room_members|«LockerRoom::Member»\lbelongs_to: account\lbelongs_to: user\l\n|{ \
-      {FIELD|account_id\l|user_id\l|role\l|name\l|username\l}| \
-      {TYPE|integer\l|intger\l|integer\l|varchar\l|varchar\l}| \
-      {VALUE|\r|\r|0:owner,1:member,2:viewer\r|\r|\r} \
+      {FIELD|account_id\l|user_id\l|role\l|name\l}| \
+      {TYPE|integer\l|intger\l|integer\l|varchar\l}| \
+      {VALUE|\r|\r|0:owner,1:member,2:viewer\r|\r} \
     }}"
   ]
 

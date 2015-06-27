@@ -13,6 +13,11 @@ module User
     has_one :member, class_name: "LockerRoom::Member"
     accepts_nested_attributes_for :member
 
+    validates :username,
+      presence: true
+    validates :username,
+      length:      {minimum: 3, maximum: 16},
+      allow_blank: true
     validates :email,
       presence: true
     validates :email,

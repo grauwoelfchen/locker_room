@@ -2,6 +2,7 @@ class CreateLockerRoomUsers < ActiveRecord::Migration
   def change
     create_table :locker_room_users do |t|
       t.integer :account_id
+      t.string  :username
       t.string  :email, null: false
       t.string  :crypted_password
       t.string  :salt
@@ -9,6 +10,7 @@ class CreateLockerRoomUsers < ActiveRecord::Migration
       t.timestamps null: false
     end
 
-    add_index :locker_room_users, [:account_id, :email], unique: true
+    add_index :locker_room_users, [:account_id, :email],    unique: true
+    add_index :locker_room_users, [:account_id, :username], unique: true
   end
 end

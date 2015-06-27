@@ -3,22 +3,18 @@ playing_piano_member_1:
   user: oswald
   role: <%= LockerRoom::Member.roles[:owner] %>
   name: 'Oswald'
-  username: 'oswald'
 playing_piano_member_2:
   account: playing_piano
   user: weenie
   role: <%= LockerRoom::Member.roles[:member] %>
   name: 'Weenie'
-  username: 'weenie'
 penguin_patrol_member_1:
   account: penguin_patrol
   user: henry
   role: <%= LockerRoom::Member.roles[:owner] %>
   name: 'Henry the Penguin'
-  username: 'henry'
 ice_cream_shop_member_1:
   account: ice_cream_shop
   user: johnny
   role: <%= LockerRoom::Member.roles[:owner] %>
   name: 'Johnny Snowman'
-  username: 'johnny'
