@@ -30,7 +30,6 @@ ActiveRecord::Schema.define(version: 20150420180450) do
     t.integer  "user_id"
     t.integer  "role",       limit: 2, default: 1
     t.string   "name"
-    t.string   "username"
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
   end
@@ -40,6 +39,7 @@ ActiveRecord::Schema.define(version: 20150420180450) do
 
   create_table "locker_room_users", force: :cascade do |t|
     t.integer  "account_id"
+    t.string   "username"
     t.string   "email",            null: false
     t.string   "crypted_password"
     t.string   "salt"
@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(version: 20150420180450) do
   end
 
   add_index "locker_room_users", ["account_id", "email"], name: "index_locker_room_users_on_account_id_and_email", unique: true, using: :btree
+  add_index "locker_room_users", ["account_id", "username"], name: "index_locker_room_users_on_account_id_and_username", unique: true, using: :btree
 
   create_table "talks", force: :cascade do |t|
     t.string   "theme"
