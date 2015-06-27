@@ -72,6 +72,7 @@ class AccountSignupTest < Capybara::Rails::TestCase
     click_link("Account Signup")
     fill_in("Name",                  :with => "Vanilla dog biscuits")
     fill_in("Subdomain",             :with => "vanilla-dog-biscuits")
+    fill_in("Username",              :with => "weenie")
     fill_in("Email",                 :with => "weenie@example.com")
     fill_in("Password",              :with => "bowwow", :exact => true)
     fill_in("Password confirmation", :with => "bowwow")

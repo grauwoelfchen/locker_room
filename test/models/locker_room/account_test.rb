@@ -86,6 +86,7 @@ module LockerRoom
         :subdomain        => "unicycle",
         :owners_attributes => {
           :"0" => {
+            :username              => "daisy",
             :email                 => "daisy@example.org",
             :password              => "hellyhollyhally",
             :password_confirmation => "hellyhollyhally"
