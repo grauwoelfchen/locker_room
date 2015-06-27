@@ -30,7 +30,7 @@ module LockerRoom
       params.require(:account).permit(
         :name, :subdomain, {
           :owners_attributes => [
-            :email, :password, :password_confirmation
+            :username, :email, :password, :password_confirmation
           ]
         }
       )

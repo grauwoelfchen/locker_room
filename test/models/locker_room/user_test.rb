@@ -4,6 +4,36 @@ module LockerRoom
   class UserTest < ActiveSupport::TestCase
     locker_room_fixtures(:accounts, :members, :users)
 
+    def test_validation_without_username
+      attributes = {
+        :username => nil
+      }
+      user = LockerRoom::User.new(attributes)
+      refute(user.valid?)
+      message = "can't be blank"
+      assert_equal([message], user.errors[:username])
+    end
+
+    def test_validation_with_too_short_username
+      attributes = {
+        :username => "sh"
+      }
+      user = LockerRoom::User.new(attributes)
+      refute(user.valid?)
+      message = "is too short (minimum is 3 characters)"
+      assert_equal([message], user.errors[:username])
+    end
+
+    def test_validation_with_too_long_username
+      attributes = {
+        :username => "yes" * 6
+      }
+      user = LockerRoom::User.new(attributes)
+      refute(user.valid?)
+      message = "is too long (maximum is 16 characters)"
+      assert_equal([message], user.errors[:username])
+    end
+
     def test_validation_without_email
       attributes = {
         :email => nil
@@ -92,6 +122,7 @@ module LockerRoom
       account = account_with_schema(:playing_piano)
       attributes = {
         :account_id            => account.id,
+        :username              => "daisy",
         :email                 => "daisy@example.org",
         :password              => "hellyhollyhally",
         :password_confirmation => "hellyhollyhally"
@@ -107,6 +138,7 @@ module LockerRoom
       account = account_with_schema(:playing_piano)
       attributes = {
         :account_id            => account.id,
+        :username              => "daisy",
         :email                 => "daisy@example.org",
         :password              => "hellyhollyhally",
         :password_confirmation => "hellyhollyhally"
