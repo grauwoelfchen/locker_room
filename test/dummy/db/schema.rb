@@ -16,17 +16,8 @@ ActiveRecord::Schema.define(version: 20150420180450) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "locker_room_accounts", force: :cascade do |t|
-    t.string   "name"
-    t.string   "subdomain"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_index "locker_room_accounts", ["subdomain"], name: "index_locker_room_accounts_on_subdomain", using: :btree
-
-  create_table "locker_room_members", force: :cascade do |t|
-    t.integer  "account_id"
+  create_table "locker_room_memberships", force: :cascade do |t|
+    t.integer  "team_id"
     t.integer  "user_id"
     t.integer  "role",       limit: 2, default: 1
     t.string   "name"
@@ -34,11 +25,20 @@ ActiveRecord::Schema.define(version: 20150420180450) do
     t.datetime "updated_at",                       null: false
   end
 
-  add_index "locker_room_members", ["account_id"], name: "index_locker_room_members_on_account_id", using: :btree
-  add_index "locker_room_members", ["user_id"], name: "index_locker_room_members_on_user_id", using: :btree
+  add_index "locker_room_memberships", ["team_id"], name: "index_locker_room_memberships_on_team_id", using: :btree
+  add_index "locker_room_memberships", ["user_id"], name: "index_locker_room_memberships_on_user_id", using: :btree
+
+  create_table "locker_room_teams", force: :cascade do |t|
+    t.string   "name"
+    t.string   "subdomain"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "locker_room_teams", ["subdomain"], name: "index_locker_room_teams_on_subdomain", using: :btree
 
   create_table "locker_room_users", force: :cascade do |t|
-    t.integer  "account_id"
+    t.integer  "team_id"
     t.string   "username"
     t.string   "email",            null: false
     t.string   "crypted_password"
@@ -47,8 +47,8 @@ ActiveRecord::Schema.define(version: 20150420180450) do
     t.datetime "updated_at",       null: false
   end
 
-  add_index "locker_room_users", ["account_id", "email"], name: "index_locker_room_users_on_account_id_and_email", unique: true, using: :btree
-  add_index "locker_room_users", ["account_id", "username"], name: "index_locker_room_users_on_account_id_and_username", unique: true, using: :btree
+  add_index "locker_room_users", ["team_id", "email"], name: "index_locker_room_users_on_team_id_and_email", unique: true, using: :btree
+  add_index "locker_room_users", ["team_id", "username"], name: "index_locker_room_users_on_team_id_and_username", unique: true, using: :btree
 
   create_table "talks", force: :cascade do |t|
     t.string   "theme"
