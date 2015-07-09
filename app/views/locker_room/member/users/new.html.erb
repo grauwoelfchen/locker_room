@@ -1,0 +1,12 @@
+<h2>Signup</h2>
+
+<%= form_for @user, url: registration_path, method: :post, html: {novalidate: "novalidate"} do |f| %>
+<% if @user.errors.any? %>
+<%= render "locker_room/shared/errors", resource: @user %>
+<% end %>
+<%= f.fields_for :membership do |membership_fields| %>
+<%= render "locker_room/memberships/form", f: membership_fields %>
+<% end %>
+<%= render "form", f: f %>
+<%= f.submit "Signup" %>
+<% end %>

@@ -18,8 +18,8 @@ digraph LockerRoom {
     rankdir = LR
   ]
 
-  Account [
-    label = "{locker_room_accounts|«LockerRoom::Account»\lhas_many: members\lhas_many: users\l\n|{ \
+  Team [
+    label = "{locker_room_teams|\«LockerRoom::Team\»\lhas_many: memberships\lhas_many: users\l\n|{ \
       {FIELD|name\l|subdomain\l}| \
       {TYPE|varchar\l|varchar\l}| \
       {VALUE|\r|\r} \
@@ -27,18 +27,18 @@ digraph LockerRoom {
   ]
 
   User [
-    label = "{locker_room_users|«LockerRoom::User»\lbelongs_to: account\lhas_one: member\l\n|{ \
-      {FIELD|account_id\l|username\l|email\l|crypted_password\l|salt\l|remember_me_token\l|remember_me_token_expires_at\l|reset_password_token\l|reset_password_token_expires_at\l|activation_state\l|activation_token\l|activation_token_expires_at\l}| \
+    label = "{locker_room_users|\«LockerRoom::User\»\lbelongs_to: team\lhas_one: membership\l\n|{ \
+      {FIELD|team_id\l|username\l|email\l|crypted_password\l|salt\l|remember_me_token\l|remember_me_token_expires_at\l|reset_password_token\l|reset_password_token_expires_at\l|activation_state\l|activation_token\l|activation_token_expires_at\l}| \
       {TYPE|integer\l|varchar\l|varchar\l|varchar\l|varchar\l|varchar\l|datetime\l|varchar\l|datetime\l|varchar\l|varchar\l|datetime\l}| \
       {VALUE|\r|\r|\r|\r|\r|\r|\r|\r|\r|\r|\r|\r} \
     }}"
   ]
 
-  Member [
-    label = "{locker_room_members|«LockerRoom::Member»\lbelongs_to: account\lbelongs_to: user\l\n|{ \
-      {FIELD|account_id\l|user_id\l|role\l|name\l}| \
+  Membership [
+    label = "{locker_room_memberships|\«LockerRoom::Membership\»\lbelongs_to: team\lbelongs_to: user\l\n|{ \
+      {FIELD|team_id\l|user_id\l|role\l|name\l}| \
       {TYPE|integer\l|intger\l|integer\l|varchar\l}| \
-      {VALUE|\r|\r|0:owner,1:member,2:viewer\r|\r} \
+      {VALUE|\r|\r|0:owner,1:member\r|\r} \
     }}"
   ]
 
@@ -61,8 +61,8 @@ digraph LockerRoom {
     dir       = both
   ]
 
-  //Account -> Member
-  //Account -> User
+  //Team -> Membership
+  //Team -> User
 
   edge [ // belongs_to
     arrowhead = vee
@@ -72,9 +72,9 @@ digraph LockerRoom {
     dir       = both
   ]
 
-  Member -> Account
-  Member -> User
-  User   -> Account
+  Membership -> Team
+  Membership -> User
+  User       -> Team
 
   edge [ // has_one
     arrowhead = normal
@@ -98,6 +98,6 @@ digraph LockerRoom {
    *
    */
 
-  {rank=same; Member;};
-  {rank=same; Account;User;};
+  {rank=same; Membership;};
+  {rank=same; Team;User;};
 }

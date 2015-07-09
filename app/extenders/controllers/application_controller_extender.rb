@@ -5,16 +5,16 @@
     end
     helper_method :current_subdomain
 
-    def current_account
-      @current_account ||= env["Houser-Object"]
+    def current_team
+      @current_team ||= env["Houser-Object"]
     end
-    helper_method :current_account
+    helper_method :current_team
 
     def login_with_subdomain(*credentials)
       return nil unless current_subdomain
       return nil unless email = credentials[0]
-      return nil unless account = current_account
-      return nil unless account.users.find_by(:email => email)
+      return nil unless team = current_team
+      return nil unless team.users.find_by(:email => email)
       login(*credentials)
     end
 
