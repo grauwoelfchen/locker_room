@@ -6,7 +6,10 @@ module LockerRoom
     module Controller
 module SubdomainHelpers
   def within_subdomain(subdomain)
-    subdomain_host = "#{subdomain}.example.org"
+    uri = URI.parse(@request.url)
+    host = uri.host.split(".").last(2).join(".")
+    subdomain_host = "#{subdomain}.#{host}"
+
     # request
     request_host = @request.host
     @request.host = subdomain_host
