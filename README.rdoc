@@ -34,18 +34,18 @@ TODO ;)
 
   % rake routes
   Routes for LockerRoom::Engine:
-      logout GET    /signout(.:format) locker_room/member/sessions#destroy
-             DELETE /signout(.:format) locker_room/member/sessions#destroy
-       login GET    /signin(.:format)  locker_room/member/sessions#new
-             POST   /signin(.:format)  locker_room/member/sessions#create
-registration GET    /signup(.:format)  locker_room/member/users#new
-             POST   /signup(.:format)  locker_room/member/users#create
-        root GET    /                  locker_room/member/storages#show
-             GET    /signin(.:format)  locker_room/sessions#new
-             POST   /signin(.:format)  locker_room/sessions#create
-             GET    /signup(.:format)  locker_room/teams#new
-             POST   /signup(.:format)  locker_room/teams#create
-             GET    /                  locker_room/entrance#index
+        logout GET    /signout(.:format) locker_room/member/sessions#destroy
+               DELETE /signout(.:format) locker_room/member/sessions#destroy
+         login GET    /signin(.:format)  locker_room/member/sessions#new
+               POST   /signin(.:format)  locker_room/member/sessions#create
+  registration GET    /signup(.:format)  locker_room/member/users#new
+               POST   /signup(.:format)  locker_room/member/users#create
+          root GET    /                  locker_room/member/storages#show
+               GET    /signin(.:format)  locker_room/sessions#new
+               POST   /signin(.:format)  locker_room/sessions#create
+               GET    /signup(.:format)  locker_room/teams#new
+               POST   /signup(.:format)  locker_room/teams#create
+               GET    /                  locker_room/entrance#index
 
 
 == Test
