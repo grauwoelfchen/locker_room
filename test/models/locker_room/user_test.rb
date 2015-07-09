@@ -2,7 +2,7 @@ require 'test_helper'
 
 module LockerRoom
   class UserTest < ActiveSupport::TestCase
-    locker_room_fixtures(:accounts, :members, :users)
+    locker_room_fixtures(:teams, :users, :memberships)
 
     def test_validation_without_username
       attributes = {
@@ -48,7 +48,7 @@ module LockerRoom
       user = user_with_schema(:oswald)
       attributes = {
         :email   => user.email,
-        :account => user.account
+        :team => user.team
       }
       user = LockerRoom::User.new(attributes)
       refute(user.valid?)
@@ -119,9 +119,9 @@ module LockerRoom
     end
 
     def test_creation
-      account = account_with_schema(:playing_piano)
+      team = team_with_schema(:playing_piano)
       attributes = {
-        :account_id            => account.id,
+        :team_id               => team.id,
         :username              => "daisy",
         :email                 => "daisy@example.org",
         :password              => "hellyhollyhally",
@@ -131,24 +131,24 @@ module LockerRoom
       assert(user.valid?)
       assert(user.save)
       assert(user.persisted?)
-      assert_equal(account, user.account)
+      assert_equal(team, user.team)
     end
 
-    def test_creation_with_member
-      account = account_with_schema(:playing_piano)
+    def test_creation_with_membership
+      team = team_with_schema(:playing_piano)
       attributes = {
-        :account_id            => account.id,
+        :team_id               => team.id,
         :username              => "daisy",
         :email                 => "daisy@example.org",
         :password              => "hellyhollyhally",
         :password_confirmation => "hellyhollyhally"
       }
-      user = account.users.create_with_member(attributes)
-      assert(user.member.persisted?)
+      user = team.users.create_with_membership(attributes)
+      assert(user.membership.persisted?)
       assert(user.persisted?)
       assert(user.created?)
-      member = account.members.where(:email => "daisy@example.org")
-      assert_includes(account.members.pluck(:user_id), user.id)
+      team.memberships.reload
+      assert_includes(team.memberships.pluck(:user_id), user.id)
     end
   end
 end

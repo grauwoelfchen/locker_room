@@ -28,7 +28,7 @@ module LockerRoom
 
     initializer "locker_room.middleware.houser" do
       Rails.application.config.middleware.use Houser::Middleware,
-        :class_name => "LockerRoom::Account"
+        :class_name => "LockerRoom::Team"
     end
 
     config.to_prepare do

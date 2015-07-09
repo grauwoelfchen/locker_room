@@ -20,14 +20,14 @@ module LockerRoom
 
           # TODO: cache
 
-          def locker_room_accounts(name)
-            account_id = ActiveRecord::FixtureSet.identify(name)
-            LockerRoom::Account.find(account_id)
+          def locker_room_teams(name)
+            team_id = ActiveRecord::FixtureSet.identify(name)
+            LockerRoom::Team.find(team_id)
           end
 
-          def locker_room_members(name)
-            member_id = ActiveRecord::FixtureSet.identify(name)
-            LockerRoom::Member.find(member_id)
+          def locker_room_memberships(name)
+            membership_id = ActiveRecord::FixtureSet.identify(name)
+            LockerRoom::Memberships.find(membership_id)
           end
 
           def locker_room_users(name)
@@ -38,15 +38,15 @@ module LockerRoom
 
         private
 
-        def account_with_schema(account_name)
-          account = locker_room_accounts(account_name)
-          account.create_schema
-          account
+        def team_with_schema(team_name)
+          team = locker_room_teams(team_name)
+          team.create_schema
+          team
         end
 
         def user_with_schema(user_name)
           user = locker_room_users(user_name)
-          user.account.create_schema
+          user.team.create_schema
           user
         end
       end

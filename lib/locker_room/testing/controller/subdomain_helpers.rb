@@ -29,7 +29,7 @@ module SubdomainHelpers
   # http://rack.rubyforge.org/doc/Rack/MockRequest.html#method-c-env_for
   def env_for(host, opts={})
     app = ->(env) { [200, env, "app"] }
-    options = {:class_name => "LockerRoom::Account"}
+    options = {:class_name => "LockerRoom::Team"}
     middleware = Houser::Middleware.new(app, options)
     opts.merge!("HTTP_HOST" => host)
     _, env = middleware.call(Rack::MockRequest.env_for("http://" + host, opts))

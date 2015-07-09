@@ -46,9 +46,9 @@ class ActiveSupport::TestCase
   end
 
   def clean_all_schema
-    LockerRoom::Account.all.map do |account|
+    LockerRoom::Team.all.map do |team|
       conn = ActiveRecord::Base.connection
-      conn.query(%Q{DROP SCHEMA IF EXISTS #{account.schema_name} CASCADE;})
+      conn.query(%Q{DROP SCHEMA IF EXISTS #{team.schema_name} CASCADE;})
     end
   end
 end

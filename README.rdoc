@@ -7,8 +7,8 @@ Bugs :: https://github.com/grauwoelfchen/locker_room/issues
 
 == Description
 
-LockerRoom is a mountable rails engine which
-provides account objects (account, user) for team using PostgreSQL's schema.
+LockerRoom is a mountable rails engine that
+provides user objects (team, user and membership) for team application.
 
 
 == Install
@@ -34,18 +34,18 @@ TODO ;)
 
   % rake routes
   Routes for LockerRoom::Engine:
-  logout GET    /logout(.:format) locker_room/account/sessions#destroy
-         DELETE /logout(.:format) locker_room/account/sessions#destroy
-   login GET    /login(.:format)  locker_room/account/sessions#new
-         POST   /login(.:format)  locker_room/account/sessions#create
-  signup GET    /signup(.:format) locker_room/account/users#new
-         POST   /signup(.:format) locker_room/account/users#create
-    root GET    /                 locker_room/account/locker#index
-         GET    /login(.:format)  locker_room/login#new
-         POST   /login(.:format)  locker_room/login#create
-         GET    /signup(.:format) locker_room/accounts#new
-         POST   /signup(.:format) locker_room/accounts#create
-         GET    /                 locker_room/entrance#index
+      logout GET    /signout(.:format) locker_room/member/sessions#destroy
+             DELETE /signout(.:format) locker_room/member/sessions#destroy
+       login GET    /signin(.:format)  locker_room/member/sessions#new
+             POST   /signin(.:format)  locker_room/member/sessions#create
+registration GET    /signup(.:format)  locker_room/member/users#new
+             POST   /signup(.:format)  locker_room/member/users#create
+        root GET    /                  locker_room/member/storages#show
+             GET    /signin(.:format)  locker_room/sessions#new
+             POST   /signin(.:format)  locker_room/sessions#create
+             GET    /signup(.:format)  locker_room/teams#new
+             POST   /signup(.:format)  locker_room/teams#create
+             GET    /                  locker_room/entrance#index
 
 
 == Test
@@ -112,7 +112,7 @@ TODO :)
 
   % # test
   % bundle exec foreman run test #=> run `rake test` with environ vars
-  % bundle exec foreman run ruby -I.:test test/models/locker_room/account_test.rb -n /xxx/
+  % bundle exec foreman run ruby -I.:test test/models/locker_room/team_test.rb -n /xxx/
 
 
 == License
