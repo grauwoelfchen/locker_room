@@ -1,7 +1,7 @@
 module LockerRoom
   module ScopedTo
-    def scoped_to(account)
-      where(:account_id => account.id)
+    def scoped_to(team)
+      where(:team_id => team.id)
     end
   end
 end
