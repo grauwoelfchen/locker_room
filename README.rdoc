@@ -34,13 +34,13 @@ TODO ;)
 
   % rake routes
   Routes for LockerRoom::Engine:
-        logout GET    /signout(.:format) locker_room/member/sessions#destroy
-               DELETE /signout(.:format) locker_room/member/sessions#destroy
-         login GET    /signin(.:format)  locker_room/member/sessions#new
-               POST   /signin(.:format)  locker_room/member/sessions#create
-  registration GET    /signup(.:format)  locker_room/member/users#new
-               POST   /signup(.:format)  locker_room/member/users#create
-          root GET    /                  locker_room/member/storages#show
+        logout GET    /signout(.:format) locker_room/account/sessions#destroy
+               DELETE /signout(.:format) locker_room/account/sessions#destroy
+         login GET    /signin(.:format)  locker_room/account/sessions#new
+               POST   /signin(.:format)  locker_room/account/sessions#create
+  registration GET    /signup(.:format)  locker_room/account/users#new
+               POST   /signup(.:format)  locker_room/account/users#create
+          root GET    /                  locker_room/account/storages#show
                GET    /signin(.:format)  locker_room/sessions#new
                POST   /signin(.:format)  locker_room/sessions#create
                GET    /signup(.:format)  locker_room/teams#new
