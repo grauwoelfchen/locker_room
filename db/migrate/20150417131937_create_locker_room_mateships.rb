@@ -4,7 +4,6 @@ class CreateLockerRoomMateships < ActiveRecord::Migration
       t.integer :team_id
       t.integer :user_id
       t.integer :role, default: 1, limit: 1
-      t.string  :name
 
       t.timestamps null: false
     end
