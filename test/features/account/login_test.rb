@@ -1,6 +1,6 @@
 require "test_helper"
 
-class MemberLoginTest < Capybara::Rails::TestCase
+class AccountLoginTest < Capybara::Rails::TestCase
   locker_room_fixtures(:teams, :users, :mateships)
 
   def test_validation_at_login_attempt_as_owner_with_invalid_email
@@ -76,7 +76,7 @@ class MemberLoginTest < Capybara::Rails::TestCase
     end
   end
 
-  def test_validation_at_login_attempt_as_member_with_invalid_email
+  def test_validation_at_login_attempt_as_mate_with_invalid_email
     user = user_with_schema(:weenie)
     within_subdomain(user.team.subdomain) do
       visit(locker_room.login_url(:subdomain => nil))
@@ -94,7 +94,7 @@ class MemberLoginTest < Capybara::Rails::TestCase
     end
   end
 
-  def test_validation_at_login_attempt_as_member_with_invalid_password
+  def test_validation_at_login_attempt_as_mate_with_invalid_password
     user = user_with_schema(:weenie)
     within_subdomain(user.team.subdomain) do
       visit(locker_room.login_url(:subdomain => nil))
@@ -112,7 +112,7 @@ class MemberLoginTest < Capybara::Rails::TestCase
     end
   end
 
-  def test_login_as_member
+  def test_login_as_mate
     user = user_with_schema(:weenie)
     within_subdomain(user.team.subdomain) do
       visit(locker_room.login_url(:subdomain => nil))

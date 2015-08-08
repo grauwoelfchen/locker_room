@@ -1,7 +1,7 @@
 require_dependency "locker_room/application_controller"
 
 module LockerRoom
-  module Member
+  module Account
     class SessionsController < ApplicationController
       skip_filter :require_login, :only => [:new, :create]
 

@@ -1,11 +1,11 @@
 require 'test_helper'
 
 module LockerRoom
-  module Member
-    class SessionsControllerTest < ActionController::TestCase
+  module Account
+    class StoragesControllerTest < ActionController::TestCase
       # test "the truth" do
       #   assert true
-      # end
+      # eend
     end
   end
 end
