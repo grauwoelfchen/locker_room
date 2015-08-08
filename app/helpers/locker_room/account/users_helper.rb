@@ -1,5 +1,5 @@
 module LockerRoom
-  module Member
+  module Account
     module UsersHelper
     end
   end

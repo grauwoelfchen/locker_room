@@ -12,7 +12,7 @@
   <%= team_form.text_field :subdomain %>
 </p>
 <%= team_form.fields_for :owners do |owners_fields| %>
-<%= render "locker_room/member/users/form", f: owners_fields %>
+<%= render "locker_room/account/users/form", f: owners_fields %>
 <% end %>
 <%= team_form.submit %>
 <% end %>

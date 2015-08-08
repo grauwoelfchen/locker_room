@@ -2,7 +2,7 @@ require "locker_room/constraints/subdomain_required"
 
 LockerRoom::Engine.routes.draw do
   constraints(LockerRoom::Constraints::SubdomainRequired) do
-    scope module: "member" do
+    scope module: "account" do
       get    "/signout", to: "sessions#destroy", as: :logout
       delete "/signout", to: "sessions#destroy", as: nil
       get    "/signin",  to: "sessions#new",     as: :login
