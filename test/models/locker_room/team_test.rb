@@ -2,7 +2,7 @@ require "test_helper"
 
 module LockerRoom
   class TeamTest < ActiveSupport::TestCase
-    locker_room_fixtures(:teams, :users, :memberships)
+    locker_room_fixtures(:teams, :users, :mateships)
 
     def test_validation_without_name
       team = LockerRoom::Team.new(:name => nil)

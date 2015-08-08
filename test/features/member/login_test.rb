@@ -1,7 +1,7 @@
 require "test_helper"
 
 class MemberLoginTest < Capybara::Rails::TestCase
-  locker_room_fixtures(:teams, :users, :memberships)
+  locker_room_fixtures(:teams, :users, :mateships)
 
   def test_validation_at_login_attempt_as_owner_with_invalid_email
     team = team_with_schema(:playing_piano)

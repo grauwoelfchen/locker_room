@@ -8,7 +8,7 @@ Bugs :: https://github.com/grauwoelfchen/locker_room/issues
 == Description
 
 LockerRoom is a mountable rails engine that
-provides user objects (team, user and membership) for team application.
+provides user objects (team, user and mateship) for team application.
 
 
 == Install
