@@ -12,9 +12,10 @@
 
     def login_with_subdomain(*credentials)
       return nil unless current_subdomain
-      return nil unless email = credentials[0]
-      return nil unless team = current_team
-      return nil unless team.users.find_by(:email => email)
+      email = credentials[0]
+      return nil unless email
+      return nil unless current_team
+      return nil unless current_team.users.find_by(:email => email)
       login(*credentials)
     end
 
