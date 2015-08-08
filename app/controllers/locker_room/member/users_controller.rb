@@ -7,13 +7,13 @@ module LockerRoom
 
       def new
         @user = LockerRoom::User.new
-        @user.build_membership
+        @user.build_mateship
       end
 
       def create
         raise ActiveRecord::RecordNotFound unless current_team
 
-        @user = current_team.users.create_with_membership(user_params)
+        @user = current_team.users.create_with_mateship(user_params)
         if @user.created?
           login(@user.email, user_params[:password])
           flash[:notice] = "You have signed up successfully."
@@ -30,7 +30,7 @@ module LockerRoom
         def user_params
           params.require(:user).permit(
             :username, :email, :password, :password_confirmation,
-            {:membership_attributes => [:name]}
+            {:mateship_attributes => [:name]}
           )
         end
     end

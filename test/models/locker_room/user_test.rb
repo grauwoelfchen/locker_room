@@ -2,7 +2,7 @@ require 'test_helper'
 
 module LockerRoom
   class UserTest < ActiveSupport::TestCase
-    locker_room_fixtures(:teams, :users, :memberships)
+    locker_room_fixtures(:teams, :users, :mateships)
 
     def test_validation_without_username
       attributes = {
@@ -134,7 +134,7 @@ module LockerRoom
       assert_equal(team, user.team)
     end
 
-    def test_creation_with_membership
+    def test_creation_with_mateship
       team = team_with_schema(:playing_piano)
       attributes = {
         :team_id               => team.id,
@@ -143,12 +143,12 @@ module LockerRoom
         :password              => "hellyhollyhally",
         :password_confirmation => "hellyhollyhally"
       }
-      user = team.users.create_with_membership(attributes)
-      assert(user.membership.persisted?)
+      user = team.users.create_with_mateship(attributes)
+      assert(user.mateship.persisted?)
       assert(user.persisted?)
       assert(user.created?)
-      team.memberships.reload
-      assert_includes(team.memberships.pluck(:user_id), user.id)
+      team.mateships.reload
+      assert_includes(team.mateships.pluck(:user_id), user.id)
     end
   end
 end

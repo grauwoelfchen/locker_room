@@ -2,7 +2,7 @@ require 'test_helper'
 
 module LockerRoom
   class TeamsControllerTest < ActionController::TestCase
-    locker_room_fixtures(:teams, :users, :memberships)
+    locker_room_fixtures(:teams, :users, :mateships)
 
     def test_create_with_validation_errors
       params = {
@@ -21,7 +21,7 @@ module LockerRoom
       expression = %w(
         LockerRoom::Team.count
         LockerRoom::User.count
-        LockerRoom::Membership.count
+        LockerRoom::Mateship.count
       )
       assert_no_difference(expression, 1) do
         post(:create, params)

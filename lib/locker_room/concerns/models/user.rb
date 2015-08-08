@@ -10,8 +10,8 @@ module User
     authenticates_with_sorcery!
 
     belongs_to :team
-    has_one :membership, class_name: "LockerRoom::Membership"
-    accepts_nested_attributes_for :membership
+    has_one :mateship, class_name: "LockerRoom::Mateship"
+    accepts_nested_attributes_for :mateship
 
     validates :username,
       presence: true
@@ -43,13 +43,13 @@ module User
   end
 
   class_methods do
-    def create_with_membership(options={})
+    def create_with_mateship(options={})
       self.transaction do
         user = self.new(options)
         if user.save
-          membership = user.build_membership
-          membership.assign_attributes(:team_id => user.team_id)
-          unless membership.save
+          mateship = user.build_mateship
+          mateship.assign_attributes(:team_id => user.team_id)
+          unless mateship.save
             raise ActiveRecord::Rollback
           end
         end
@@ -59,7 +59,7 @@ module User
   end
 
   def created?
-    persisted? && membership && membership.persisted?
+    persisted? && mateship && mateship.persisted?
   end
 end
     end
