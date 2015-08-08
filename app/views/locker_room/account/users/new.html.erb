@@ -4,9 +4,6 @@
 <% if @user.errors.any? %>
 <%= render "locker_room/shared/errors", resource: @user %>
 <% end %>
-<%= f.fields_for :mateship do |mateship_fields| %>
-<%= render "locker_room/mateships/form", f: mateship_fields %>
-<% end %>
 <%= render "form", f: f %>
 <%= f.submit "Signup" %>
 <% end %>
