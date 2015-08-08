@@ -1,7 +1,7 @@
 require "test_helper"
 
 class MemberLogoutTest < Capybara::Rails::TestCase
-  locker_room_fixtures(:teams, :users, :memberships)
+  locker_room_fixtures(:teams, :users, :mateships)
 
   def test_logout
     user = user_with_schema(:oswald)

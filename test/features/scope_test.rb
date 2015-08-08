@@ -1,7 +1,7 @@
 require "test_helper"
 
 class ScopTest < Capybara::Rails::TestCase
-  locker_room_fixtures(:teams, :users, :memberships)
+  locker_room_fixtures(:teams, :users, :mateships)
 
   def setup
     @team_piano   = team_with_schema(:playing_piano)

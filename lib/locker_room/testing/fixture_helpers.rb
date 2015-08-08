@@ -25,9 +25,9 @@ module LockerRoom
             LockerRoom::Team.find(team_id)
           end
 
-          def locker_room_memberships(name)
-            membership_id = ActiveRecord::FixtureSet.identify(name)
-            LockerRoom::Memberships.find(membership_id)
+          def locker_room_mateships(name)
+            mateship_id = ActiveRecord::FixtureSet.identify(name)
+            LockerRoom::Mateship.find(mateship_id)
           end
 
           def locker_room_users(name)
