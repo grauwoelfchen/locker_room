@@ -3,14 +3,14 @@ require 'test_helper'
 module LockerRoom
   module Member
     class UsersControllerTest < ActionController::TestCase
-      locker_room_fixtures(:teams, :users, :memberships)
+      locker_room_fixtures(:teams, :users, :mateships)
 
       def test_new
         get(:new)
         refute(assigns(:user).persisted?)
-        refute(assigns(:user).membership.persisted?)
+        refute(assigns(:user).mateship.persisted?)
         assert_kind_of(LockerRoom::User, assigns(:user))
-        assert_kind_of(LockerRoom::Membership, assigns(:user).membership)
+        assert_kind_of(LockerRoom::Mateship, assigns(:user).mateship)
         assert_template(:new)
         assert_response(:success)
       end
@@ -23,7 +23,7 @@ module LockerRoom
               :email                 => "daisy@example.org",
               :password              => "",
               :password_confirmation => "",
-              :membership_attributes => {
+              :mateship_attributes   => {
                 :name     => "Daisy",
                 :username => "daisy"
               }
@@ -31,10 +31,10 @@ module LockerRoom
           }
           post(:create, params)
           refute(assigns(:user).persisted?)
-          refute(assigns(:user).membership.persisted?)
-          assert(assigns(:current_team), assigns(:user).membership.team)
+          refute(assigns(:user).mateship.persisted?)
+          assert(assigns(:current_team), assigns(:user).mateship.team)
           assert_kind_of(LockerRoom::User, assigns(:user))
-          assert_kind_of(LockerRoom::Membership, assigns(:user).membership)
+          assert_kind_of(LockerRoom::Mateship, assigns(:user).mateship)
           assert_template(:new)
           assert_response(:success)
         end

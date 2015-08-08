@@ -7,11 +7,11 @@ module Team
   included do
     EXCLUDED_SUBDOMAINS = %w(admin test www new)
 
-    has_many :users,       class_name: "LockerRoom::User"
-    has_many :memberships, class_name: "LockerRoom::Membership"
+    has_many :users,     class_name: "LockerRoom::User"
+    has_many :mateships, class_name: "LockerRoom::Mateship"
     has_many :ownerships,
-      -> { where(:role => LockerRoom::Membership.roles[:owner]) },
-      class_name: "LockerRoom::Membership"
+      -> { where(:role => LockerRoom::Mateship.roles[:owner]) },
+      class_name: "LockerRoom::Mateship"
     has_many :owners,
       through: :ownerships,
       source:  :user

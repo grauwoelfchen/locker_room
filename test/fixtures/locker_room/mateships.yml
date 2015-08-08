@@ -1,0 +1,20 @@
+playing_piano_mateship_1:
+  team: playing_piano
+  user: oswald
+  role: <%= LockerRoom::Mateship.roles[:owner] %>
+  name: 'Oswald'
+playing_piano_mateship_2:
+  team: playing_piano
+  user: weenie
+  role: <%= LockerRoom::Mateship.roles[:mate] %>
+  name: 'Weenie'
+penguin_patrol_mateship_1:
+  team: penguin_patrol
+  user: henry
+  role: <%= LockerRoom::Mateship.roles[:owner] %>
+  name: 'Henry the Penguin'
+ice_cream_shop_mateship_1:
+  team: ice_cream_shop
+  user: johnny
+  role: <%= LockerRoom::Mateship.roles[:owner] %>
+  name: 'Johnny Snowman'
