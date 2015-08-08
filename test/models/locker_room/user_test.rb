@@ -4,6 +4,16 @@ module LockerRoom
   class UserTest < ActiveSupport::TestCase
     locker_room_fixtures(:teams, :users, :mateships)
 
+    def test_validation_with_too_long_name
+      attributes = {
+        :name => "long" * 9
+      }
+      user = LockerRoom::User.new(attributes)
+      refute(user.valid?)
+      message = "is too long (maximum is 32 characters)"
+      assert_equal([message], user.errors[:name])
+    end
+
     def test_validation_without_username
       attributes = {
         :username => nil
@@ -123,6 +133,7 @@ module LockerRoom
       attributes = {
         :team_id               => team.id,
         :username              => "daisy",
+        :name                  => "Daisy",
         :email                 => "daisy@example.org",
         :password              => "hellyhollyhally",
         :password_confirmation => "hellyhollyhally"
@@ -139,6 +150,7 @@ module LockerRoom
       attributes = {
         :team_id               => team.id,
         :username              => "daisy",
+        :name                  => "Daisy",
         :email                 => "daisy@example.org",
         :password              => "hellyhollyhally",
         :password_confirmation => "hellyhollyhally"
