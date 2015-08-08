@@ -1,7 +1,7 @@
 require 'test_helper'
 
 module LockerRoom
-  module Member
+  module Account
     class UsersControllerTest < ActionController::TestCase
       locker_room_fixtures(:teams, :users, :mateships)
 

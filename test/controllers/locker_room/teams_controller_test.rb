@@ -32,7 +32,7 @@ module LockerRoom
       assert_nil(flash[:notice])
       assert_template(:new)
       assert_template(:partial => "locker_room/shared/_errors")
-      assert_template(:partial => "locker_room/member/users/_form")
+      assert_template(:partial => "locker_room/account/users/_form")
       assert_response(:success)
     end
 

@@ -1,6 +1,6 @@
 require "test_helper"
 
-class MemberRegistrationTest < Capybara::Rails::TestCase
+class AccountRegistrationTest < Capybara::Rails::TestCase
   locker_room_fixtures(:teams, :users, :mateships)
 
   def test_validation_with_duplicated_email
