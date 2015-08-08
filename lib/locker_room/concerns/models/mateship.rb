@@ -11,13 +11,6 @@ module Mateship
 
     belongs_to :team, class_name: "LockerRoom::Team"
     belongs_to :user, class_name: "LockerRoom::User"
-
-    validates :name,
-      length: {maximum: 32}
-
-    def nickname
-      user.username
-    end
   end
 end
     end

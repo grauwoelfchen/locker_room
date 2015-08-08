@@ -11,13 +11,14 @@ module User
 
     belongs_to :team
     has_one :mateship, class_name: "LockerRoom::Mateship"
-    accepts_nested_attributes_for :mateship
 
     validates :username,
       presence: true
     validates :username,
       length:      {minimum: 3, maximum: 16},
       allow_blank: true
+    validates :name,
+      length: {maximum: 32}
     validates :email,
       presence: true
     validates :email,
@@ -46,12 +47,10 @@ module User
     def create_with_mateship(options={})
       self.transaction do
         user = self.new(options)
+        mateship = user.build_mateship
         if user.save
-          mateship = user.build_mateship
           mateship.assign_attributes(:team_id => user.team_id)
-          unless mateship.save
-            raise ActiveRecord::Rollback
-          end
+          raise ActiveRecord::Rollback unless mateship.save
         end
         user
       end
