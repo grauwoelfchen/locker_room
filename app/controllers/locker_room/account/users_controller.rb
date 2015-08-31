@@ -29,8 +29,7 @@ module LockerRoom
 
         def user_params
           params.require(:user).permit(
-            :username, :email, :password, :password_confirmation,
-            {:mateship_attributes => [:name]}
+            :username, :email, :password, :password_confirmation
           )
         end
     end
