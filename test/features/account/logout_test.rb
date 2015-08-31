@@ -8,8 +8,8 @@ class AccountLogoutTest < Capybara::Rails::TestCase
     within_subdomain(user.team.subdomain) do
       visit(locker_room.login_url)
       assert_equal(locker_room.login_url, page.current_url)
-      fill_in("Email",   :with => user.email)
-      fill_in("Password",:with => "secret")
+      fill_in("Email",    :with => user.email)
+      fill_in("Password", :with => "secret")
       click_button("Signin")
       assert_equal(locker_room.root_url, page.current_url)
       click_logout
