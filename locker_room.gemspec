@@ -22,7 +22,7 @@ DESCRIPTION
 
   s.add_dependency "rails", "~> 4.2.1"
   s.add_dependency "pg", "~> 0.18"
-  s.add_dependency "apartment", "~> 1.0"
+  s.add_dependency "apartment", "~> 1.0.2"
   s.add_dependency "enum_accessor", "~> 2.0"
   s.add_dependency "sorcery","~> 0.9.1"
   s.add_dependency "houser", "~> 2.0"
