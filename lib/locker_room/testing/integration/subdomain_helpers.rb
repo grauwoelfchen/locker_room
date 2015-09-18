@@ -4,8 +4,11 @@ module LockerRoom
 module SubdomainHelpers
   def within_subdomain(subdomain)
     uri = URI.parse(Capybara.app_host)
-    host = uri.host.split(".").last(2).join(".")
-    subdomain_host = "#{uri.scheme}://#{subdomain}.#{host}"
+    tld_length = Rails.application.config.action_dispatch.tld_length ||
+                 ActionDispatch::Http::URL.tld_length
+    # Enable host like: foo.127.0.0.1.xip.io
+    host = uri.host.split(".").last(tld_length + 1).join(".")
+    subdomain_host = "#{uri.scheme}://#{subdomain}.#{host}:#{uri.port}"
 
     app_host = Capybara.app_host
     Capybara.app_host = subdomain_host
