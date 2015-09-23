@@ -7,11 +7,11 @@ module Team
   included do
     EXCLUDED_SUBDOMAINS = %w(admin test www new)
 
-    has_many :users,     class_name: "LockerRoom::User"
-    has_many :mateships, class_name: "LockerRoom::Mateship"
+    has_many :users,     class_name: 'LockerRoom::User'
+    has_many :mateships, class_name: 'LockerRoom::Mateship'
     has_many :ownerships,
       -> { where(:role => LockerRoom::Mateship.roles[:owner]) },
-      class_name: "LockerRoom::Mateship"
+      class_name: 'LockerRoom::Mateship'
     has_many :owners,
       through: :ownerships,
       source:  :user
@@ -48,7 +48,7 @@ module Team
     end
 
     def schema_name
-      subdomain.gsub(/\-/, "_")
+      subdomain.gsub(/\-/, '_')
     end
   end
 

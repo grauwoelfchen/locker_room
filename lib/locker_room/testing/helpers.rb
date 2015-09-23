@@ -1,5 +1,5 @@
-require "locker_room/testing/controller/subdomain_helpers"
-require "locker_room/testing/controller/authentication_helpers"
-require "locker_room/testing/integration/subdomain_helpers"
-require "locker_room/testing/integration/authentication_helpers"
-require "locker_room/testing/fixture_helpers"
+require 'locker_room/testing/controller/subdomain_helpers'
+require 'locker_room/testing/controller/authentication_helpers'
+require 'locker_room/testing/integration/subdomain_helpers'
+require 'locker_room/testing/integration/authentication_helpers'
+require 'locker_room/testing/fixture_helpers'
