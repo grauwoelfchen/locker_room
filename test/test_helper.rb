@@ -1,16 +1,16 @@
-ENV["RAILS_ENV"] = "test"
+ENV['RAILS_ENV'] = 'test'
 
-require File.expand_path("../../test/dummy/config/environment.rb",  __FILE__)
+require File.expand_path('../../test/dummy/config/environment.rb',  __FILE__)
 ActiveRecord::Migrator.migrations_paths = [
-  File.expand_path("../../test/dummy/db/migrate", __FILE__),
+  File.expand_path('../../test/dummy/db/migrate', __FILE__),
   File.expand_path('../../db/migrate', __FILE__)
 ]
-require "rails/test_help"
+require 'rails/test_help'
 
-require "minitest/mock"
-require "minitest/rails/capybara"
-require "minitest/pride" if ENV["TEST_PRIDE"].present?
-require "database_cleaner"
+require 'minitest/mock'
+require 'minitest/rails/capybara'
+require 'minitest/pride' if ENV['TEST_PRIDE'].present?
+require 'database_cleaner'
 
 # Filter out Minitest backtrace while allowing backtrace from other libraries
 # to be shown.
@@ -22,7 +22,7 @@ Dir["#{test_dir}/support/**/*.rb"].each { |f| require f }
 
 # Load fixtures from the engine
 if ActiveSupport::TestCase.respond_to?(:fixture_path=)
-  ActiveSupport::TestCase.fixture_path = test_dir + "/fixtures"
+  ActiveSupport::TestCase.fixture_path = test_dir + '/fixtures'
   # ActiveSupport::TestCase.fixtures :all
 end
 
@@ -64,7 +64,7 @@ class ActionController::TestCase
 end
 
 Capybara.configure do |config|
-  config.app_host = "http://example.org"
+  config.app_host = 'http://example.org'
 end
 
 class Capybara::Rails::TestCase

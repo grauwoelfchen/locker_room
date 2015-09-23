@@ -20,11 +20,11 @@ module LockerRoom
         within_subdomain(team.subdomain) do
           params = {
             :user => {
-              :username              => "daisy",
-              :email                 => "daisy@example.org",
-              :name                  => "Daisy",
-              :password              => "",
-              :password_confirmation => ""
+              :username              => 'daisy',
+              :email                 => 'daisy@example.org',
+              :name                  => 'Daisy',
+              :password              => '',
+              :password_confirmation => ''
             }
           }
           post(:create, params)
