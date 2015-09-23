@@ -10,7 +10,7 @@ module User
     authenticates_with_sorcery!
 
     belongs_to :team
-    has_one :mateship, class_name: "LockerRoom::Mateship"
+    has_one :mateship, class_name: 'LockerRoom::Mateship'
 
     validates :username,
       presence: true
@@ -38,7 +38,7 @@ module User
       allow_blank:  true
     validates :password_confirmation,
       presence: true,
-      if:       "password.present?"
+      if:       'password.present?'
 
     attr_accessor :skip_password
   end

@@ -19,8 +19,8 @@ module AuthenticationHelpers
   def logout_user(route=nil, http_method=:get)
     # subdomain route support
     if page && !route
-      host = Capybara.app_host.sub(/^https?:\/\//, "")
-      subdomain = page.driver.request.env["HTTP_HOST"].sub(".#{host}", "")
+      host = Capybara.app_host.sub(/^https?:\/\//, '')
+      subdomain = page.driver.request.env['HTTP_HOST'].sub(".#{host}", '')
       if subdomain.present?
         route = locker_room.logout_url(:subdomain => subdomain)
       end
@@ -31,8 +31,8 @@ module AuthenticationHelpers
   def click_logout
     logout_user(locker_room.logout_url, :delete)
     # redirect link
-    assert_content("You are being redirected.")
-    click_link("redirected")
+    assert_content('You are being redirected.')
+    click_link('redirected')
   end
 end
     end
