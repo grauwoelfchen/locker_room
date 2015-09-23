@@ -1,7 +1,8 @@
 ---
 rules:
   ignore:
-  - space_inside_closing_curly_brace_missing
-  - space_inside_opening_curly_brace_missing
-  - space_missing_inside_closing_curly_brace
-  - space_missing_inside_opening_curly_brace
+    - space_inside_closing_curly_brace_missing
+    - space_inside_opening_curly_brace_missing
+    - space_missing_inside_closing_curly_brace
+    - space_missing_inside_opening_curly_brace
+    - surrounding_space_missing_for_assign
