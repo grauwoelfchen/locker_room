@@ -1,4 +1,4 @@
-require_dependency "locker_room/application_controller"
+require_dependency 'locker_room/application_controller'
 
 module LockerRoom
   class SessionsController < ApplicationController
@@ -13,7 +13,7 @@ module LockerRoom
       if team
         redirect_to locker_room.root_url(:subdomain => team.subdomain)
       else
-        flash[:alert] = "Team is not found."
+        flash[:alert] = 'Team is not found.'
         render :new
       end
     end
