@@ -1,5 +1,5 @@
 module LockerRoom
   class User < ActiveRecord::Base
-    include Concerns::Models::User
+    include Models::User
   end
 end
