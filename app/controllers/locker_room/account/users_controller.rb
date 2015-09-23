@@ -1,4 +1,4 @@
-require_dependency "locker_room/application_controller"
+require_dependency 'locker_room/application_controller'
 
 module LockerRoom
   module Account
@@ -16,11 +16,11 @@ module LockerRoom
         @user = current_team.users.create_with_mateship(user_params)
         if @user.created?
           login(@user.email, user_params[:password])
-          flash[:notice] = "You have signed up successfully."
+          flash[:notice] = 'You have signed up successfully.'
           redirect_to locker_room.root_url
         else
           @user.valid? # for password
-          flash[:alert] = "Your user account could not be created."
+          flash[:alert] = 'Your user account could not be created.'
           render :new
         end
       end

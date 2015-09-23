@@ -1,7 +1,7 @@
 <h2>Signup</h2>
-<%= form_for @team, url:  registration_path, method: :post, html: {novalidate: "novalidate"} do |team_form| %>
+<%= form_for @team, url:  registration_path, method: :post, html: {novalidate: 'novalidate'} do |team_form| %>
 <% if @team.errors.any? %>
-<%= render "locker_room/shared/errors", resource: @team %>
+<%= render 'locker_room/shared/errors', resource: @team %>
 <% end %>
 <p>
   <%= team_form.label :name %><br>
@@ -12,7 +12,7 @@
   <%= team_form.text_field :subdomain %>
 </p>
 <%= team_form.fields_for :owners do |owners_fields| %>
-<%= render "locker_room/account/users/form", f: owners_fields %>
+<%= render 'locker_room/account/users/form', f: owners_fields %>
 <% end %>
 <%= team_form.submit %>
 <% end %>

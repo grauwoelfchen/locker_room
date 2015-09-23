@@ -16,16 +16,16 @@ end
   private
 
     def current_subdomain
-      @current_subdomain ||= env["Houser-Subdomain"]
+      @current_subdomain ||= env['Houser-Subdomain']
     end
     helper_method :current_subdomain
 
     def current_team
-      @current_team ||= env["Houser-Object"]
+      @current_team ||= env['Houser-Object']
     end
     helper_method :current_team
 
     def not_authenticated
-      redirect_to locker_room.login_url, :alert => "Please signin."
+      redirect_to locker_room.login_url, :alert => 'Please signin.'
     end
 end

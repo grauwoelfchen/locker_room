@@ -23,7 +23,7 @@ module SubdomainHelpers
     tld_length = Rails.application.config.action_dispatch.tld_length ||
                  ActionDispatch::Http::URL.tld_length
     # Enable host like: foo.127.0.0.1.xip.io
-    host = uri.host.split(".").last(tld_length + 1).join(".")
+    host = uri.host.split('.').last(tld_length + 1).join('.')
     "#{uri.scheme}://#{subdomain}.#{host}:#{uri.port}"
   end
 end

@@ -6,11 +6,11 @@ module LockerRoom
 
     def test_validation_with_too_long_name
       attributes = {
-        :name => "long" * 9
+        :name => 'long' * 9
       }
       user = LockerRoom::User.new(attributes)
       refute(user.valid?)
-      message = "is too long (maximum is 32 characters)"
+      message = 'is too long (maximum is 32 characters)'
       assert_equal([message], user.errors[:name])
     end
 
@@ -20,27 +20,27 @@ module LockerRoom
       }
       user = LockerRoom::User.new(attributes)
       refute(user.valid?)
-      message = "can't be blank"
+      message = 'can\'t be blank'
       assert_equal([message], user.errors[:username])
     end
 
     def test_validation_with_too_short_username
       attributes = {
-        :username => "sh"
+        :username => 'sh'
       }
       user = LockerRoom::User.new(attributes)
       refute(user.valid?)
-      message = "is too short (minimum is 3 characters)"
+      message = 'is too short (minimum is 3 characters)'
       assert_equal([message], user.errors[:username])
     end
 
     def test_validation_with_too_long_username
       attributes = {
-        :username => "yes" * 6
+        :username => 'yes' * 6
       }
       user = LockerRoom::User.new(attributes)
       refute(user.valid?)
-      message = "is too long (maximum is 16 characters)"
+      message = 'is too long (maximum is 16 characters)'
       assert_equal([message], user.errors[:username])
     end
 
@@ -50,7 +50,7 @@ module LockerRoom
       }
       user = LockerRoom::User.new(attributes)
       refute(user.valid?)
-      message = "can't be blank"
+      message = 'can\'t be blank'
       assert_equal([message], user.errors[:email])
     end
 
@@ -62,27 +62,27 @@ module LockerRoom
       }
       user = LockerRoom::User.new(attributes)
       refute(user.valid?)
-      message = "has already been taken"
+      message = 'has already been taken'
       assert_equal([message], user.errors[:email])
     end
 
     def test_validation_with_invalid_email
       attributes = {
-        :email => "invalid"
+        :email => 'invalid'
       }
       user = LockerRoom::User.new(attributes)
       refute(user.valid?)
-      message = "is invalid"
+      message = 'is invalid'
       assert_equal([message], user.errors[:email])
     end
 
     def test_validation_with_too_long_email
       attributes = {
-        :email => "long" * 30 + "@example.org"
+        :email => 'long' * 30 + '@example.org'
       }
       user = LockerRoom::User.new(attributes)
       refute(user.valid?)
-      message = "is too long (maximum is 128 characters)"
+      message = 'is too long (maximum is 128 characters)'
       assert_equal([message], user.errors[:email])
     end
 
@@ -92,39 +92,39 @@ module LockerRoom
       }
       user = LockerRoom::User.new(attributes)
       refute(user.valid?)
-      message = "can't be blank"
+      message = 'can\'t be blank'
       assert_equal([message], user.errors[:password])
     end
 
     def test_validation_with_too_short_password
       attributes = {
-        :password => "short"
+        :password => 'short'
       }
       user = LockerRoom::User.new(attributes)
       refute(user.valid?)
-      message = "is too short (minimum is 6 characters)"
+      message = 'is too short (minimum is 6 characters)'
       assert_equal([message], user.errors[:password])
     end
 
     def test_validation_with_mismatch_password_confirmation
       attributes = {
-        :password              => "secret",
-        :password_confirmation => "public"
+        :password              => 'secret',
+        :password_confirmation => 'public'
       }
       user = LockerRoom::User.new(attributes)
       refute(user.valid?)
-      message = "doesn't match Password"
+      message = 'doesn\'t match Password'
       assert_equal([message], user.errors[:password_confirmation])
     end
 
     def test_validation_without_password_confirmation
       attributes = {
-        :password              => "secret",
+        :password              => 'secret',
         :password_confirmation => nil
       }
       user = LockerRoom::User.new(attributes)
       refute(user.valid?)
-      message = "can't be blank"
+      message = 'can\'t be blank'
       assert_equal([message], user.errors[:password_confirmation])
     end
 
@@ -132,11 +132,11 @@ module LockerRoom
       team = team_with_schema(:playing_piano)
       attributes = {
         :team_id               => team.id,
-        :username              => "daisy",
-        :name                  => "Daisy",
-        :email                 => "daisy@example.org",
-        :password              => "hellyhollyhally",
-        :password_confirmation => "hellyhollyhally"
+        :username              => 'daisy',
+        :name                  => 'Daisy',
+        :email                 => 'daisy@example.org',
+        :password              => 'hellyhollyhally',
+        :password_confirmation => 'hellyhollyhally'
       }
       user = LockerRoom::User.new(attributes)
       assert(user.valid?)
@@ -149,11 +149,11 @@ module LockerRoom
       team = team_with_schema(:playing_piano)
       attributes = {
         :team_id               => team.id,
-        :username              => "daisy",
-        :name                  => "Daisy",
-        :email                 => "daisy@example.org",
-        :password              => "hellyhollyhally",
-        :password_confirmation => "hellyhollyhally"
+        :username              => 'daisy',
+        :name                  => 'Daisy',
+        :email                 => 'daisy@example.org',
+        :password              => 'hellyhollyhally',
+        :password_confirmation => 'hellyhollyhally'
       }
       user = team.users.create_with_mateship(attributes)
       assert(user.mateship.persisted?)
