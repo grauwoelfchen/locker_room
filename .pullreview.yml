@@ -1,5 +1,7 @@
 ---
 rules:
+  excludes:
+    - test/dummy/*
   ignore:
     - prefer_ruby_19_new_hash_syntax
     - space_inside_closing_curly_brace_missing
