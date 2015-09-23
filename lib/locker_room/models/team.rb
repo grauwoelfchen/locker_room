@@ -29,9 +29,9 @@ module LockerRoom
           allow_blank: true
         validates :subdomain,
           exclusion:   {in: EXCLUDED_SUBDOMAINS,
-                        message: "%{value} is not allowed"},
+                        message: '%{value} is not allowed'},
           format:      {with: /\A[\w\-]+\Z/i,
-                        message: "%{value} is not allowed"},
+                        message: '%{value} is not allowed'},
           allow_blank: true
 
         before_validation do
