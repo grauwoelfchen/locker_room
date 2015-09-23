@@ -1,5 +1,5 @@
 module LockerRoom
   class Team < ActiveRecord::Base
-    include Concerns::Models::Team
+    include Models::Team
   end
 end

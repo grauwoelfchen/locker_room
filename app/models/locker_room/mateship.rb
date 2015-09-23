@@ -1,5 +1,5 @@
 module LockerRoom
   class Mateship < ActiveRecord::Base
-    include Concerns::Models::Mateship
+    include Models::Mateship
   end
 end
