@@ -4,7 +4,7 @@ module LockerRoom
       extend ActiveSupport::Concern
 
       included do
-        EXCLUDED_SUBDOMAINS = %w(admin test www new)
+        EXCLUDED_SUBDOMAINS ||= %w(admin test www new)
 
         has_many :users,     class_name: 'LockerRoom::User'
         has_many :mateships, class_name: 'LockerRoom::Mateship'
