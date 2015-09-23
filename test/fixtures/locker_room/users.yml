@@ -3,26 +3,26 @@ oswald:
   username: 'oswald'
   name: 'Oswald'
   email: 'oswald@example.org'
-  salt: <%= salt = "abcdefghijklmnopqrstuvwxyz" %>
-  crypted_password: <%= Sorcery::CryptoProviders::BCrypt.encrypt("secret", salt) %>
+  salt: <%= salt = 'abcdefghijklmnopqrstuvwxyz' %>
+  crypted_password: <%= Sorcery::CryptoProviders::BCrypt.encrypt('secret', salt) %>
 weenie:
   team: playing_piano
   username: 'weenie'
   name: 'Weenie'
   email: 'weenie@example.org'
-  salt: <%= salt = "abcdefghijklmnopqrstuvwxyz" %>
-  crypted_password: <%= Sorcery::CryptoProviders::BCrypt.encrypt("secret", salt) %>
+  salt: <%= salt = 'abcdefghijklmnopqrstuvwxyz' %>
+  crypted_password: <%= Sorcery::CryptoProviders::BCrypt.encrypt('secret', salt) %>
 henry:
   team: penguin_patrol
   username: 'henry'
   name: 'Henry the Penguin'
   email: 'henry@example.org'
-  salt: <%= salt = "abcdefghijklmnopqrstuvwxyz" %>
-  crypted_password: <%= Sorcery::CryptoProviders::BCrypt.encrypt("secret", salt) %>
+  salt: <%= salt = 'abcdefghijklmnopqrstuvwxyz' %>
+  crypted_password: <%= Sorcery::CryptoProviders::BCrypt.encrypt('secret', salt) %>
 johnny:
   team: ice_cream_shop
   username: 'johnny'
   name: 'Johnny Snowman'
   email: 'johnny@example.org'
-  salt: <%= salt = "abcdefghijklmnopqrstuvwxyz" %>
-  crypted_password: <%= Sorcery::CryptoProviders::BCrypt.encrypt("secret", salt) %>
+  salt: <%= salt = 'abcdefghijklmnopqrstuvwxyz' %>
+  crypted_password: <%= Sorcery::CryptoProviders::BCrypt.encrypt('secret', salt) %>
