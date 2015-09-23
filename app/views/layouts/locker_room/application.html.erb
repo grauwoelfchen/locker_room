@@ -2,16 +2,16 @@
 <html>
 <head>
   <title>LockerRoom</title>
-  <%= stylesheet_link_tag    "locker_room/application", media: "all" %>
-  <%= javascript_include_tag "locker_room/application" %>
+  <%= stylesheet_link_tag    'locker_room/application', media: 'all' %>
+  <%= javascript_include_tag 'locker_room/application' %>
   <%= csrf_meta_tags %>
 </head>
 <body>
 
-<%= render "locker_room/shared/login" %>
+<%= render 'locker_room/shared/login' %>
 
 <% flash.each do |k, v| %>
-<div class='flash <%=h k %>'><%=h v %></div>
+<div class="flash <%=h k %>"><%=h v %></div>
 <% end %>
 
 <%= yield %>

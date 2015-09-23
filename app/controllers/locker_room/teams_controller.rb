@@ -1,4 +1,4 @@
-require_dependency "locker_room/application_controller"
+require_dependency 'locker_room/application_controller'
 
 module LockerRoom
   class TeamsController < ApplicationController
@@ -15,11 +15,11 @@ module LockerRoom
         owner = @team.owners.first
         login(owner.email, owner_params[:password])
         @team.create_schema
-        flash[:notice] = "Your team has been successfully created."
+        flash[:notice] = 'Your team has been successfully created.'
         redirect_to locker_room.root_url(:subdomain => @team.subdomain)
       else
         @team.valid?
-        flash[:alert] = "Your team could not be created."
+        flash[:alert] = 'Your team could not be created.'
         render :new
       end
     end
@@ -38,7 +38,7 @@ module LockerRoom
 
     def owner_params
       owners_attributes = team_params[:owners_attributes]
-      (owners_attributes && owners_attributes["0"]) || {}
+      (owners_attributes && owners_attributes['0']) || {}
     end
   end
 end

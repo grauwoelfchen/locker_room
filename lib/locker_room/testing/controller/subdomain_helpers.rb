@@ -1,5 +1,5 @@
-require "rack/mock"
-require "houser/middleware"
+require 'rack/mock'
+require 'houser/middleware'
 
 module LockerRoom
   module Testing
@@ -7,7 +7,7 @@ module LockerRoom
 module SubdomainHelpers
   def within_subdomain(subdomain)
     uri = URI.parse(@request.url)
-    host = uri.host.split(".").last(2).join(".")
+    host = uri.host.split('.').last(2).join('.')
     subdomain_host = "#{subdomain}.#{host}"
 
     # request
@@ -31,11 +31,11 @@ module SubdomainHelpers
   # https://github.com/radar/houser/blob/master/spec/houser_spec.rb
   # http://rack.rubyforge.org/doc/Rack/MockRequest.html#method-c-env_for
   def env_for(host, opts={})
-    app = ->(env) { [200, env, "app"] }
-    options = {:class_name => "LockerRoom::Team"}
+    app = ->(env) { [200, env, 'app'] }
+    options = {:class_name => 'LockerRoom::Team'}
     middleware = Houser::Middleware.new(app, options)
-    opts.merge!("HTTP_HOST" => host)
-    _, env = middleware.call(Rack::MockRequest.env_for("http://" + host, opts))
+    opts.merge!('HTTP_HOST' => host)
+    _, env = middleware.call(Rack::MockRequest.env_for('http://' + host, opts))
     @controller.env = env
   end
 end
