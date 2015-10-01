@@ -1,6 +1,9 @@
 language: ruby
 addons:
   postgresql: "9.3"
+  code_climate:
+    repo_token:
+      secure: FtY2G2HDUFbSHm0ipYGZyG/lSDlkdFkJFnQjkz8a+bSo0w5NpHNzVbFbugvPq0VFxO44uyiPCcpQNaG6qKfzj8CRugwPH1Bmj5ClW5nSiW14uHudX2OmQfaVFjtZKC581p9S+maHlb/2jtF+TwHlafMFunPg54S/iC6c70GqiIY=
 rvm:
   - 2.0.0
   - 2.1.5
@@ -25,7 +28,3 @@ notifications:
 env:
   global:
   - TRAVIS_SECURE_ENV_VARS=true
-addons:
-  code_climate:
-    repo_token:
-      secure: FtY2G2HDUFbSHm0ipYGZyG/lSDlkdFkJFnQjkz8a+bSo0w5NpHNzVbFbugvPq0VFxO44uyiPCcpQNaG6qKfzj8CRugwPH1Bmj5ClW5nSiW14uHudX2OmQfaVFjtZKC581p9S+maHlb/2jtF+TwHlafMFunPg54S/iC6c70GqiIY=
