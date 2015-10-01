@@ -20,11 +20,13 @@ notifications:
     on_failure: always
     recipients:
       - grauwoelfchen@gmail.com
-  webhooks:
+  irc:
     on_success: change
     on_failure: always
-    urls:
-      - secure: CmLUsWVJMXSiYynScQBlpSjXOfMQif0hlfZFmgld8+5vs1nbP6RPi39vDsVzxD21REDN1FIL48AEaYP1HeRFnHmf+qQKebcRhsKoxphhSv71rhFspsxWTlI3FTFdtywx2UICq7fHOAcbzx4q2OiUyays3cTLsVojBCZiPAqpScw=
+    channels:
+      - secure: UlOv2Lnc9VI5/RmOewazvioib/X7GCSLWS6j/K0dpRap/2dzUnWregxAy6Sjw91gGJFyRiAWFCaZ3L7G6phA6+pEdAf6PdrDfBF+ApVaXVQGopdbwQNnaOtqDiiwCnnkof4whPln7uSDhBp1CGiHRTqbHfDsPQTej1XDepYrmjw=
+    channel_key:
+      secure: CaNOljKg2roeVsn3CpjG2O1zOGezb6JwKDx3xsmuOOS7ECqfu0kGyDmhSi6edPL9kf2vsxn3VPCHjwlXMV5i5Xama0HhIG+C4J5p9c4f4nyZIankdCM4AEVmucHitlIFqyaNLc+rPqjnffjazlPwF9BriKzZ6rMVavFLiyf2NsE=
 env:
   global:
   - TRAVIS_SECURE_ENV_VARS=true
