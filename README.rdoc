@@ -2,6 +2,8 @@
 
 {<img src="https://travis-ci.org/grauwoelfchen/locker_room.svg?branch=master" alt="Build Status" />}[http://travis-ci.org/grauwoelfchen/locker_room]
 {<img src="https://www.pullreview.com/github/grauwoelfchen/locker_room/badges/master.svg?" alt="Review" />}[https://www.pullreview.com/github/grauwoelfchen/locker_room/reviews/master]
+{<img src="https://codeclimate.com/github/grauwoelfchen/locker_room/badges/gpa.svg" />}[https://codeclimate.com/github/grauwoelfchen/locker_room]
+{<img src="https://codeclimate.com/github/grauwoelfchen/locker_room/badges/coverage.svg" />}[https://codeclimate.com/github/grauwoelfchen/locker_room/coverage]
 
 Home :: https://github.com/grauwoelfchen/locker_room
 Bugs :: https://github.com/grauwoelfchen/locker_room/issues
