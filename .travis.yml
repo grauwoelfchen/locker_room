@@ -9,7 +9,7 @@ before_script:
   - psql -U postgres -c "CREATE DATABASE travis_ci_test;"
   - mv test/dummy/config/database.yml.travis test/dummy/config/database.yml
   - RAILS_ENV=test bundle exec rake db:migrate --trace
-scripts:
+script:
   - RAILS_ENV=test bundle exec rake test
 notifications:
   email:
