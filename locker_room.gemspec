@@ -32,4 +32,5 @@ DESCRIPTION
   s.add_development_dependency "minitest-rails-capybara"
   s.add_development_dependency "database_cleaner"
   s.add_development_dependency "travis"
+  s.add_development_dependency "codeclimate-test-reporter"
 end
