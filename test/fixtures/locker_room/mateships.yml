@@ -5,7 +5,7 @@ playing_piano_mateship_1:
 playing_piano_mateship_2:
   team: playing_piano
   user: weenie
-  role: <%= LockerRoom::Mateship.roles[:mate] %>
+  role: <%= LockerRoom::Mateship.roles[:member] %>
 penguin_patrol_mateship_1:
   team: penguin_patrol
   user: henry

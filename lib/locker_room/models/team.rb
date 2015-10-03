@@ -14,6 +14,13 @@ module LockerRoom
         has_many :owners,
           through: :ownerships,
           source:  :user
+        has_many :memberships,
+          -> { where(:role => LockerRoom::Mateship.roles[:member]) },
+          class_name: 'LockerRoom::Mateship'
+        has_many :members,
+          through: :memberships,
+          source:  :user
+
         accepts_nested_attributes_for :owners
 
         validates :name,
@@ -38,8 +45,16 @@ module LockerRoom
           self.subdomain = subdomain.to_s.downcase
         end
 
+        def primary_owner
+          owners.order(:id => :asc).first
+        end
+
+        def owner?(user)
+          owners.include?(user)
+        end
+
         def created?
-          persisted? && (owner = owners.first) && owner.persisted?
+          persisted? && (owner = primary_owner) && owner.persisted?
         end
 
         def create_schema
@@ -56,7 +71,7 @@ module LockerRoom
           self.transaction do
             team = new(options)
             if team.save
-              owner = team.owners.first
+              owner = team.primary_owner
               unless owner && owner.update_attribute(:team, team)
                 raise ActiveRecord::Rollback
               end
