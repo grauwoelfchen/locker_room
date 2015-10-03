@@ -11,9 +11,11 @@ ActiveRecord::Migrator.migrations_paths = [
 
 require 'rails/test_help'
 
+require 'minitest/unit'
 require 'minitest/mock'
 require 'minitest/rails/capybara'
 require 'minitest/pride' if ENV['TEST_PRIDE'].present?
+require 'mocha/mini_test'
 require 'database_cleaner'
 
 # Filter out Minitest backtrace while allowing backtrace from other libraries
