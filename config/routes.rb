@@ -10,6 +10,9 @@ LockerRoom::Engine.routes.draw do
       get    '/signup',  to: 'users#new',     as: :registration
       post   '/signup',  to: 'users#create',  as: nil
 
+      get   '/team/settings', to: 'teams#edit',   as: :edit_team
+      patch '/team/settings', to: 'teams#update', as: :team
+
       root 'storages#show', as: :root
     end
   end
