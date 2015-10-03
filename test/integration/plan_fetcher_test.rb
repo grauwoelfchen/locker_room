@@ -12,7 +12,7 @@ class PlanFetcherTest < ActionDispatch::IntegrationTest
     Braintree::Plan.expects(:all).returns([@plan])
     LockerRoom::Plan.expects(:find_by)
       .with(:braintree_id => 'foo1').returns(nil)
-    LockerRoom::Plan.expects(:create).with(
+    LockerRoom::Plan.expects(:create!).with(
       :braintree_id => 'foo1',
       :name         => 'Starter',
       :price        => '9.95'
@@ -21,14 +21,14 @@ class PlanFetcherTest < ActionDispatch::IntegrationTest
   end
 
   def test_update_by_store_plans_locally
-    @plan.expects(:update_attributes).with(
+    @plan.expects(:update_attributes!).with(
       :name  => 'Starter',
       :price => '9.95'
     ).once
     Braintree::Plan.expects(:all).returns([@plan])
     LockerRoom::Plan.expects(:find_by)
       .with(:braintree_id => 'foo1').returns(@plan)
-    LockerRoom::Plan.expects(:create).never
+    LockerRoom::Plan.expects(:create!).never
     LockerRoom::PlanFetcher.store_plans_locally
   end
 end
