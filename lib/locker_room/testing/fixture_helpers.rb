@@ -19,20 +19,12 @@ module LockerRoom
           end
 
           # TODO: cache
-
-          def locker_room_teams(name)
-            team_id = ActiveRecord::FixtureSet.identify(name)
-            LockerRoom::Team.find(team_id)
-          end
-
-          def locker_room_mateships(name)
-            mateship_id = ActiveRecord::FixtureSet.identify(name)
-            LockerRoom::Mateship.find(mateship_id)
-          end
-
-          def locker_room_users(name)
-            user_id = ActiveRecord::FixtureSet.identify(name)
-            LockerRoom::User.find(user_id)
+          %w{team mateship user plan}.map do |model|
+            define_method("locker_room_#{model.pluralize}".intern) do |name|
+              data_id = ActiveRecord::FixtureSet.identify(name)
+              klass = Object.const_get("LockerRoom::#{model.classify}")
+              klass.find(data_id)
+            end
           end
         end
 
