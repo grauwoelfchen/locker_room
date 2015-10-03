@@ -21,8 +21,11 @@ module AuthenticationHelpers
       if page && !route
         host = Capybara.app_host.sub(/^https?:\/\//, '')
         subdomain = page.driver.request.env['HTTP_HOST'].sub(".#{host}", '')
-        if subdomain.present?
-          route = locker_room.logout_url(:subdomain => subdomain)
+        if subdomain.present? &&
+           team = LockerRoom::Team.find_by(subdomain: subdomain)
+          route = locker_room.logout_url(:subdomain => team.subdomain)
+        else
+          route = locker_room.logout_url
         end
       end
       orig_logout_user(route, http_method)

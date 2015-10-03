@@ -1,9 +1,12 @@
 playing_piano:
   name: 'Playing the Piano'
   subdomain: 'piano'
+  plan: starter_plan
 penguin_patrol:
   name: 'Penguin Patrol'
   subdomain: 'penguin'
+  plan: extreme_plan
 ice_cream_shop:
   name: 'Ice Cream Shop'
   subdomain: 'ice-cream'
+  plan: starter_plan

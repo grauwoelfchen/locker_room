@@ -8,5 +8,10 @@
     <%= f.label :name %>
     <%= f.text_field :name %>
   </p>
+  <p>
+    <%= f.label :plan_id %>
+    <% plans = LockerRoom::Plan.all.map { |p| [p.name, p.id] } %>
+    <%= f.select :plan_id, plans %>
+  </p>
   <%= f.submit 'Update Team' %>
 <% end %>
