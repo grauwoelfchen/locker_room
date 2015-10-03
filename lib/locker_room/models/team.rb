@@ -72,9 +72,9 @@ module LockerRoom
             team = new(options)
             if team.save
               owner = team.primary_owner
-              unless owner && owner.update_attribute(:team, team)
-                raise ActiveRecord::Rollback
-              end
+              raise ActiveRecord::Rollback unless
+                owner && owner.update_attribute(:team, team)
+              team.create_schema
             end
             team
           end
