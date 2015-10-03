@@ -12,14 +12,11 @@ module LockerRoom
     def create
       @team = LockerRoom::Team.create_with_owner(team_params)
       if @team.created?
-        owner = @team.owners.first
-        login(owner.email, owner_params[:password])
-        @team.create_schema
-        flash[:notice] = 'Your team has been successfully created.'
+        login(@team.primary_owner.email, owner_params[:password])
+        flash[:notice] = 'Team has been successfully created.'
         redirect_to locker_room.root_url(:subdomain => @team.subdomain)
       else
-        @team.valid?
-        flash[:alert] = 'Your team could not be created.'
+        flash[:alert] = 'Team could not be created.'
         render :new
       end
     end
