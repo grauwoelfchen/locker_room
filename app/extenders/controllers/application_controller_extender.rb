@@ -25,6 +25,11 @@ end
     end
     helper_method :current_team
 
+    def owner?
+      current_team.owner?(current_user)
+    end
+    helper_method :owner?
+
     def not_authenticated
       redirect_to locker_room.login_url, :alert => 'Please signin.'
     end
