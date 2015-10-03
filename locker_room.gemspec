@@ -26,10 +26,12 @@ DESCRIPTION
   s.add_dependency "enum_accessor", "~> 2.0"
   s.add_dependency "sorcery","~> 0.9.1"
   s.add_dependency "houser", "~> 2.0"
+  s.add_dependency "braintree", "2.49.0"
 
   s.add_development_dependency "foreman"
   s.add_development_dependency "minitest", "~> 5.5"
   s.add_development_dependency "minitest-rails-capybara"
+  s.add_development_dependency "mocha"
   s.add_development_dependency "database_cleaner"
   s.add_development_dependency "travis"
   s.add_development_dependency "codeclimate-test-reporter"

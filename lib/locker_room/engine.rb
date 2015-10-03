@@ -4,6 +4,7 @@ require 'apartment'
 require 'houser'
 require 'sorcery'
 require 'enum_accessor'
+require 'braintree'
 
 module Apartment
   module Elevators
