@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class TeamsUpdatingTest < Capybara::Rails::TestCase
-  locker_room_fixtures(:teams, :users, :mateships)
+  locker_room_fixtures(:teams, :users, :mateships, :plans)
 
   def setup
     @team = team_with_schema(:playing_piano)
@@ -46,6 +46,43 @@ class TeamsUpdatingTest < Capybara::Rails::TestCase
       assert_equal(locker_room.root_url, page.current_url)
       @team.reload
       assert_equal(@team.name, 'New name')
+    end
+  end
+
+  def test_updating_a_team_s_plan_as_owner
+    starter_plan = locker_room_plans(:starter_plan)
+    extreme_plan = locker_room_plans(:extreme_plan)
+    login_user(@team.primary_owner)
+    within_subdomain(@team.subdomain) do
+      visit(locker_room.root_url)
+      assert_equal(locker_room.root_url, page.current_url)
+      click_link('Edit Team')
+      select('Extreme', :from => 'Plan')
+      click_button('Update Team')
+      # at plan
+      plan_url = locker_room.plan_team_url(plan_id: extreme_plan.id)
+      assert_equal(plan_url, page.current_url)
+      assert_content('Team has been updated successfully.')
+      assert_content('You are changing to the \'Extreme\' plan')
+      assert_content('This plan costs $18.0 per month')
+      # at plan form
+      fill_in('Credit card number', with: '1111111111111')
+      fill_in('Name on card', with: 'OSWALD')
+      now = Time.now
+      future_date = "#{now.month + 1}/#{now.year + 1}"
+      fill_in('Expiration date', with: future_date)
+      fill_in('CVV', with: '123')
+      # at subscribe
+      LockerRoom::Team.any_instance.expects(:update_attributes)
+        .with(:plan_id => extreme_plan.id.to_s)
+        .returns(true)
+      Braintree::Subscription.expects(:create)
+        .with(anything)
+        .returns(stub(:success? => true)).once
+      click_button('Change plan')
+      # at root
+      assert_content('Your team is now on the \'Extreme\' plan.')
+      assert_equal(locker_room.root_url, page.current_url)
     end
   end
 end

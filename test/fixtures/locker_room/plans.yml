@@ -1,11 +1,8 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-one:
-  name: MyString
-  price: 1.5
-  braintree_id: MyString
-
-two:
-  name: MyString
-  price: 1.5
-  braintree_id: MyString
+starter_plan:
+  name: 'Starter'
+  price: 9.95
+  braintree_id: 'starter'
+extreme_plan:
+  name: 'Extreme'
+  price: 18
+  braintree_id: 'extreme'
