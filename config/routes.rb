@@ -13,6 +13,9 @@ LockerRoom::Engine.routes.draw do
       get   '/team/settings', to: 'teams#edit',   as: :edit_team
       patch '/team/settings', to: 'teams#update', as: :team
 
+      get '/team/plan/:plan_id', to: 'teams#plan',      as: :plan_team
+      get '/team/subscribe',     to: 'teams#subscribe', as: :subscribe_team
+
       root 'storages#show', as: :root
     end
   end

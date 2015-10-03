@@ -69,15 +69,44 @@ class ActionController::TestCase
   end
 end
 
+ENV['BRAINTREE_GATEWAY_PORT'] ||= '45678'
+
 Capybara.configure do |config|
-  config.app_host = 'http://example.org'
+  config.app_host    = 'http://example.org'
+  config.server_port = 3001
 end
+
+require 'fake_braintree'
+FakeBraintree.activate!(gateway_port: ENV['BRAINTREE_GATEWAY_PORT'])
+
+# https://github.com/highfidelity/fake_braintree/issues/18#issuecomment-13776245
+class PortMap
+  def initialize(default_app, mappings)
+    @default_app = default_app
+    @mappings = mappings
+  end
+
+  def call(env)
+    request = Rack::Request.new(env)
+    port = request.port
+    app = @mappings[port] || @default_app
+    app.call(env)
+  end
+end
+
+original_app = Capybara.app
+
+Capybara.app = PortMap.new(
+  original_app,
+  ENV['BRAINTREE_GATEWAY_PORT'].to_i => FakeBraintree::SinatraApp
+)
 
 class Capybara::Rails::TestCase
   include LockerRoom::Testing::Integration::SubdomainHelpers
   include LockerRoom::Testing::Integration::AuthenticationHelpers
 
   def before_setup
+    FakeBraintree.clear!
     @default_host = locker_room.scope.default_url_options[:host]
     locker_room.scope.default_url_options[:host] = Capybara.app_host
     super
