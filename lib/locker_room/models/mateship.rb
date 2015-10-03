@@ -6,7 +6,7 @@ module LockerRoom
       included do
         extend ScopedTo
 
-        enum_accessor :role, [:owner, :mate]
+        enum_accessor :role, [:owner, :member]
 
         belongs_to :team, class_name: 'LockerRoom::Team'
         belongs_to :user, class_name: 'LockerRoom::User'

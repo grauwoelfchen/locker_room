@@ -26,19 +26,19 @@ module LockerRoom
 
     private
 
-    def team_params
-      params.require(:team).permit(
-        :name, :subdomain, {
-          :owners_attributes => [
-            :username, :email, :password, :password_confirmation
-          ]
-        }
-      )
-    end
+      def team_params
+        params.require(:team).permit(
+          :name, :subdomain, {
+            :owners_attributes => [
+              :username, :email, :password, :password_confirmation
+            ]
+          }
+        )
+      end
 
-    def owner_params
-      owners_attributes = team_params[:owners_attributes]
-      (owners_attributes && owners_attributes['0']) || {}
-    end
+      def owner_params
+        owners_attributes = team_params[:owners_attributes]
+        (owners_attributes && owners_attributes['0']) || {}
+      end
   end
 end
