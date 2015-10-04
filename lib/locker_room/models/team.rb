@@ -51,7 +51,7 @@ module LockerRoom
         end
 
         def owner?(user)
-          owners.include?(user)
+          owners.pluck(:id).include?(user.id)
         end
 
         def created?

@@ -4,6 +4,13 @@
 </div>
 
 <%= form_for :customer, url: Braintree::TransparentRedirect.url, html: {autocomplete: 'off'} do |f| %>
+  <% if @result && @result.message %>
+    <ul>
+      <% @result.message.split("\n").each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  <% end %>
   <%= f.fields_for :credit_card do |_f| %>
     <p>
       <%= _f.label :number, 'Credit card number' %><br>

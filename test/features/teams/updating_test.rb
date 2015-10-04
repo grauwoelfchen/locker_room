@@ -60,29 +60,60 @@ class TeamsUpdatingTest < Capybara::Rails::TestCase
       select('Extreme', :from => 'Plan')
       click_button('Update Team')
       # at plan
-      plan_url = locker_room.plan_team_url(plan_id: extreme_plan.id)
+      plan_url = locker_room.plan_team_url(:plan_id => extreme_plan.id)
       assert_equal(plan_url, page.current_url)
       assert_content('Team has been updated successfully.')
       assert_content('You are changing to the \'Extreme\' plan')
       assert_content('This plan costs $18.0 per month')
       # at plan form
-      fill_in('Credit card number', with: '1111111111111')
-      fill_in('Name on card', with: 'OSWALD')
+      fill_in('Credit card number', :with => '1111111111111')
+      fill_in('Name on card', :with => 'OSWALD')
       now = Time.now
       future_date = "#{now.month + 1}/#{now.year + 1}"
-      fill_in('Expiration date', with: future_date)
-      fill_in('CVV', with: '123')
-      # at subscribe
-      LockerRoom::Team.any_instance.expects(:update_attributes)
-        .with(:plan_id => extreme_plan.id.to_s)
-        .returns(true)
-      Braintree::Subscription.expects(:create)
-        .with(anything)
-        .returns(stub(:success? => true)).once
+      fill_in('Expiration date', :with => future_date)
+      fill_in('CVV', :with => '123')
       click_button('Change plan')
       # at root
       assert_content('Your team is now on the \'Extreme\' plan.')
       assert_equal(locker_room.root_url, page.current_url)
+    end
+  end
+
+  def test_change_team_s_plan_with_invalid_credit_card_number_fails
+    extreme_plan = locker_room_plans(:extreme_plan)
+    # errors
+    # see:
+    #   https://github.com/highfidelity/fake_braintree/
+    #   blob/master/lib/fake_braintree.rb#L46
+    FakeBraintree.registry.failures = {
+      'invalid' => {
+        'message' => 'Credit card number must be 12-19 digits'
+      }
+    }
+    login_user(@team.primary_owner)
+    within_subdomain(@team.subdomain) do
+      visit(locker_room.root_url)
+      assert_equal(locker_room.root_url, page.current_url)
+      click_link('Edit Team')
+      select('Extreme', :from => 'Plan')
+      click_button('Update Team')
+      # at plan
+      plan_url = locker_room.plan_team_url(:plan_id => extreme_plan.id)
+      assert_equal(plan_url, page.current_url)
+      assert_content('Team has been updated successfully.')
+      assert_content('You are changing to the \'Extreme\' plan')
+      assert_content('This plan costs $18.0 per month')
+      # at plan form
+      fill_in('Credit card number', :with => 'invalid')
+      fill_in('Name on card', :with => 'OSWALD')
+      now = Time.now
+      future_date = "#{now.month + 1}/#{now.year + 1}"
+      fill_in('Expiration date', :with => future_date)
+      fill_in('CVV', :with => '123')
+      click_button('Change plan')
+      # at subscribe
+      assert_content('Invalid credit card details. Please try again.')
+      assert_content('Credit card number must be 12-19 digits')
     end
   end
 end
