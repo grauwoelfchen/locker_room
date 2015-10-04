@@ -29,15 +29,18 @@ module LockerRoom
 
       def subscribe
         @plan = LockerRoom::Plan.find(params[:plan_id])
-        result = Braintree::TransparentRedirect.confirm(request.query_string)
-        if result.success?
+        @result = Braintree::TransparentRedirect.confirm(request.query_string)
+        if @result.success?
           subscription_result = Braintree::Subscription.create(
-            :payment_method_token => result.customer.credit_cards[0].token,
+            :payment_method_token => @result.customer.credit_cards[0].token,
             :plan_id              => @plan.braintree_id
           )
           current_team.update_attributes(:plan_id => params[:plan_id])
           flash[:notice] = "Your team is now on the '#{@plan.name}' plan."
           redirect_to locker_room.root_path
+        else
+          flash[:alert] = 'Invalid credit card details. Please try again.'
+          render :plan
         end
       end
 
