@@ -19,7 +19,7 @@ module LockerRoom
           end
 
           # TODO: cache
-          %w{team mateship user plan}.map do |model|
+          %w{team mateship user type}.map do |model|
             define_method("locker_room_#{model.pluralize}".intern) do |name|
               data_id = ActiveRecord::FixtureSet.identify(name)
               klass = Object.const_get("LockerRoom::#{model.classify}")
