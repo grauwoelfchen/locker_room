@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151005174606) do
+ActiveRecord::Schema.define(version: 20151003031634) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,24 +27,28 @@ ActiveRecord::Schema.define(version: 20151005174606) do
   add_index "locker_room_mateships", ["team_id"], name: "index_locker_room_mateships_on_team_id", using: :btree
   add_index "locker_room_mateships", ["user_id"], name: "index_locker_room_mateships_on_user_id", using: :btree
 
-  create_table "locker_room_plans", force: :cascade do |t|
-    t.string   "name"
-    t.float    "price"
-    t.string   "braintree_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-  end
-
   create_table "locker_room_teams", force: :cascade do |t|
     t.string   "name"
     t.string   "subdomain"
+    t.integer  "type_id"
+    t.string   "subscription_id"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
-    t.integer  "plan_id"
-    t.string   "subscription_id"
   end
 
   add_index "locker_room_teams", ["subdomain"], name: "index_locker_room_teams_on_subdomain", using: :btree
+  add_index "locker_room_teams", ["subscription_id"], name: "index_locker_room_teams_on_subscription_id", using: :btree
+  add_index "locker_room_teams", ["type_id"], name: "index_locker_room_teams_on_type_id", using: :btree
+
+  create_table "locker_room_types", force: :cascade do |t|
+    t.string   "plan_id"
+    t.string   "name"
+    t.float    "price"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "locker_room_types", ["plan_id"], name: "index_locker_room_types_on_plan_id", using: :btree
 
   create_table "locker_room_users", force: :cascade do |t|
     t.integer  "team_id"

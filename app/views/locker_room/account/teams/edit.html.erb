@@ -9,9 +9,9 @@
     <%= f.text_field :name %>
   </p>
   <p>
-    <%= f.label :plan_id %>
-    <% plans = LockerRoom::Plan.all.map { |p| [p.name, p.id] } %>
-    <%= f.select :plan_id, plans %>
+    <%= f.label :type_id %>
+    <% types = LockerRoom::Type.all.map { |t| [t.name, t.id] } %>
+    <%= f.select :type_id, types %>
   </p>
   <%= f.submit 'Update Team' %>
 <% end %>

@@ -1,0 +1,8 @@
+starter_type:
+  plan_id: 'starter'
+  name: 'Starter'
+  price: 9.95
+extreme_type:
+  plan_id: 'extreme'
+  name: 'Extreme'
+  price: 18

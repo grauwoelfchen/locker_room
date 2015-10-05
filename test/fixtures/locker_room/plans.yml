@@ -1,8 +1,0 @@
-starter_plan:
-  name: 'Starter'
-  price: 9.95
-  braintree_id: 'starter'
-extreme_plan:
-  name: 'Extreme'
-  price: 18
-  braintree_id: 'extreme'

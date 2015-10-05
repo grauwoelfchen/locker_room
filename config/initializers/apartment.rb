@@ -18,7 +18,7 @@ Apartment.configure do |config|
     LockerRoom::Team
     LockerRoom::User
     LockerRoom::Mateship
-    LockerRoom::Plan
+    LockerRoom::Type
   )
 
   # In order to migrate all of your Tenants you need to provide a list of Tenant names to Apartment.
