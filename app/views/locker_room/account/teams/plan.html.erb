@@ -3,33 +3,8 @@
   <p>This plan costs <strong>$<%= @plan.price %></strong> per month</p>
 </div>
 
-<%= form_for :customer, url: Braintree::TransparentRedirect.url, html: {autocomplete: 'off'} do |f| %>
-  <% if @result && @result.message %>
-    <ul>
-      <% @result.message.split("\n").each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-    </ul>
-  <% end %>
-  <%= f.fields_for :credit_card do |_f| %>
-    <p>
-      <%= _f.label :number, 'Credit card number' %><br>
-      <%= _f.text_field :number %>
-    </p>
-    <p>
-      <%= _f.label :cardholder_name, 'Name on card' %><br>
-      <%= _f.text_field :cardholder_name %>
-    </p>
-    <p>
-      <%= _f.label :expiration_date, 'Expiration date' %><br>
-      <%= _f.text_field :expiration_date %>
-    </p>
-    <p>
-      <%= _f.label :cvv, 'CVV' %><br>
-      <%= _f.text_field :cvv %>
-    </p>
-  <% end %>
-  <% tr_data = Braintree::TransparentRedirect.create_customer_data(redirect_url:  locker_room.subscribe_team_url(plan_id: params[:plan_id])) %>
-  <%= hidden_field_tag 'tr_data', tr_data %>
-  <%= f.submit 'Change plan' %>
+<% if current_team.subscription_id.present? %>
+  <%= render 'edit_subscription' %>
+<% else %>
+  <%= render 'new_subscription' %>
 <% end %>

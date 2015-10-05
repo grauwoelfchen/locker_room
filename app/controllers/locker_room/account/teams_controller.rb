@@ -4,6 +4,7 @@ module LockerRoom
   module Account
     class TeamsController < ApplicationController
       before_filter :authorize_owner, only: [:edit, :update, :plan]
+      before_action :set_plan, only: [:plan, :subscribe, :confirm_plan]
 
       def edit
       end
@@ -24,18 +25,18 @@ module LockerRoom
       end
 
       def plan
-        @plan = LockerRoom::Plan.find(params[:plan_id])
       end
 
       def subscribe
-        @plan = LockerRoom::Plan.find(params[:plan_id])
         @result = Braintree::TransparentRedirect.confirm(request.query_string)
         if @result.success?
           subscription_result = Braintree::Subscription.create(
             :payment_method_token => @result.customer.credit_cards[0].token,
             :plan_id              => @plan.braintree_id
           )
-          current_team.update_attributes(:plan_id => params[:plan_id])
+          subscription_id = subscription_result.subscription.id
+          current_team.update_column(:plan_id, params[:plan_id])
+          current_team.update_column(:subscription_id, subscription_id)
           flash[:notice] = "Your team is now on the '#{@plan.name}' plan."
           redirect_to locker_room.root_path
         else
@@ -44,7 +45,32 @@ module LockerRoom
         end
       end
 
+      def confirm_plan
+        begin
+          subscription_id = current_team.subscription_id
+          subscription_result = Braintree::Subscription.update(
+            subscription_id,
+            :plan_id => @plan.braintree_id
+          )
+        rescue Braintree::NotFoundError
+          subscription_result = nil
+        end
+        if subscription_result && subscription_result.success?
+          current_team.update_column(:plan_id, @plan.id)
+          flash[:notice] =
+            "Your team has switched to the '#{@plan.name}' plan."
+          redirect_to locker_room.root_path
+        else
+          flash[:error] = 'Something went wrong. Please try again.'
+          render :plan
+        end
+      end
+
       private
+
+        def set_plan
+          @plan = LockerRoom::Plan.find(params[:plan_id])
+        end
 
         def team_params
           params.require(:team).permit(:name, :plan_id)
