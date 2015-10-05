@@ -15,6 +15,8 @@ LockerRoom::Engine.routes.draw do
 
       get '/team/plan/:plan_id', to: 'teams#plan',      as: :plan_team
       get '/team/subscribe',     to: 'teams#subscribe', as: :subscribe_team
+      post '/team/confirm_plan', to: 'teams#confirm_plan',
+        as: :confirm_plan_team
 
       root 'storages#show', as: :root
     end
