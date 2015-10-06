@@ -1,15 +1,15 @@
 playing_piano:
   name: 'Playing the Piano'
   subdomain: 'piano'
-  plan: starter_plan
+  type: starter_type
   subscription_id: 'bar456'
 penguin_patrol:
   name: 'Penguin Patrol'
   subdomain: 'penguin'
-  plan: extreme_plan
+  type: extreme_type
   subscription_id: '789baz'
 ice_cream_shop:
   name: 'Ice Cream Shop'
   subdomain: 'ice-cream'
-  plan: starter_plan
+  type: starter_type
   subscription_id: '1q2u3x'

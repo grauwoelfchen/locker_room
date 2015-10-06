@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class TeamsUpdatingTest < Capybara::Rails::TestCase
-  locker_room_fixtures(:teams, :users, :mateships, :plans)
+  locker_room_fixtures(:teams, :users, :mateships, :types)
 
   def setup
     @team = team_with_schema(:playing_piano)
@@ -49,9 +49,9 @@ class TeamsUpdatingTest < Capybara::Rails::TestCase
     end
   end
 
-  def test_updating_a_team_s_plan_with_invalid_credit_card_number_fails
-    extreme_plan = locker_room_plans(:extreme_plan)
-    @team.update_columns(:plan_id => nil, :subscription_id => nil)
+  def test_updating_a_team_s_type_with_invalid_credit_card_number_fails
+    extreme_type = locker_room_types(:extreme_type)
+    @team.update_columns(:type_id => nil, :subscription_id => nil)
     @team.reload
     # errors
     # see:
@@ -67,32 +67,32 @@ class TeamsUpdatingTest < Capybara::Rails::TestCase
       visit(locker_room.root_url)
       assert_equal(locker_room.root_url, page.current_url)
       click_link('Edit Team')
-      select('Extreme', :from => 'Plan')
+      select('Extreme', :from => 'Type')
       click_button('Update Team')
-      # at plan
-      plan_url = locker_room.plan_team_url(:plan_id => extreme_plan.id)
-      assert_equal(plan_url, page.current_url)
+      # at type
+      type_url = locker_room.type_team_url(:type_id => extreme_type.id)
+      assert_equal(type_url, page.current_url)
       assert_content('Team has been updated successfully.')
-      assert_content('You are changing to the \'Extreme\' plan')
-      assert_content('This plan costs $18.0 per month')
-      # at plan form
+      assert_content('You are changing to the \'Extreme\' type')
+      assert_content('This type costs $18.0 per month')
+      # at type form
       fill_in('Credit card number', :with => 'invalid')
       fill_in('Name on card', :with => 'OSWALD')
       now = Time.now
       future_date = "#{now.month + 1}/#{now.year + 1}"
       fill_in('Expiration date', :with => future_date)
       fill_in('CVV', :with => '123')
-      click_button('Change plan')
+      click_button('Change type')
       # at subscribe
       assert_content('Invalid credit card details. Please try again.')
       assert_content('Credit card number must be 12-19 digits')
     end
   end
 
-  def test_updating_a_team_s_plan_as_owner
-    starter_plan = locker_room_plans(:starter_plan)
-    extreme_plan = locker_room_plans(:extreme_plan)
-    @team.update_columns(:plan_id => nil, :subscription_id => nil)
+  def test_updating_a_team_s_type_as_owner
+    starter_type = locker_room_types(:starter_type)
+    extreme_type = locker_room_types(:extreme_type)
+    @team.update_columns(:type_id => nil, :subscription_id => nil)
     @team.reload
     Braintree::Subscription.any_instance
       .expects(:id)
@@ -102,62 +102,62 @@ class TeamsUpdatingTest < Capybara::Rails::TestCase
       visit(locker_room.root_url)
       assert_equal(locker_room.root_url, page.current_url)
       click_link('Edit Team')
-      select('Extreme', :from => 'Plan')
+      select('Extreme', :from => 'Type')
       click_button('Update Team')
-      # at plan
-      plan_url = locker_room.plan_team_url(:plan_id => extreme_plan.id)
-      assert_equal(plan_url, page.current_url)
+      # at type
+      type_url = locker_room.type_team_url(:type_id => extreme_type.id)
+      assert_equal(type_url, page.current_url)
       assert_content('Team has been updated successfully.')
-      assert_content('You are changing to the \'Extreme\' plan')
-      assert_content('This plan costs $18.0 per month')
-      # at plan form
+      assert_content('You are changing to the \'Extreme\' type')
+      assert_content('This type costs $18.0 per month')
+      # at type form
       fill_in('Credit card number', :with => '1111111111111')
       fill_in('Name on card', :with => 'OSWALD')
       now = Time.now
       future_date = "#{now.month + 1}/#{now.year + 1}"
       fill_in('Expiration date', :with => future_date)
       fill_in('CVV', :with => '666')
-      click_button('Change plan')
+      click_button('Change type')
       # at root
-      assert_content('Your team is now on the \'Extreme\' plan.')
+      assert_content('Your team is now on the \'Extreme\' type.')
       assert_equal(locker_room.root_url, page.current_url)
       @team.reload
-      assert_equal(@team.plan, extreme_plan)
+      assert_equal(@team.type, extreme_type)
       assert_equal(@team.subscription_id, 'foo123')
     end
   end
 
-  def test_changing_plan_after_initial_subscription_fails
-    starter_plan = locker_room_plans(:starter_plan)
-    extreme_plan = locker_room_plans(:extreme_plan)
+  def test_changing_type_after_initial_subscription_fails
+    starter_type = locker_room_types(:starter_type)
+    extreme_type = locker_room_types(:extreme_type)
     # no registered previous subscription
     login_user(@team.primary_owner)
     within_subdomain(@team.subdomain) do
       visit(locker_room.root_url)
       assert_equal(locker_room.root_url, page.current_url)
       click_link('Edit Team')
-      select('Extreme', :from => 'Plan')
+      select('Extreme', :from => 'Type')
       click_button('Update Team')
-      # at plan
-      plan_url = locker_room.plan_team_url(:plan_id => extreme_plan.id)
-      assert_equal(plan_url, page.current_url)
+      # at type
+      type_url = locker_room.type_team_url(:type_id => extreme_type.id)
+      assert_equal(type_url, page.current_url)
       assert_content('Team has been updated successfully.')
-      assert_content('You are changing to the \'Extreme\' plan')
-      assert_content('This plan costs $18.0 per month')
-      # at plan form
-      click_button('Change plan')
+      assert_content('You are changing to the \'Extreme\' type')
+      assert_content('This type costs $18.0 per month')
+      # at type form
+      click_button('Change type')
       # at root
       assert_content('Something went wrong. Please try again.')
-      plan_url = locker_room.confirm_plan_team_url(:plan_id => extreme_plan.id)
-      assert_equal(plan_url, page.current_url)
+      type_url = locker_room.confirm_type_team_url(:type_id => extreme_type.id)
+      assert_equal(type_url, page.current_url)
       @team.reload
-      assert_not_equal(@team.plan, extreme_plan)
+      assert_not_equal(@team.type, extreme_type)
     end
   end
 
-  def test_changing_plan_after_initial_subscription
-    starter_plan = locker_room_plans(:starter_plan)
-    extreme_plan = locker_room_plans(:extreme_plan)
+  def test_changing_type_after_initial_subscription
+    starter_type = locker_room_types(:starter_type)
+    extreme_type = locker_room_types(:extreme_type)
     # register previous subscription
     subscription_id = @team.subscription_id
     subscription = FakeBraintree::Subscription.new(
@@ -168,21 +168,21 @@ class TeamsUpdatingTest < Capybara::Rails::TestCase
       visit(locker_room.root_url)
       assert_equal(locker_room.root_url, page.current_url)
       click_link('Edit Team')
-      select('Extreme', :from => 'Plan')
+      select('Extreme', :from => 'Type')
       click_button('Update Team')
-      # at plan
-      plan_url = locker_room.plan_team_url(:plan_id => extreme_plan.id)
-      assert_equal(plan_url, page.current_url)
+      # at type
+      type_url = locker_room.type_team_url(:type_id => extreme_type.id)
+      assert_equal(type_url, page.current_url)
       assert_content('Team has been updated successfully.')
-      assert_content('You are changing to the \'Extreme\' plan')
-      assert_content('This plan costs $18.0 per month')
-      # at plan form
-      click_button('Change plan')
+      assert_content('You are changing to the \'Extreme\' type')
+      assert_content('This type costs $18.0 per month')
+      # at type form
+      click_button('Change type')
       # at root
-      assert_content('Your team has switched to the \'Extreme\' plan.')
+      assert_content('Your team has switched to the \'Extreme\' type.')
       assert_equal(locker_room.root_url, page.current_url)
       @team.reload
-      assert_equal(@team.plan, extreme_plan)
+      assert_equal(@team.type, extreme_type)
       assert_equal(@team.subscription_id, subscription_id)
     end
   end

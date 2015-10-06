@@ -1,6 +1,6 @@
 module LockerRoom
   module Models
-    module Plan
+    module Type
       extend ActiveSupport::Concern
     end
   end

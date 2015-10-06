@@ -1,18 +1,19 @@
 module LockerRoom
   class PlanFetcher
-    def self.store_plans_locally
+    # Imports Braintree::Plan as LockerRoom::Type
+    def self.store_types_locally
       Braintree::Plan.all.each do |plan|
-        stored_plan = LockerRoom::Plan.find_by(braintree_id: plan.id)
-        if stored_plan
-          stored_plan.update_attributes!(
+        type = LockerRoom::Type.find_by(plan_id: plan.id)
+        if type
+          type.update_attributes!(
             :name  => plan.name,
             :price => plan.price
           )
         else
-          LockerRoom::Plan.create!(
-            :braintree_id => plan.id,
-            :name         => plan.name,
-            :price        => plan.price,
+          LockerRoom::Type.create!(
+            :plan_id => plan.id,
+            :name    => plan.name,
+            :price   => plan.price,
           )
         end
       end

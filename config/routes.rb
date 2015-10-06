@@ -13,10 +13,10 @@ LockerRoom::Engine.routes.draw do
       get   '/team/settings', to: 'teams#edit',   as: :edit_team
       patch '/team/settings', to: 'teams#update', as: :team
 
-      get '/team/plan/:plan_id', to: 'teams#plan',      as: :plan_team
+      get '/team/type/:type_id', to: 'teams#type',      as: :type_team
       get '/team/subscribe',     to: 'teams#subscribe', as: :subscribe_team
-      post '/team/confirm_plan', to: 'teams#confirm_plan',
-        as: :confirm_plan_team
+      post '/team/confirm_type', to: 'teams#confirm_type',
+        as: :confirm_type_team
 
       root 'storages#show', as: :root
     end
