@@ -1,7 +1,7 @@
 require 'test_helper'
 
 module LockerRoom
-  class PlanTest < ActiveSupport::TestCase
+  class TypeTest < ActiveSupport::TestCase
     # test "the truth" do
     #   assert true
     # end

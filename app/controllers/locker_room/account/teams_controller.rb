@@ -3,18 +3,18 @@ require_dependency "locker_room/application_controller"
 module LockerRoom
   module Account
     class TeamsController < ApplicationController
-      before_filter :authorize_owner, only: [:edit, :update, :plan]
-      before_action :set_plan, only: [:plan, :subscribe, :confirm_plan]
+      before_filter :authorize_owner, only: [:edit, :update, :type]
+      before_action :set_type, only: [:type, :subscribe, :confirm_type]
 
       def edit
       end
 
       def update
-        plan_id = team_params.delete(:plan_id)
-        if current_team.update_attributes(team_params.except(:plan_id))
+        type_id = team_params.delete(:type_id)
+        if current_team.update_attributes(team_params.except(:type_id))
           flash[:notice] = 'Team has been updated successfully.'
-          if plan_id != current_team.plan_id.to_s
-            redirect_to locker_room.plan_team_url(:plan_id => plan_id)
+          if type_id != current_team.type_id.to_s
+            redirect_to locker_room.type_team_url(:type_id => type_id)
           else
             redirect_to locker_room.root_path
           end
@@ -24,7 +24,7 @@ module LockerRoom
         end
       end
 
-      def plan
+      def type
       end
 
       def subscribe
@@ -32,48 +32,48 @@ module LockerRoom
         if @result.success?
           subscription_result = Braintree::Subscription.create(
             :payment_method_token => @result.customer.credit_cards[0].token,
-            :plan_id              => @plan.braintree_id
+            :plan_id              => @type.plan_id
           )
           subscription_id = subscription_result.subscription.id
-          current_team.update_column(:plan_id, params[:plan_id])
+          current_team.update_column(:type_id, params[:type_id])
           current_team.update_column(:subscription_id, subscription_id)
-          flash[:notice] = "Your team is now on the '#{@plan.name}' plan."
+          flash[:notice] = "Your team is now on the '#{@type.name}' type."
           redirect_to locker_room.root_path
         else
           flash[:alert] = 'Invalid credit card details. Please try again.'
-          render :plan
+          render :type
         end
       end
 
-      def confirm_plan
+      def confirm_type
         begin
           subscription_id = current_team.subscription_id
           subscription_result = Braintree::Subscription.update(
             subscription_id,
-            :plan_id => @plan.braintree_id
+            :plan_id => @type.plan_id
           )
         rescue Braintree::NotFoundError
           subscription_result = nil
         end
         if subscription_result && subscription_result.success?
-          current_team.update_column(:plan_id, @plan.id)
+          current_team.update_column(:type_id, @type.id)
           flash[:notice] =
-            "Your team has switched to the '#{@plan.name}' plan."
+            "Your team has switched to the '#{@type.name}' type."
           redirect_to locker_room.root_path
         else
           flash[:error] = 'Something went wrong. Please try again.'
-          render :plan
+          render :type
         end
       end
 
       private
 
-        def set_plan
-          @plan = LockerRoom::Plan.find(params[:plan_id])
+        def set_type
+          @type = LockerRoom::Type.find(params[:type_id])
         end
 
         def team_params
-          params.require(:team).permit(:name, :plan_id)
+          params.require(:team).permit(:name, :type_id)
         end
     end
   end
