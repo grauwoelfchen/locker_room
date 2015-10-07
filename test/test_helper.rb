@@ -60,6 +60,7 @@ class ActiveSupport::TestCase
 end
 
 class ActionController::TestCase
+  include LockerRoom::Testing::Controller::WardenHelpers
   include LockerRoom::Testing::Controller::SubdomainHelpers
   include LockerRoom::Testing::Controller::AuthenticationHelpers
 

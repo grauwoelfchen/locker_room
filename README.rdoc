@@ -54,7 +54,7 @@ TODO ;)
 == Test
 
 Testing modules provide +within_subdomain+ with
-+login_user+ and +logout_user+ (from sorcery, but its support subdomain) for controller and integration.
++login_user+ and +logout_user+ (with subdomain scope support) for controller and integration.
 
   # test/test_helper.rb
 
@@ -65,6 +65,7 @@ Testing modules provide +within_subdomain+ with
   end
 
   class ActionController::TestCase
+    include LockerRoom::Testing::Controller::WardenHelpers
     include LockerRoom::Testing::Controller::SubdomainHelpers
     include LockerRoom::Testing::Controller::AuthenticationHelpers
   end
