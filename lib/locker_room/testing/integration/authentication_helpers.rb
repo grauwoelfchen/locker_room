@@ -2,20 +2,19 @@ module LockerRoom
   module Testing
     module Integration
 module AuthenticationHelpers
-  include Sorcery::TestHelpers::Rails::Integration
-
   private
 
-    alias_method :orig_login_user, :login_user
     def login_user(user=nil, route=nil, http_method=:post)
       # subdomain route support
       if user && !route
         route = locker_room.login_url(:subdomain => user.team.subdomain)
       end
-      orig_login_user(user, route, http_method)
+      user ||= @user
+      route ||= locker_room.login_url
+      user_params = {:email => user.email, :password => 'secret'}
+      page.driver.send(http_method, route, user_params)
     end
 
-    alias_method :orig_logout_user, :logout_user
     def logout_user(route=nil, http_method=:get)
       # subdomain route support
       if page && !route
@@ -24,11 +23,10 @@ module AuthenticationHelpers
         if subdomain.present? &&
            team = LockerRoom::Team.find_by(subdomain: subdomain)
           route = locker_room.logout_url(:subdomain => team.subdomain)
-        else
-          route = locker_room.logout_url
         end
       end
-      orig_logout_user(route, http_method)
+      route ||= locker_room.logout_url
+      page.driver.send(http_method, route)
     end
 
     def click_logout

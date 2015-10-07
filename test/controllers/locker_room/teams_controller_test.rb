@@ -38,8 +38,8 @@ module LockerRoom
     end
 
     def test_create
-      @controller.stub(:login, true) do
-        user = mock('User', email: 'daisy@example.org')
+      @controller.stub(:user_signed_in?, true) do
+        user = mock('User', id: 1)
         user.expects(:update_attribute).returns(true)
         team = mock('Team', subdomain: 'unicycle')
         team.expects(:primary_owner).returns(user).twice
