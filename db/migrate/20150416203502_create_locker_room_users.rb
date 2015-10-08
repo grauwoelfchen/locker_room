@@ -5,8 +5,7 @@ class CreateLockerRoomUsers < ActiveRecord::Migration
       t.string  :username
       t.string  :name
       t.string  :email, null: false
-      t.string  :crypted_password
-      t.string  :salt
+      t.string  :password_digest
 
       t.timestamps null: false
     end
