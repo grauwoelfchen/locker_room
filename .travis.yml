@@ -1,6 +1,9 @@
 language: ruby
 addons:
   postgresql: "9.3"
+  code_climate:
+    repo_token:
+      secure: FtY2G2HDUFbSHm0ipYGZyG/lSDlkdFkJFnQjkz8a+bSo0w5NpHNzVbFbugvPq0VFxO44uyiPCcpQNaG6qKfzj8CRugwPH1Bmj5ClW5nSiW14uHudX2OmQfaVFjtZKC581p9S+maHlb/2jtF+TwHlafMFunPg54S/iC6c70GqiIY=
 rvm:
   - 2.0.0
   - 2.1.5
@@ -9,11 +12,21 @@ before_script:
   - psql -U postgres -c "CREATE DATABASE travis_ci_test;"
   - mv test/dummy/config/database.yml.travis test/dummy/config/database.yml
   - RAILS_ENV=test bundle exec rake db:migrate --trace
-scripts:
+script:
   - RAILS_ENV=test bundle exec rake test
 notifications:
   email:
-    recipients:
-      - grauwoelfchen@gmail.com
     on_success: change
     on_failure: always
+    recipients:
+      - grauwoelfchen@gmail.com
+  irc:
+    on_success: change
+    on_failure: always
+    channels:
+      - secure: UlOv2Lnc9VI5/RmOewazvioib/X7GCSLWS6j/K0dpRap/2dzUnWregxAy6Sjw91gGJFyRiAWFCaZ3L7G6phA6+pEdAf6PdrDfBF+ApVaXVQGopdbwQNnaOtqDiiwCnnkof4whPln7uSDhBp1CGiHRTqbHfDsPQTej1XDepYrmjw=
+    channel_key:
+      secure: CaNOljKg2roeVsn3CpjG2O1zOGezb6JwKDx3xsmuOOS7ECqfu0kGyDmhSi6edPL9kf2vsxn3VPCHjwlXMV5i5Xama0HhIG+C4J5p9c4f4nyZIankdCM4AEVmucHitlIFqyaNLc+rPqjnffjazlPwF9BriKzZ6rMVavFLiyf2NsE=
+env:
+  global:
+  - TRAVIS_SECURE_ENV_VARS=true

@@ -1,12 +1,20 @@
 <p>
-  <%= user_form.label :email %><br>
-  <%= user_form.email_field :email %>
+  <%= f.label :username %><br>
+  <%= f.text_field :username %>
 </p>
 <p>
-  <%= user_form.label :password %><br>
-  <%= user_form.password_field :password %>
+  <%= f.label :name %><br>
+  <%= f.text_field :name %>
 </p>
 <p>
-  <%= user_form.label :password_confirmation %><br>
-  <%= user_form.password_field :password_confirmation %>
+  <%= f.label :email %><br>
+  <%= f.email_field :email %>
+</p>
+<p>
+  <%= f.label :password %><br>
+  <%= f.password_field :password %>
+</p>
+<p>
+  <%= f.label :password_confirmation %><br>
+  <%= f.password_field :password_confirmation %>
 </p>

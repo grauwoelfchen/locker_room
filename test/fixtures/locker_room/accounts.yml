@@ -1,9 +1,0 @@
-playing_piano:
-  name: 'Playing the Piano'
-  subdomain: 'piano'
-penguin_patrol:
-  name: 'Penguin Patrol'
-  subdomain: 'penguin'
-ice_cream_shop:
-  name: 'Ice Cream Shop'
-  subdomain: 'ice-cream'

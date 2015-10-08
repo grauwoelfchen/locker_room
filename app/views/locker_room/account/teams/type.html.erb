@@ -1,0 +1,10 @@
+<div>
+  <p>You are changing to the '<%= @type.name %>' type</p>
+  <p>This type costs <strong>$<%= @type.price %></strong> per month</p>
+</div>
+
+<% if current_team.subscription_id.present? %>
+  <%= render 'edit_subscription' %>
+<% else %>
+  <%= render 'new_subscription' %>
+<% end %>

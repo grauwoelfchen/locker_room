@@ -1,0 +1,17 @@
+<h2>Ehit Team</h2>
+
+<%= form_for(current_team, url: locker_room.team_path) do |f| %>
+  <% if current_team.errors.any? %>
+  <%= render 'locker_room/shared/errors', resource: current_team %>
+  <% end %>
+  <p>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :type_id %>
+    <% types = LockerRoom::Type.all.map { |t| [t.name, t.id] } %>
+    <%= f.select :type_id, types %>
+  </p>
+  <%= f.submit 'Update Team' %>
+<% end %>

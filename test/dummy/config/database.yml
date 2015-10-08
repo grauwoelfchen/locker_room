@@ -6,10 +6,10 @@ default: &default
 
 development:
   <<: *default
-  url: <%= ENV["DATABASE_URL_DEVELOPMENT"] %>
+  url: <%= ENV['DATABASE_URL_DEVELOPMENT'] %>
   min_messages: notice
 
 test:
   <<: *default
-  url: <%= ENV["DATABASE_URL_TEST"] %>
+  url: <%= ENV['DATABASE_URL_TEST'] %>
   min_messages: warning
