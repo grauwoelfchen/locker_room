@@ -1,8 +1,8 @@
 require 'apartment/elevators/subdomain'
 
 require 'apartment'
+require 'warden'
 require 'houser'
-require 'sorcery'
 require 'enum_accessor'
 require 'braintree'
 
@@ -30,6 +30,19 @@ module LockerRoom
     initializer 'locker_room.middleware.apartment' do
       Rails.application.config.middleware.use \
         'Apartment::Elevators::UnderscoreSubdomain'
+    end
+
+    initializer 'locker_room.middleware.warden' do
+      Rails.application.config.middleware.use Warden::Manager do |config|
+        config.default_strategies :password
+
+        config.serialize_into_session do |user|
+          user.id
+        end
+        config.serialize_from_session do |id|
+          LockerRoom::User.find(id)
+        end
+      end
     end
 
     # If you change tld_length, set

@@ -11,7 +11,7 @@
 <%= render 'locker_room/shared/login' %>
 
 <% flash.each do |k, v| %>
-<div class="flash <%=h k %>"><%=h v %></div>
+  <div class="flash <%=h k %>"><%=h v %></div>
 <% end %>
 
 <%= yield %>

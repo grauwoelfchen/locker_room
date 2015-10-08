@@ -19,26 +19,34 @@ digraph LockerRoom {
   ]
 
   Team [
-    label = "{locker_room_teams|\«LockerRoom::Team\»\lhas_many: users\lhas_many: mateships\lhas_many: ownerships\lhas_many: owners\l\n|{ \
-      {FIELD|name\l|subdomain\l}| \
-      {TYPE|varchar\l|varchar\l}| \
-      {VALUE|\r|\r} \
+    label = "{locker_room_teams|\«LockerRoom::Team\»\lbelongs_to: type\lhas_many: users\lhas_many: mateships\lhas_many: ownerships\lhas_many: owners\lhas_many: memberships\lhas_many: members\l\n|{ \
+      {FIELD|name\l|subdomain\l|type_id\l|subscription_id\l}| \
+      {TYPE|string\l|string\l|integer\l|string\l}| \
+      {VALUE|\r|\r|\r|generated values from external service\r} \
     }}"
   ]
 
   User [
     label = "{locker_room_users|\«LockerRoom::User\»\lbelongs_to: team\lhas_one: mateship\l\n|{ \
-      {FIELD|team_id\l|username\l|email\l|crypted_password\l|salt\l|remember_me_token\l|remember_me_token_expires_at\l|reset_password_token\l|reset_password_token_expires_at\l|activation_state\l|activation_token\l|activation_token_expires_at\l}| \
-      {TYPE|integer\l|varchar\l|varchar\l|varchar\l|varchar\l|varchar\l|datetime\l|varchar\l|datetime\l|varchar\l|varchar\l|datetime\l}| \
-      {VALUE|\r|\r|\r|\r|\r|\r|\r|\r|\r|\r|\r|\r} \
+      {FIELD|team_id\l|username\l|name\l|email\l|password_digest\l}| \
+      {TYPE|integer\l|string\l|string\l|string\l|string\l}| \
+      {VALUE|\r|\r|\r|\r|\r} \
     }}"
   ]
 
   Mateship [
     label = "{locker_room_mateships|\«LockerRoom::Mateship\»\lbelongs_to: team\lbelongs_to: user\l\n|{ \
-      {FIELD|team_id\l|user_id\l|role\l|name\l}| \
-      {TYPE|integer\l|intger\l|integer\l|varchar\l}| \
-      {VALUE|\r|\r|0:owner,1:mate\r|\r} \
+      {FIELD|team_id\l|user_id\l|role\l}| \
+      {TYPE|integer\l|intger\l|integer\l}| \
+      {VALUE|\r|\r|0:owner,1:mate\r} \
+    }}"
+  ]
+
+  Type [
+    label = "{locker_room_types|\«LockerRoom::Type\»\l\n|{ \
+      {FIELD|plan_id\l|name\l|price\l}| \
+      {TYPE|integer\l|string\l|float\l}| \
+      {VALUE|imported values from external service\r|\r|\r} \
     }}"
   ]
 
@@ -74,6 +82,17 @@ digraph LockerRoom {
 
   Mateship -> User
 
+
+  edge [ // belongs_to
+    arrowhead = normal
+    arrowtail = none
+    headlabel = ""
+    taillabel = ""
+    dir       = both
+  ]
+
+  Team -> Type
+
   edge [ // has_and_belongs_to_many
     arrowhead = crow
     arrowtail = vee
@@ -88,6 +107,6 @@ digraph LockerRoom {
    *
    */
 
-  {rank=same; Mateship;};
+  {rank=same; Mateship;Type;};
   {rank=same; User;Team;};
 }
