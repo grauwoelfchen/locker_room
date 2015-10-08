@@ -1,24 +1,36 @@
-::ApplicationController.class_eval do
+module LockerRoom::LoginMethods
   private
+
+    def login_with_subdomain(*credentials)
+      return nil unless current_subdomain && current_team
+      email = credentials[0]
+      return nil unless email
+      return nil unless current_team.users.find_by(:email => email)
+      login(*credentials)
+    end
+end
+
+::ApplicationController.class_eval do
+  include LockerRoom::LoginMethods
+
+  private
+
     def current_subdomain
-      @current_subdomain ||= env["Houser-Subdomain"]
+      @current_subdomain ||= env['Houser-Subdomain']
     end
     helper_method :current_subdomain
 
-    def current_account
-      @current_account ||= env["Houser-Object"]
+    def current_team
+      @current_team ||= env['Houser-Object']
     end
-    helper_method :current_account
+    helper_method :current_team
 
-    def login_with_subdomain(*credentials)
-      return nil unless current_subdomain
-      return nil unless email = credentials[0]
-      return nil unless account = current_account
-      return nil unless account.users.find_by(:email => email)
-      login(*credentials)
+    def owner?
+      current_team.owner?(current_user)
     end
+    helper_method :owner?
 
     def not_authenticated
-      redirect_to locker_room.login_url, :alert => "Please signin."
+      redirect_to locker_room.login_url, :alert => 'Please signin.'
     end
 end

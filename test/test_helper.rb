@@ -1,16 +1,22 @@
-ENV["RAILS_ENV"] = "test"
+require 'codeclimate-test-reporter'
+CodeClimate::TestReporter.start
 
-require File.expand_path("../../test/dummy/config/environment.rb",  __FILE__)
+ENV['RAILS_ENV'] ||= 'test'
+
+require File.expand_path('../../test/dummy/config/environment.rb',  __FILE__)
 ActiveRecord::Migrator.migrations_paths = [
-  File.expand_path("../../test/dummy/db/migrate", __FILE__),
+  File.expand_path('../../test/dummy/db/migrate', __FILE__),
   File.expand_path('../../db/migrate', __FILE__)
 ]
-require "rails/test_help"
 
-require "minitest/mock"
-require "minitest/rails/capybara"
-require "minitest/pride" if ENV["TEST_PRIDE"].present?
-require "database_cleaner"
+require 'rails/test_help'
+
+require 'minitest/unit'
+require 'minitest/mock'
+require 'minitest/rails/capybara'
+require 'minitest/pride' if ENV['TEST_PRIDE'].present?
+require 'mocha/mini_test'
+require 'database_cleaner'
 
 # Filter out Minitest backtrace while allowing backtrace from other libraries
 # to be shown.
@@ -22,7 +28,7 @@ Dir["#{test_dir}/support/**/*.rb"].each { |f| require f }
 
 # Load fixtures from the engine
 if ActiveSupport::TestCase.respond_to?(:fixture_path=)
-  ActiveSupport::TestCase.fixture_path = test_dir + "/fixtures"
+  ActiveSupport::TestCase.fixture_path = test_dir + '/fixtures'
   # ActiveSupport::TestCase.fixtures :all
 end
 
@@ -46,9 +52,9 @@ class ActiveSupport::TestCase
   end
 
   def clean_all_schema
-    LockerRoom::Account.all.map do |account|
+    LockerRoom::Team.all.map do |team|
       conn = ActiveRecord::Base.connection
-      conn.query(%Q{DROP SCHEMA IF EXISTS #{account.schema_name} CASCADE;})
+      conn.query(%Q{DROP SCHEMA IF EXISTS #{team.schema_name} CASCADE;})
     end
   end
 end
@@ -63,15 +69,44 @@ class ActionController::TestCase
   end
 end
 
+ENV['BRAINTREE_GATEWAY_PORT'] ||= '45678'
+
 Capybara.configure do |config|
-  config.app_host = "http://example.org"
+  config.app_host    = 'http://example.org'
+  config.server_port = 3001
 end
+
+require 'fake_braintree'
+FakeBraintree.activate!(gateway_port: ENV['BRAINTREE_GATEWAY_PORT'])
+
+# https://github.com/highfidelity/fake_braintree/issues/18#issuecomment-13776245
+class PortMap
+  def initialize(default_app, mappings)
+    @default_app = default_app
+    @mappings = mappings
+  end
+
+  def call(env)
+    request = Rack::Request.new(env)
+    port = request.port
+    app = @mappings[port] || @default_app
+    app.call(env)
+  end
+end
+
+original_app = Capybara.app
+
+Capybara.app = PortMap.new(
+  original_app,
+  ENV['BRAINTREE_GATEWAY_PORT'].to_i => FakeBraintree::SinatraApp
+)
 
 class Capybara::Rails::TestCase
   include LockerRoom::Testing::Integration::SubdomainHelpers
   include LockerRoom::Testing::Integration::AuthenticationHelpers
 
   def before_setup
+    FakeBraintree.clear!
     @default_host = locker_room.scope.default_url_options[:host]
     locker_room.scope.default_url_options[:host] = Capybara.app_host
     super

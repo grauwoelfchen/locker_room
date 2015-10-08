@@ -1,21 +1,31 @@
-require "locker_room/constraints/subdomain_required"
+require 'locker_room/constraints/subdomain_required'
 
 LockerRoom::Engine.routes.draw do
   constraints(LockerRoom::Constraints::SubdomainRequired) do
-    scope module: "account" do
-      get    :logout, to: "sessions#destroy", as: :logout
-      delete :logout, to: "sessions#destroy", as: nil
-      get    :login,  to: "sessions#new",     as: :login
-      post   :login,  to: "sessions#create",  as: nil
-      get    :signup, to: "users#new",        as: :signup
-      post   :signup, to: "users#create",     as: nil
-      root "locker#index", as: :root
+    scope module: 'account' do
+      get    '/signout', to: 'sessions#destroy', as: :logout
+      delete '/signout', to: 'sessions#destroy', as: nil
+      get    '/signin',  to: 'sessions#new',     as: :login
+      post   '/signin',  to: 'sessions#create',  as: nil
+      get    '/signup',  to: 'users#new',     as: :registration
+      post   '/signup',  to: 'users#create',  as: nil
+
+      get   '/team/settings', to: 'teams#edit',   as: :edit_team
+      patch '/team/settings', to: 'teams#update', as: :team
+
+      get '/team/type/:type_id', to: 'teams#type',      as: :type_team
+      get '/team/subscribe',     to: 'teams#subscribe', as: :subscribe_team
+      post '/team/confirm_type', to: 'teams#confirm_type',
+        as: :confirm_type_team
+
+      root 'storages#show', as: :root
     end
   end
 
-  get  "/login",  to: "login#new",       as: nil
-  post "/login",  to: "login#create",    as: nil
-  get  "/signup", to: "accounts#new",    as: nil
-  post "/signup", to: "accounts#create", as: nil
-  root "entrance#index", as: nil
+  get  '/signin', to: 'sessions#new',    as: nil
+  post '/signin', to: 'sessions#create', as: nil
+  get  '/signup', to: 'teams#new',    as: nil
+  post '/signup', to: 'teams#create', as: nil
+
+  root 'entrance#index', as: nil
 end

@@ -15,9 +15,10 @@ Apartment.configure do |config|
   # A typical example would be a Customer or Tenant model that stores each Tenant's information.
   #
   config.excluded_models = %w(
-    LockerRoom::Account
-    LockerRoom::Member
+    LockerRoom::Team
     LockerRoom::User
+    LockerRoom::Mateship
+    LockerRoom::Type
   )
 
   # In order to migrate all of your Tenants you need to provide a list of Tenant names to Apartment.
@@ -28,7 +29,7 @@ Apartment.configure do |config|
   # config.tenant_names = ['tenant1', 'tenant2']
   #
   config.tenant_names = lambda {
-    LockerRoom::Account.all.map(&:schema_name)
+    LockerRoom::Team.all.map(&:schema_name)
   }
 
   #
@@ -74,4 +75,4 @@ end
 # Rails.application.config.middleware.use 'Apartment::Elevators::Subdomain'
 
 Apartment::Elevators::Subdomain.excluded_subdomains = \
-  LockerRoom::Account::EXCLUDED_SUBDOMAINS
+  LockerRoom::Team::EXCLUDED_SUBDOMAINS

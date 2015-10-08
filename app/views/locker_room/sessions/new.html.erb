@@ -1,0 +1,13 @@
+<h2>Signin</h2>
+
+<%= form_tag login_path, method: :post do %>
+<p>
+<%= label_tag :subdomain %><br>
+<%= text_field_tag :subdomain %>
+</p>
+<p>
+<%= submit_tag 'Continue' %>
+</p>
+<% end %>
+
+<%= link_to 'New User?', registration_path %>
