@@ -2,7 +2,7 @@ require_dependency 'locker_room/application_controller'
 
 module LockerRoom
   class SessionsController < ApplicationController
-    skip_filter :require_login, :only => [:new, :create]
+    skip_filter :authenticate_user!, only: [:new, :create]
 
     def new
     end

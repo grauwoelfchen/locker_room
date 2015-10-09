@@ -2,7 +2,7 @@ require_dependency 'locker_room/application_controller'
 
 module LockerRoom
   class TeamsController < ApplicationController
-    skip_filter :require_login, :only => [:new, :create]
+    skip_filter :authenticate_user!, only: [:new, :create]
 
     def new
       @team = LockerRoom::Team.new
@@ -12,7 +12,7 @@ module LockerRoom
     def create
       @team = LockerRoom::Team.create_with_owner(team_params)
       if @team.created?
-        login(@team.primary_owner.email, owner_params[:password])
+        force_authentication!(@team.primary_owner)
         flash[:notice] = 'Team has been successfully created.'
         redirect_to locker_room.root_url(:subdomain => @team.subdomain)
       else

@@ -54,11 +54,10 @@ ActiveRecord::Schema.define(version: 20151003031634) do
     t.integer  "team_id"
     t.string   "username"
     t.string   "name"
-    t.string   "email",            null: false
-    t.string   "crypted_password"
-    t.string   "salt"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.string   "email",           null: false
+    t.string   "password_digest"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
   add_index "locker_room_users", ["team_id", "email"], name: "index_locker_room_users_on_team_id_and_email", unique: true, using: :btree

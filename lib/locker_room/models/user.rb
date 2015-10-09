@@ -6,7 +6,7 @@ module LockerRoom
       included do
         extend ScopedTo
 
-        authenticates_with_sorcery!
+        has_secure_password
 
         belongs_to :team
         has_one :mateship, class_name: 'LockerRoom::Mateship'
@@ -30,11 +30,11 @@ module LockerRoom
           if:          ->(u) { u.errors[:email].empty? }
         validates :password,
           presence: true,
+          on:       :update,
           unless:   ->(u) { u.skip_password }
         validates :password,
-          length:       {minimum: 6},
-          confirmation: true,
-          allow_blank:  true
+          length:      {minimum: 6},
+          allow_blank: true
         validates :password_confirmation,
           presence: true,
           if:       'password.present?'
