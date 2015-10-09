@@ -1,7 +1,7 @@
-<% if current_user %>
-Signed in as <%= current_user.email %>
-<% if owner? %>
-  &middot;
-  <%= link_to 'Edit Team', locker_room.edit_team_path %>
-<% end %>
+<% if user_signed_in? %>
+  Signed in as <%= current_user.email %>
+  <% if owner? %>
+    &middot;
+    <%= link_to 'Edit Team', locker_room.edit_team_path %>
+  <% end %>
 <% end %>
