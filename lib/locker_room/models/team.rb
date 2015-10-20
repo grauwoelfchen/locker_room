@@ -7,8 +7,10 @@ module LockerRoom
         EXCLUDED_SUBDOMAINS ||= %w(admin test www new)
 
         belongs_to :type, class_name: 'LockerRoom::Type'
-        has_many :users,     class_name: 'LockerRoom::User'
         has_many :mateships, class_name: 'LockerRoom::Mateship'
+        has_many :mates,
+          through: :mateships,
+          source:  :user
         has_many :ownerships,
           -> { where(:role => LockerRoom::Mateship.roles[:owner]) },
           class_name: 'LockerRoom::Mateship'
@@ -74,7 +76,7 @@ module LockerRoom
             if team.save
               owner = team.primary_owner
               raise ActiveRecord::Rollback unless
-                owner && owner.update_attribute(:team, team)
+                owner && owner.ownerships.create(team: team)
               team.create_schema
             end
             team

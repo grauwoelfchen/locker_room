@@ -5,7 +5,7 @@ module LockerRoom::AuthenticationMethods
       return nil unless current_subdomain && current_team
       email, password = credentials
       return nil unless email
-      user = current_team.users.find_by(:email => email)
+      user = current_team.mates.find_by(:email => email)
       return nil unless user
       if user.authenticate(password)
         force_authentication!(user)

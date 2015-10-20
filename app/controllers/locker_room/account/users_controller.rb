@@ -7,19 +7,17 @@ module LockerRoom
 
       def new
         @user = LockerRoom::User.new
-        @user.build_mateship
       end
 
       def create
         raise ActiveRecord::RecordNotFound unless current_team
 
-        @user = current_team.users.create_with_mateship(user_params)
-        if @user.created?
+        @user = current_team.mates.create(user_params)
+        if @user.valid?
           force_authentication!(@user)
           flash[:notice] = 'You have signed up successfully.'
           redirect_to locker_room.root_url
         else
-          @user.valid? # for password
           flash[:alert] = 'Your user account could not be created.'
           render :new
         end

@@ -75,17 +75,17 @@ class RegistrationTest < Capybara::Rails::TestCase
   def test_team_registration
     visit(locker_room.root_url)
     click_link('Create your team')
-    find('input[id=team_name]').set('Vanilla dog biscuits')
-    fill_in('Subdomain', :with => 'vanilla-dog-biscuits')
-    fill_in('Username',  :with => 'weenie')
-    find('input[id=team_owners_attributes_0_name]').set('Weenie')
-    fill_in('Email',                 :with => 'weenie@example.com')
-    fill_in('Password',              :with => 'bowwow', :exact => true)
-    fill_in('Password confirmation', :with => 'bowwow')
+    find('input[id=team_name]').set('Lovely flowers')
+    fill_in('Subdomain', :with => 'lovely-flowers')
+    fill_in('Username',  :with => 'daisy')
+    find('input[id=team_owners_attributes_0_name]').set('Daisy')
+    fill_in('Email',                 :with => 'daisy@example.org')
+    fill_in('Password',              :with => 'byebyuuun', :exact => true)
+    fill_in('Password confirmation', :with => 'byebyuuun')
     click_button('Create Team')
-    assert_equal('http://vanilla-dog-biscuits.example.org/', page.current_url)
+    assert_equal('http://lovely-flowers.example.org/', page.current_url)
     assert_content('Team has been successfully created.')
-    assert_content('Signed in as weenie@example.com')
+    assert_content('Signed in as daisy@example.org')
     logout_user
   end
 end
