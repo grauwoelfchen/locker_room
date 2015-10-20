@@ -20,7 +20,7 @@ class ScopTest < Capybara::Rails::TestCase
 
   def test_scoped_visibility_for_team_piano
     user = @team_piano.owners.first
-    login_user(user)
+    login_user(user, @team_piano.subdomain)
     visit(main_app.talks_url(:subdomain => @team_piano.subdomain))
     assert_content('Musical instrument')
     refute_content('The ice')
@@ -28,7 +28,7 @@ class ScopTest < Capybara::Rails::TestCase
 
   def test_scoped_visibility_for_team_penguin
     user = @team_penguin.owners.first
-    login_user(user)
+    login_user(user, @team_piano.subdomain)
     visit(main_app.talks_url(:subdomain => @team_penguin.subdomain))
     refute_content('Musical instrument')
     assert_content('The ice')

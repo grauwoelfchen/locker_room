@@ -1,23 +1,19 @@
 oswald:
-  team: playing_piano
   username: 'oswald'
   name: 'Oswald'
   email: 'oswald@example.org'
   password_digest: <%= BCrypt::Password.create('secret') %>
 weenie:
-  team: playing_piano
   username: 'weenie'
   name: 'Weenie'
   email: 'weenie@example.org'
   password_digest: <%= BCrypt::Password.create('secret') %>
 henry:
-  team: penguin_patrol
   username: 'henry'
   name: 'Henry the Penguin'
   email: 'henry@example.org'
   password_digest: <%= BCrypt::Password.create('secret') %>
 johnny:
-  team: ice_cream_shop
   username: 'johnny'
   name: 'Johnny Snowman'
   email: 'johnny@example.org'

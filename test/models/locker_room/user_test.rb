@@ -56,11 +56,11 @@ module LockerRoom
 
     def test_validation_with_duplicated_email
       user = user_with_schema(:oswald)
+      team = user.teams.first
       attributes = {
-        :email   => user.email,
-        :team => user.team
+        :email => user.email
       }
-      user = LockerRoom::User.new(attributes)
+      user = team.mates.new(attributes)
       refute(user.valid?)
       message = 'has already been taken'
       assert_equal([message], user.errors[:email])
@@ -131,7 +131,6 @@ module LockerRoom
     def test_creation
       team = team_with_schema(:playing_piano)
       attributes = {
-        :team_id               => team.id,
         :username              => 'daisy',
         :name                  => 'Daisy',
         :email                 => 'daisy@example.org',
@@ -142,23 +141,21 @@ module LockerRoom
       assert(user.valid?)
       assert(user.save)
       assert(user.persisted?)
-      assert_equal(team, user.team)
     end
 
-    def test_creation_with_mateship
+    def test_creation_via_mateships
       team = team_with_schema(:playing_piano)
       attributes = {
-        :team_id               => team.id,
         :username              => 'daisy',
         :name                  => 'Daisy',
         :email                 => 'daisy@example.org',
         :password              => 'hellyhollyhally',
         :password_confirmation => 'hellyhollyhally'
       }
-      user = team.users.create_with_mateship(attributes)
-      assert(user.mateship.persisted?)
+      user = team.mates.create(attributes)
+      assert_equal(team, user.teams.last)
       assert(user.persisted?)
-      assert(user.created?)
+      assert(user.valid?)
       team.mateships.reload
       assert_includes(team.mateships.pluck(:user_id), user.id)
     end

@@ -4,10 +4,10 @@ module LockerRoom
 module AuthenticationHelpers
   private
 
-    def login_user(user=nil, route=nil, http_method=:post)
+    def login_user(user=nil, subdomain=nil, route=nil, http_method=:post)
       # subdomain route support
       if user && !route
-        route = locker_room.login_url(:subdomain => user.team.subdomain)
+        route = locker_room.login_url(:subdomain => subdomain)
       end
       user ||= @user
       route ||= locker_room.login_url

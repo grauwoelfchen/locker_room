@@ -8,11 +8,11 @@ class TeamsUpdatingTest < Capybara::Rails::TestCase
   end
 
   def teardown
-    logout_user
+    logout_user(nil, :delete)
   end
 
   def test_updating_a_team_as_user
-    login_user(@team.members.first)
+    login_user(@team.members.first, @team.subdomain)
     within_subdomain(@team.subdomain) do
       visit(locker_room.edit_team_url)
       assert_content('You are not allowed to do that.')
@@ -20,7 +20,7 @@ class TeamsUpdatingTest < Capybara::Rails::TestCase
   end
 
   def test_updating_a_team_as_owner_with_invaild_attributes_fails
-    login_user(@team.primary_owner)
+    login_user(@team.primary_owner, @team.subdomain)
     within_subdomain(@team.subdomain) do
       visit(locker_room.root_url)
       assert_equal(locker_room.root_url, page.current_url)
@@ -35,7 +35,7 @@ class TeamsUpdatingTest < Capybara::Rails::TestCase
   end
 
   def test_updating_a_team_s_name_as_owner
-    login_user(@team.primary_owner)
+    login_user(@team.primary_owner, @team.subdomain)
     within_subdomain(@team.subdomain) do
       visit(locker_room.root_url)
       assert_equal(locker_room.root_url, page.current_url)
@@ -62,7 +62,7 @@ class TeamsUpdatingTest < Capybara::Rails::TestCase
         'message' => 'Credit card number must be 12-19 digits'
       }
     }
-    login_user(@team.primary_owner)
+    login_user(@team.primary_owner, @team.subdomain)
     within_subdomain(@team.subdomain) do
       visit(locker_room.root_url)
       assert_equal(locker_room.root_url, page.current_url)
@@ -97,7 +97,7 @@ class TeamsUpdatingTest < Capybara::Rails::TestCase
     Braintree::Subscription.any_instance
       .expects(:id)
       .returns('foo123')
-    login_user(@team.primary_owner)
+    login_user(@team.primary_owner, @team.subdomain)
     within_subdomain(@team.subdomain) do
       visit(locker_room.root_url)
       assert_equal(locker_room.root_url, page.current_url)
@@ -131,7 +131,7 @@ class TeamsUpdatingTest < Capybara::Rails::TestCase
     starter_type = locker_room_types(:starter_type)
     extreme_type = locker_room_types(:extreme_type)
     # no registered previous subscription
-    login_user(@team.primary_owner)
+    login_user(@team.primary_owner, @team.subdomain)
     within_subdomain(@team.subdomain) do
       visit(locker_room.root_url)
       assert_equal(locker_room.root_url, page.current_url)
@@ -163,7 +163,7 @@ class TeamsUpdatingTest < Capybara::Rails::TestCase
     subscription = FakeBraintree::Subscription.new(
       {}, {:id => subscription_id})
     subscription_result = subscription.create
-    login_user(@team.primary_owner)
+    login_user(@team.primary_owner, @team.subdomain)
     within_subdomain(@team.subdomain) do
       visit(locker_room.root_url)
       assert_equal(locker_room.root_url, page.current_url)

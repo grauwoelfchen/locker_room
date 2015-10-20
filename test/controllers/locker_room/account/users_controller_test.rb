@@ -8,9 +8,8 @@ module LockerRoom
       def test_new
         get(:new)
         refute(assigns(:user).persisted?)
-        refute(assigns(:user).mateship.persisted?)
         assert_kind_of(LockerRoom::User, assigns(:user))
-        assert_kind_of(LockerRoom::Mateship, assigns(:user).mateship)
+        assert_equal(assigns(:user).mateships, [])
         assert_template(:new)
         assert_response(:success)
       end
@@ -29,10 +28,9 @@ module LockerRoom
           }
           post(:create, params)
           refute(assigns(:user).persisted?)
-          refute(assigns(:user).mateship.persisted?)
-          assert(assigns(:current_team), assigns(:user).mateship.team)
+          assert([assigns(:current_team)], assigns(:user).teams)
+          assert_equal(assigns(:user).mateships, [])
           assert_kind_of(LockerRoom::User, assigns(:user))
-          assert_kind_of(LockerRoom::Mateship, assigns(:user).mateship)
           assert_template(:new)
           assert_response(:success)
         end
