@@ -19,7 +19,7 @@ digraph LockerRoom {
   ]
 
   Team [
-    label = "{locker_room_teams|\«LockerRoom::Team\»\lbelongs_to: type\lhas_many: users\lhas_many: mateships\lhas_many: ownerships\lhas_many: owners\lhas_many: memberships\lhas_many: members\l\n|{ \
+    label = "{locker_room_teams|\«LockerRoom::Team\»\lbelongs_to: type\lhas_many: mateships\lhas_many: mates\lhas_many: ownerships\lhas_many: owners\lhas_many: memberships\lhas_many: members\l\n|{ \
       {FIELD|name\l|subdomain\l|type_id\l|subscription_id\l}| \
       {TYPE|string\l|string\l|integer\l|string\l}| \
       {VALUE|\r|\r|\r|generated values from external service\r} \
@@ -27,10 +27,10 @@ digraph LockerRoom {
   ]
 
   User [
-    label = "{locker_room_users|\«LockerRoom::User\»\lbelongs_to: team\lhas_one: mateship\l\n|{ \
-      {FIELD|team_id\l|username\l|name\l|email\l|password_digest\l}| \
-      {TYPE|integer\l|string\l|string\l|string\l|string\l}| \
-      {VALUE|\r|\r|\r|\r|\r} \
+  label = "{locker_room_users|\«LockerRoom::User\»\lhas_many: teams\lhas_many: mateships\lhas_many: ownerships\lhas_many: memberships\l\n|{ \
+      {FIELD|username\l|name\l|email\l|password_digest\l}| \
+      {TYPE|string\l|string\l|string\l|string\l}| \
+      {VALUE|\r|\r|\r|\r} \
     }}"
   ]
 
@@ -38,7 +38,7 @@ digraph LockerRoom {
     label = "{locker_room_mateships|\«LockerRoom::Mateship\»\lbelongs_to: team\lbelongs_to: user\l\n|{ \
       {FIELD|team_id\l|user_id\l|role\l}| \
       {TYPE|integer\l|intger\l|integer\l}| \
-      {VALUE|\r|\r|0:owner,1:mate\r} \
+      {VALUE|\r|\r|0:owner,1:member\r} \
     }}"
   ]
 
@@ -70,7 +70,7 @@ digraph LockerRoom {
   ]
 
   Mateship -> Team
-  User     -> Team
+  Mateship -> User
 
   edge [ // belongs_to -> has_one
     arrowhead = vee
@@ -79,8 +79,6 @@ digraph LockerRoom {
     taillabel = ""
     dir       = both
   ]
-
-  Mateship -> User
 
 
   edge [ // belongs_to

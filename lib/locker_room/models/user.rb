@@ -8,11 +8,20 @@ module LockerRoom
 
         has_secure_password
 
-        belongs_to :team
-        has_one :mateship, class_name: 'LockerRoom::Mateship'
+        has_many :mateships, class_name: 'LockerRoom::Mateship'
+        has_many :ownerships,
+          -> { where(:role => LockerRoom::Mateship.roles[:owner]) },
+          class_name: 'LockerRoom::Mateship'
+        has_many :memberships,
+          -> { where(:role => LockerRoom::Mateship.roles[:member]) },
+          class_name: 'LockerRoom::Mateship'
+        has_many :teams,
+          through: :mateships,
+          source:  :team
 
         validates :username,
-          presence: true
+          presence:   true,
+          uniqueness: true
         validates :username,
           length:      {minimum: 3, maximum: 16},
           allow_blank: true
@@ -21,7 +30,7 @@ module LockerRoom
         validates :email,
           presence: true
         validates :email,
-          uniqueness:  {scope: [:team_id]},
+          uniqueness:  true,
           format:      {with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i},
           allow_blank: true
         validates :email,
@@ -40,24 +49,6 @@ module LockerRoom
           if:       'password.present?'
 
         attr_accessor :skip_password
-      end
-
-      class_methods do
-        def create_with_mateship(options={})
-          self.transaction do
-            user = self.new(options)
-            mateship = user.build_mateship
-            if user.save
-              mateship.assign_attributes(:team_id => user.team_id)
-              raise ActiveRecord::Rollback unless mateship.save
-            end
-            user
-          end
-        end
-      end
-
-      def created?
-        persisted? && mateship && mateship.persisted?
       end
     end
   end

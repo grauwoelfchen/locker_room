@@ -17,7 +17,7 @@ class AccountLoginTest < Capybara::Rails::TestCase
       click_button('Signin')
       assert_equal(locker_room.login_url, page.current_url)
       assert_content('Email or password is invalid.')
-      logout_user(locker_room.logout_url, :delete)
+      logout_user(nil, :delete)
     end
   end
 
@@ -35,7 +35,7 @@ class AccountLoginTest < Capybara::Rails::TestCase
       click_button('Signin')
       assert_equal(locker_room.login_url, page.current_url)
       assert_content('Email or password is invalid.')
-      logout_user(locker_room.logout_url, :delete)
+      logout_user(nil, :delete)
     end
   end
 
@@ -54,7 +54,7 @@ class AccountLoginTest < Capybara::Rails::TestCase
       click_button('Signin')
       assert_equal(locker_room.login_url, page.current_url)
       assert_content('Email or password is invalid.')
-      logout_user(locker_room.logout_url, :delete)
+      logout_user(nil, :delete)
     end
   end
 
@@ -72,16 +72,17 @@ class AccountLoginTest < Capybara::Rails::TestCase
       click_button('Signin')
       assert_equal(locker_room.root_url, page.current_url)
       assert_content('You are now signed in.')
-      logout_user(locker_room.logout_url, :delete)
+      logout_user(nil, :delete)
     end
   end
 
   def test_validation_at_login_attempt_as_mate_with_invalid_email
     user = user_with_schema(:weenie)
-    within_subdomain(user.team.subdomain) do
+    team = user.teams.first
+    within_subdomain(team.subdomain) do
       visit(locker_room.login_url(:subdomain => nil))
       assert_equal(locker_room.login_url(:subdomain => nil), page.current_url)
-      fill_in('Subdomain', :with => user.team.subdomain)
+      fill_in('Subdomain', :with => team.subdomain)
       click_button('Continue')
       assert_equal(locker_room.login_url, page.current_url)
       assert_content('Please signin.')
@@ -90,16 +91,17 @@ class AccountLoginTest < Capybara::Rails::TestCase
       click_button('Signin')
       assert_equal(locker_room.login_url, page.current_url)
       assert_content('Email or password is invalid.')
-      logout_user(locker_room.logout_url, :delete)
+      logout_user(nil, :delete)
     end
   end
 
   def test_validation_at_login_attempt_as_mate_with_invalid_password
     user = user_with_schema(:weenie)
-    within_subdomain(user.team.subdomain) do
+    team = user.teams.first
+    within_subdomain(team.subdomain) do
       visit(locker_room.login_url(:subdomain => nil))
       assert_equal(locker_room.login_url(:subdomain => nil), page.current_url)
-      fill_in('Subdomain', :with => user.team.subdomain)
+      fill_in('Subdomain', :with => team.subdomain)
       click_button('Continue')
       assert_content('Please signin.')
       assert_equal(locker_room.login_url, page.current_url)
@@ -108,16 +110,17 @@ class AccountLoginTest < Capybara::Rails::TestCase
       click_button('Signin')
       assert_content('Email or password is invalid.')
       assert_equal(locker_room.login_url, page.current_url)
-      logout_user(locker_room.logout_url, :delete)
+      logout_user(nil, :delete)
     end
   end
 
   def test_login_as_mate
     user = user_with_schema(:weenie)
-    within_subdomain(user.team.subdomain) do
+    team = user.teams.first
+    within_subdomain(team.subdomain) do
       visit(locker_room.login_url(:subdomain => nil))
       assert_equal(locker_room.login_url(:subdomain => nil), page.current_url)
-      fill_in('Subdomain', :with => user.team.subdomain)
+      fill_in('Subdomain', :with => team.subdomain)
       click_button('Continue')
       assert_equal(locker_room.login_url, page.current_url)
       fill_in('Email',    :with => user.email)
@@ -125,7 +128,7 @@ class AccountLoginTest < Capybara::Rails::TestCase
       click_button('Signin')
       assert_content('You are now signed in.')
       assert_equal(locker_room.root_url, page.current_url)
-      logout_user(locker_room.logout_url, :delete)
+      logout_user(nil, :delete)
     end
   end
 end
