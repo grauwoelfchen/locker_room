@@ -5,7 +5,8 @@ class AccountLogoutTest < Capybara::Rails::TestCase
 
   def test_logout
     user = user_with_schema(:oswald)
-    within_subdomain(user.team.subdomain) do
+    team = user.teams.first
+    within_subdomain(team.subdomain) do
       visit(locker_room.login_url)
       assert_equal(locker_room.login_url, page.current_url)
       fill_in('Email',    :with => user.email)

@@ -38,7 +38,7 @@ module LockerRoom
 
           def user_with_schema(user_name)
             user = locker_room_users(user_name)
-            user.team.create_schema
+            user.teams.map(&:create_schema)
             user
           end
       end

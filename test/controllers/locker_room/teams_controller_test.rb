@@ -40,7 +40,9 @@ module LockerRoom
     def test_create
       @controller.stub(:user_signed_in?, true) do
         user = mock('User', id: 1)
-        user.expects(:update_attribute).returns(true)
+        ownerships = mock('Ownership Relation')
+        ownerships.expects(:create).returns(true)
+        user.expects(:ownerships).returns(ownerships)
         team = mock('Team', subdomain: 'unicycle')
         team.expects(:primary_owner).returns(user).twice
         team.expects(:created?).returns(true)

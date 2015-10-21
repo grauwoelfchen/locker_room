@@ -77,7 +77,7 @@ module LockerRoom
       team = LockerRoom::Team.create_with_owner
       refute(team.valid?)
       refute(team.persisted?)
-      assert(team.users.empty?)
+      assert(team.owners.empty?)
     end
 
     def test_creation_with_an_owner
@@ -97,7 +97,7 @@ module LockerRoom
       assert(team.valid?)
       assert(team.persisted?)
       owner = team.owners.where(:email => 'daisy@example.org').take!
-      assert_includes(team.users.pluck(:id), owner.id)
+      assert_includes(team.owners.pluck(:id), owner.id)
     end
 
     def test_creation_of_schema
