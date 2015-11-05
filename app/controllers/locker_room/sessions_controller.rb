@@ -4,14 +4,17 @@ module LockerRoom
   class SessionsController < ApplicationController
     skip_filter :authenticate_user!, only: [:new, :create]
 
+    # Renders subdomain form
     def new
     end
 
+    # Tries to switch team
     def create
       return render :new unless params[:subdomain].present?
       team = LockerRoom::Team.find_by(:subdomain => params[:subdomain])
       if team
-        redirect_to locker_room.root_url(:subdomain => team.subdomain)
+        redirect_to locker_room.login_url(:subdomain => team.subdomain),
+          :notice => 'Please signin.'
       else
         flash[:alert] = 'Team is not found.'
         render :new

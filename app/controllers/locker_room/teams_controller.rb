@@ -4,17 +4,19 @@ module LockerRoom
   class TeamsController < ApplicationController
     skip_filter :authenticate_user!, only: [:new, :create]
 
+    # Renders new team form
     def new
       @team = LockerRoom::Team.new
       @team.owners.build
     end
 
+    # Creates a new team with its owner
     def create
       @team = LockerRoom::Team.create_with_owner(team_params)
       if @team.created?
         force_authentication!(@team.primary_owner)
-        flash[:notice] = 'Team has been successfully created.'
-        redirect_to locker_room.root_url(:subdomain => @team.subdomain)
+        redirect_to locker_room.root_url(:subdomain => @team.subdomain),
+          :notice => 'Team has been successfully created.'
       else
         flash[:alert] = 'Team could not be created.'
         render :new
@@ -27,7 +29,7 @@ module LockerRoom
         params.require(:team).permit(
           :name, :subdomain, {
             :owners_attributes => [
-              :username, :email, :password, :password_confirmation
+              :username, :email, :name, :password, :password_confirmation
             ]
           }
         )

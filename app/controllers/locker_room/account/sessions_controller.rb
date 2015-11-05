@@ -5,9 +5,11 @@ module LockerRoom
     class SessionsController < ApplicationController
       skip_filter :authenticate_user!, only: [:new, :create]
 
+      # Renders user signin form
       def new
       end
 
+      # Tries to login user
       def create
         user = login_with_subdomain(params[:email], params[:password])
         if user
@@ -19,6 +21,7 @@ module LockerRoom
         end
       end
 
+      # Logout user
       def destroy
         logout
         redirect_to locker_room.login_url(:subdomain => current_subdomain),

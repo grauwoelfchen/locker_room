@@ -27,6 +27,7 @@ module LockerRoom
       def type
       end
 
+      # Tries to subscribe a new plan
       def subscribe
         @result = Braintree::TransparentRedirect.confirm(request.query_string)
         if @result.success?

@@ -6,14 +6,15 @@ module AuthenticationHelpers
 
   private
 
-  def login_user(user=nil)
-    user ||= @user
-    login_as(user, :scope => :user)
-  end
+    def login_user(user=nil)
+      user ||= @user
+      # see Testing::Controller::WardenHelpers
+      warden.set_user(user, :scope => :user)
+    end
 
-  def logout_user
-    logout(:user)
-  end
+    def logout_user
+      warden.logout(:scope => :user)
+    end
 end
     end
   end
