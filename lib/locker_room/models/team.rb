@@ -12,13 +12,13 @@ module LockerRoom
           through: :mateships,
           source:  :user
         has_many :ownerships,
-          -> { where(:role => LockerRoom::Mateship.roles[:owner]) },
+          -> { where_role(:owner) },
           class_name: 'LockerRoom::Mateship'
         has_many :owners,
           through: :ownerships,
           source:  :user
         has_many :memberships,
-          -> { where(:role => LockerRoom::Mateship.roles[:member]) },
+          -> { where_role(:member) },
           class_name: 'LockerRoom::Mateship'
         has_many :members,
           through: :memberships,
@@ -74,9 +74,7 @@ module LockerRoom
           self.transaction do
             team = new(options)
             if team.save
-              owner = team.primary_owner
-              raise ActiveRecord::Rollback unless
-                owner && owner.ownerships.create(team: team)
+              raise ActiveRecord::Rollback unless team.primary_owner
               team.create_schema
             end
             team
