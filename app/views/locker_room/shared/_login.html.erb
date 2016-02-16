@@ -2,6 +2,6 @@
   Signed in as <%= current_user.email %>
   <% if owner? %>
     &middot;
-    <%= link_to 'Edit Team', locker_room.edit_team_path %>
+    <%= link_to 'Team Settings', locker_room.team_settings_path %>
   <% end %>
 <% end %>
