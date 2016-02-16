@@ -12,3 +12,6 @@
 Gemfile.lock
 .env
 Procfile
+
+.ruby-version
+env
