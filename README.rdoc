@@ -37,18 +37,24 @@ TODO ;)
 
   % rake routes
   Routes for LockerRoom::Engine:
-        logout GET    /signout(.:format) locker_room/account/sessions#destroy
-               DELETE /signout(.:format) locker_room/account/sessions#destroy
-         login GET    /signin(.:format)  locker_room/account/sessions#new
-               POST   /signin(.:format)  locker_room/account/sessions#create
-  registration GET    /signup(.:format)  locker_room/account/users#new
-               POST   /signup(.:format)  locker_room/account/users#create
-          root GET    /                  locker_room/account/storages#show
-               GET    /signin(.:format)  locker_room/sessions#new
-               POST   /signin(.:format)  locker_room/sessions#create
-               GET    /signup(.:format)  locker_room/teams#new
-               POST   /signup(.:format)  locker_room/teams#create
-               GET    /                  locker_room/entrance#index
+             logout GET    /signout(.:format)                     locker_room/account/sessions#destroy
+                    DELETE /signout(.:format)                     locker_room/account/sessions#destroy
+              login GET    /signin(.:format)                      locker_room/account/sessions#new
+                    POST   /signin(.:format)                      locker_room/account/sessions#create
+       registration GET    /signup(.:format)                      locker_room/account/users#new
+                    POST   /signup(.:format)                      locker_room/account/users#create
+               root GET    /                                      locker_room/account/storages#show
+      team_settings GET    /settings/team(.:format)               locker_room/settings/teams#edit
+                    PATCH  /settings/team(.:format)               locker_room/settings/teams#update
+                    PUT    /settings/team(.:format)               locker_room/settings/teams#update
+     subscribe_team GET    /settings/team/subscribe(.:format)     locker_room/settings/teams#subscribe
+          team_type GET    /settings/team/type/:type_id(.:format) locker_room/settings/teams#type
+  confirm_team_type POST   /settings/team/confirm_type(.:format)  locker_room/settings/teams#confirm_type
+                    GET    /signin(.:format)                      locker_room/sessions#new
+                    POST   /signin(.:format)                      locker_room/sessions#create
+                    GET    /signup(.:format)                      locker_room/teams#new
+                    POST   /signup(.:format)                      locker_room/teams#create
+                    GET    /                                      locker_room/entrance#index
 
 
 == Test
