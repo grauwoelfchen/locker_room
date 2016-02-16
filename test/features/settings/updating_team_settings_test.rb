@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class TeamsUpdatingTest < Capybara::Rails::TestCase
+class SettingsUpdatingTeamSettingsTest < Capybara::Rails::TestCase
   locker_room_fixtures(:teams, :users, :mateships, :types)
 
   def setup
@@ -11,20 +11,20 @@ class TeamsUpdatingTest < Capybara::Rails::TestCase
     logout_user(nil, :delete)
   end
 
-  def test_updating_a_team_as_user
+  def test_updating_team_settings_as_user
     login_user(@team.members.first, @team.subdomain)
     within_subdomain(@team.subdomain) do
-      visit(locker_room.edit_team_url)
+      visit(locker_room.team_settings_url)
       assert_content('You are not allowed to do that.')
     end
   end
 
-  def test_updating_a_team_as_owner_with_invaild_attributes_fails
+  def test_updating_team_settings_as_owner_with_invaild_attributes_fails
     login_user(@team.primary_owner, @team.subdomain)
     within_subdomain(@team.subdomain) do
       visit(locker_room.root_url)
       assert_equal(locker_room.root_url, page.current_url)
-      click_link('Edit Team')
+      click_link('Team Settings')
       fill_in('Name', :with => '')
       click_button('Update Team')
       assert_content('Name can\'t be blank')
@@ -39,7 +39,7 @@ class TeamsUpdatingTest < Capybara::Rails::TestCase
     within_subdomain(@team.subdomain) do
       visit(locker_room.root_url)
       assert_equal(locker_room.root_url, page.current_url)
-      click_link('Edit Team')
+      click_link('Team Settings')
       fill_in('Name', :with => 'New name')
       click_button('Update Team')
       assert_content('Team has been updated successfully.')
@@ -66,11 +66,11 @@ class TeamsUpdatingTest < Capybara::Rails::TestCase
     within_subdomain(@team.subdomain) do
       visit(locker_room.root_url)
       assert_equal(locker_room.root_url, page.current_url)
-      click_link('Edit Team')
+      click_link('Team Settings')
       select('Extreme', :from => 'Type')
       click_button('Update Team')
       # at type
-      type_url = locker_room.type_team_url(:type_id => extreme_type.id)
+      type_url = locker_room.team_type_url(:type_id => extreme_type.id)
       assert_equal(type_url, page.current_url)
       assert_content('Team has been updated successfully.')
       assert_content('You are changing to the \'Extreme\' type')
@@ -101,11 +101,11 @@ class TeamsUpdatingTest < Capybara::Rails::TestCase
     within_subdomain(@team.subdomain) do
       visit(locker_room.root_url)
       assert_equal(locker_room.root_url, page.current_url)
-      click_link('Edit Team')
+      click_link('Team Settings')
       select('Extreme', :from => 'Type')
       click_button('Update Team')
       # at type
-      type_url = locker_room.type_team_url(:type_id => extreme_type.id)
+      type_url = locker_room.team_type_url(:type_id => extreme_type.id)
       assert_equal(type_url, page.current_url)
       assert_content('Team has been updated successfully.')
       assert_content('You are changing to the \'Extreme\' type')
@@ -135,11 +135,11 @@ class TeamsUpdatingTest < Capybara::Rails::TestCase
     within_subdomain(@team.subdomain) do
       visit(locker_room.root_url)
       assert_equal(locker_room.root_url, page.current_url)
-      click_link('Edit Team')
+      click_link('Team Settings')
       select('Extreme', :from => 'Type')
       click_button('Update Team')
       # at type
-      type_url = locker_room.type_team_url(:type_id => extreme_type.id)
+      type_url = locker_room.team_type_url(:type_id => extreme_type.id)
       assert_equal(type_url, page.current_url)
       assert_content('Team has been updated successfully.')
       assert_content('You are changing to the \'Extreme\' type')
@@ -148,7 +148,7 @@ class TeamsUpdatingTest < Capybara::Rails::TestCase
       click_button('Change type')
       # at root
       assert_content('Something went wrong. Please try again.')
-      type_url = locker_room.confirm_type_team_url(:type_id => extreme_type.id)
+      type_url = locker_room.confirm_team_type_url(:type_id => extreme_type.id)
       assert_equal(type_url, page.current_url)
       @team.reload
       assert_not_equal(@team.type, extreme_type)
@@ -167,11 +167,11 @@ class TeamsUpdatingTest < Capybara::Rails::TestCase
     within_subdomain(@team.subdomain) do
       visit(locker_room.root_url)
       assert_equal(locker_room.root_url, page.current_url)
-      click_link('Edit Team')
+      click_link('Team Settings')
       select('Extreme', :from => 'Type')
       click_button('Update Team')
       # at type
-      type_url = locker_room.type_team_url(:type_id => extreme_type.id)
+      type_url = locker_room.team_type_url(:type_id => extreme_type.id)
       assert_equal(type_url, page.current_url)
       assert_content('Team has been updated successfully.')
       assert_content('You are changing to the \'Extreme\' type')
