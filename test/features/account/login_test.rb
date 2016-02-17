@@ -40,7 +40,6 @@ class AccountLoginTest < Capybara::Rails::TestCase
   end
 
   def test_validation_at_login_attempt_as_owner_with_other_subdomain
-    team       = team_with_schema(:penguin_patrol)
     other_team = team_with_schema(:playing_piano)
     within_subdomain(other_team.subdomain) do
       visit(locker_room.login_url(:subdomain => nil))
@@ -49,6 +48,7 @@ class AccountLoginTest < Capybara::Rails::TestCase
       click_button('Continue')
       assert_equal(locker_room.login_url, page.current_url)
       assert_content('Please signin.')
+      team = team_with_schema(:penguin_patrol)
       fill_in('Email',    :with => team.owners.first.email)
       fill_in('Password', :with => 'secret')
       click_button('Signin')
