@@ -120,6 +120,10 @@ TODO :)
   % cp .env.sample .env
   % cp Procfile.sample Procfile
 
+  % # prepare (run rails app in test/dummy)
+  % bundle exec foreman run app:locker_room:import_types
+  % bundle exec foreman run server
+
   % # test
   % bundle exec foreman run test #=> run `rake test` with environ vars
   % bundle exec foreman run ruby -I.:test test/models/locker_room/team_test.rb -n /xxx/
