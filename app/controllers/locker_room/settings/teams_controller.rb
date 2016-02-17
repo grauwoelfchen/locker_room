@@ -69,13 +69,13 @@ module LockerRoom
 
       private
 
-        def set_type
-          @type = LockerRoom::Type.find(params[:type_id])
-        end
+      def set_type
+        @type = LockerRoom::Type.find(params[:type_id])
+      end
 
-        def team_params
-          params.require(:team).permit(:name, :type_id)
-        end
+      def team_params
+        params.require(:team).permit(:name, :type_id)
+      end
     end
   end
 end
