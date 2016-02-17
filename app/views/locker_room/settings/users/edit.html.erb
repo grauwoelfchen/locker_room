@@ -1,0 +1,9 @@
+<h2>Account</h2>
+
+<%= form_for @user, url: user_settings_path, html: {novalidate: 'novalidate'} do |f| %>
+<% if @user.errors.any? %>
+<%= render 'locker_room/shared/errors', resource: @user %>
+<% end %>
+<%= render 'form', f: f %>
+<p><%= f.submit 'Update Account' %></p>
+<% end %>

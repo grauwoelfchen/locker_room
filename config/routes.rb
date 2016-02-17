@@ -14,6 +14,11 @@ LockerRoom::Engine.routes.draw do
     end
 
     scope module: 'settings', path: 'settings' do
+      # user
+      get :user, to: 'users#edit', as: :user_settings
+      resource :users, path: 'user', only: [:update], as: :user_settings
+
+      # team
       get :team, to: 'teams#edit', as: :team_settings
       resource :teams, path: 'team', only: [:update], as: :team_settings
 
