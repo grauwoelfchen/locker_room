@@ -8,7 +8,7 @@ class AccountRegistrationTest < Capybara::Rails::TestCase
     within_subdomain(team.subdomain) do
       visit(locker_room.root_url)
       assert_equal(locker_room.login_url, page.current_url)
-      click_link('New User?')
+      click_link('New Member?')
       assert_equal(locker_room.registration_url, page.current_url)
       fill_in('Username',              :with => 'henry')
       fill_in('Email',                 :with => 'henry@example.org')
@@ -25,7 +25,7 @@ class AccountRegistrationTest < Capybara::Rails::TestCase
     within_subdomain(team.subdomain) do
       visit(locker_room.root_url)
       assert_equal(locker_room.login_url, page.current_url)
-      click_link('New User?')
+      click_link('New Member?')
       assert_equal(locker_room.registration_url, page.current_url)
       fill_in('Username',              :with => 'louie')
       fill_in('Email',                 :with => 'louie@example.org')
