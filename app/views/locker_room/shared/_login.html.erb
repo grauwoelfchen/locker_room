@@ -2,6 +2,8 @@
   <p>Signed in as <%= current_user.email %></p>
   <p>
     <%= link_to 'Top', locker_room.root_path %>
+    &middot;
+    <%= link_to 'Account Settings', locker_room.user_settings_path %>
     <% if current_team && owner? %>
       &middot;
       <%= link_to 'Team Settings', locker_room.team_settings_path %>
