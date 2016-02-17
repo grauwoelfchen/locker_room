@@ -73,8 +73,10 @@ end
 ENV['BRAINTREE_GATEWAY_PORT'] ||= '45678'
 
 Capybara.configure do |config|
-  config.app_host    = 'http://example.org'
-  config.server_port = 3001
+  config.app_host              = 'http://example.org'
+  config.run_server            = false
+  config.server_port           = 3001
+  config.default_max_wait_time = 6 # seconds (default: 2)
 end
 
 require 'fake_braintree'
@@ -115,6 +117,7 @@ class Capybara::Rails::TestCase
 
   def after_teardown
     super
+    Capybara.reset_session!
     locker_room.scope.default_url_options[:host] = @default_host
   end
 end
