@@ -2,7 +2,7 @@
 
 <p>Team: <%= current_team.name %></p>
 
-<%= form_tag login_path, method: :post, html: {novalidate: 'novalidate'} do %>
+<%= form_tag login_path, method: :post, novalidate: 'novalidate' do %>
 <p>
   <%= label_tag :email %><br>
   <%= email_field_tag :email %>
