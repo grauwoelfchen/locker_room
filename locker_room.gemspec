@@ -31,7 +31,9 @@ DESCRIPTION
 
   s.add_development_dependency 'foreman'
   s.add_development_dependency 'minitest', '~> 5.5'
-  s.add_development_dependency 'minitest-rails-capybara'
+  s.add_development_dependency 'capybara', '~> 2.6.2'
+  s.add_development_dependency 'minitest-rails', '~> 2.1.1'
+  s.add_development_dependency 'minitest-rails-capybara', '~> 2.1.0'
   s.add_development_dependency 'mocha'
   s.add_development_dependency 'database_cleaner'
   s.add_development_dependency 'quiet_assets'
