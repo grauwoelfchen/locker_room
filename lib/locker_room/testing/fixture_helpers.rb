@@ -30,17 +30,17 @@ module LockerRoom
 
         private
 
-          def team_with_schema(team_name)
-            team = locker_room_teams(team_name)
-            team.create_schema
-            team
-          end
+        def team_with_schema(team_name)
+          team = locker_room_teams(team_name)
+          team.create_schema
+          team
+        end
 
-          def user_with_schema(user_name)
-            user = locker_room_users(user_name)
-            user.teams.map(&:create_schema)
-            user
-          end
+        def user_with_schema(user_name)
+          user = locker_room_users(user_name)
+          user.teams.map(&:create_schema)
+          user
+        end
       end
     end
   end
