@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class SettingsUpdatingTeamSettingsTest < Capybara::Rails::TestCase
+class SettingsUpdateTeamTest < Capybara::Rails::TestCase
   locker_room_fixtures(:teams, :users, :mateships, :types)
 
   def setup
