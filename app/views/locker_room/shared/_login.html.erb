@@ -1,7 +1,12 @@
 <% if user_signed_in? %>
-  Signed in as <%= current_user.email %>
-  <% if owner? %>
+  <p>Signed in as <%= current_user.email %></p>
+  <p>
+    <%= link_to 'Top', locker_room.root_path %>
+    <% if current_team && owner? %>
+      &middot;
+      <%= link_to 'Team Settings', locker_room.team_settings_path %>
+    <% end %>
     &middot;
-    <%= link_to 'Team Settings', locker_room.team_settings_path %>
-  <% end %>
+    <%= link_to 'Signout', locker_room.logout_path %>
+  </p>
 <% end %>
