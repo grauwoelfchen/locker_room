@@ -5,9 +5,10 @@ addons:
     repo_token:
       secure: FtY2G2HDUFbSHm0ipYGZyG/lSDlkdFkJFnQjkz8a+bSo0w5NpHNzVbFbugvPq0VFxO44uyiPCcpQNaG6qKfzj8CRugwPH1Bmj5ClW5nSiW14uHudX2OmQfaVFjtZKC581p9S+maHlb/2jtF+TwHlafMFunPg54S/iC6c70GqiIY=
 rvm:
-  - 2.0.0
-  - 2.1.5
-  - 2.2.0
+  - 2.0.0-p648
+  - 2.1.8
+  - 2.2.4
+  - 2.3.0
 before_script:
   - psql -U postgres -c "CREATE DATABASE travis_ci_test;"
   - mv test/dummy/config/database.yml.travis test/dummy/config/database.yml
