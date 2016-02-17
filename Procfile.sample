@@ -1,4 +1,4 @@
 # development
-server: test/dummy/bin/rails server -e development
+server: test/dummy/bin/rails server -p $PORT -e development
 # test
 test: rake test
