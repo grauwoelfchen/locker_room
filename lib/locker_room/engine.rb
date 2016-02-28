@@ -11,10 +11,11 @@ module Apartment
     class UnderscoreSubdomain < Subdomain
       alias_method :orig_parse_tenant_name, :parse_tenant_name
       def parse_tenant_name(request)
-        Apartment.tld_length =
+        Apartment.tld_length = (
           Rails.application.config.action_dispatch.tld_length ||
           ActionDispatch::Http::URL.tld_length ||
           Apartment.tld_length
+        ).to_i
         name = orig_parse_tenant_name(request)
         name.gsub!(/\-/, '_') if name
         name
@@ -50,9 +51,10 @@ module LockerRoom
     initializer 'locker_room.middleware.houser' do
       Rails.application.config.middleware.use 'Houser::Middleware',
         :class_name => 'LockerRoom::Team',
-        :tld_length => \
+        :tld_length => (
           Rails.application.config.action_dispatch.tld_length ||
           ActionDispatch::Http::URL.tld_length
+        ).to_i
     end
 
     config.to_prepare do
