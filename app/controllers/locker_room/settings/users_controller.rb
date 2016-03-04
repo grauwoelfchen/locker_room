@@ -24,9 +24,12 @@ module LockerRoom
       def set_user
         @user = current_user
       end
+
       def user_params
         params.require(:user).permit(
-          :username, :name, :email, :password, :password_confirmation
+          :username, :name, :email,
+          # optional
+          :password, :password_confirmation
         )
       end
     end

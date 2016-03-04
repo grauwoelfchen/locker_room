@@ -13,6 +13,7 @@ module LockerRoom
         raise ActiveRecord::RecordNotFound unless current_team
 
         @user = current_team.mates.create(user_params)
+        @user.skip_current_password = true
         if @user.valid?
           force_authentication!(@user)
           flash[:notice] = 'You have signed up successfully.'

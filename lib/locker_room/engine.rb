@@ -28,6 +28,12 @@ module LockerRoom
   class Engine < ::Rails::Engine
     isolate_namespace LockerRoom
 
+    config.autoload_paths += Dir[
+      File.expand_path('../concerns/**/*.rb', __FILE__),
+      File.expand_path('../constraints/**/*.rb', __FILE__),
+      File.expand_path('../models/**/*.rb', __FILE__)
+    ]
+
     initializer 'locker_room.middleware.apartment' do
       Rails.application.config.middleware.use \
         'Apartment::Elevators::UnderscoreSubdomain'
