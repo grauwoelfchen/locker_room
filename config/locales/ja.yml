@@ -1,0 +1,26 @@
+ja:
+  activerecord:
+    models:
+      locker_room/team: チーム
+      locker_room/user: ユーザ
+    attributes:
+      base: &base
+        created_at: 作成日時
+        updated_at: 更新日時
+      locker_room/user:
+        <<: *base
+        username: ユーザ名
+        name: 名前
+        email: E メール
+        current_password: 現在のパスワード
+        password: パスワード
+        password_confirmation: パスワード確認
+      locker_room/team:
+        <<: *base
+        name: 名前
+        subdomain: サブドメイン
+        type_id: タイプ
+      locker_room/account/owners:
+        email: E メール
+        password: パスワード
+        password_confirmation: パスワード確認
