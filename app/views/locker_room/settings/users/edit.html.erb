@@ -1,3 +1,8 @@
+<ul>
+  <li>Account</li>
+  <li><%= link_to 'Change Password', edit_password_path %></li>
+</ul>
+
 <h2>Account</h2>
 
 <%= form_for @user, url: user_settings_path, html: {novalidate: 'novalidate'} do |f| %>
