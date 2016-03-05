@@ -13,7 +13,7 @@ module LockerRoom
           flash[:notice] = 'Password has been updated successfully.'
           redirect_to locker_room.edit_password_path
         else
-          flash[:alert] = 'Password could not be updated.'
+          flash.now[:alert] = 'Password could not be updated.'
           render :edit
         end
       end

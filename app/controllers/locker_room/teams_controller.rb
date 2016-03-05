@@ -18,7 +18,7 @@ module LockerRoom
         redirect_to locker_room.root_url(:subdomain => @team.subdomain),
           :notice => 'Team has been successfully created.'
       else
-        flash[:alert] = 'Team could not be created.'
+        flash.now[:alert] = 'Team could not be created.'
         render :new
       end
     end

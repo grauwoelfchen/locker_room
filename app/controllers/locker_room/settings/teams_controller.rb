@@ -19,7 +19,7 @@ module LockerRoom
             redirect_to locker_room.root_path
           end
         else
-          flash[:alert] = 'Team could not be updated.'
+          flash.now[:alert] = 'Team could not be updated.'
           render :edit
         end
       end
@@ -41,7 +41,7 @@ module LockerRoom
           flash[:notice] = "Your team is now on the '#{@type.name}' type."
           redirect_to locker_room.root_path
         else
-          flash[:alert] = 'Invalid credit card details. Please try again.'
+          flash.now[:alert] = 'Invalid credit card details. Please try again.'
           render :type
         end
       end
@@ -62,7 +62,7 @@ module LockerRoom
             "Your team has switched to the '#{@type.name}' type."
           redirect_to locker_room.root_path
         else
-          flash[:alert] = 'Something went wrong. Please try again.'
+          flash.now[:alert] = 'Something went wrong. Please try again.'
           render :type
         end
       end
