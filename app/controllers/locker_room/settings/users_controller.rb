@@ -14,7 +14,7 @@ module LockerRoom
           flash[:notice] = 'Account has been updated successfully.'
           redirect_to locker_room.root_path
         else
-          flash[:alert] = 'Account could not be updated.'
+          flash.now[:alert] = 'Account could not be updated.'
           render :edit
         end
       end

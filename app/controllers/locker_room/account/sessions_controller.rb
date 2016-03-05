@@ -16,7 +16,7 @@ module LockerRoom
           flash[:notice] = 'You are now signed in.'
           redirect_to locker_room.root_url
         else
-          flash[:alert] = 'Email or password is invalid.'
+          flash.now[:alert] = 'Email or password is invalid.'
           render :new
         end
       end

@@ -16,7 +16,7 @@ module LockerRoom
         redirect_to locker_room.login_url(:subdomain => team.subdomain),
           :notice => 'Please signin.'
       else
-        flash[:alert] = 'Team is not found.'
+        flash.now[:alert] = 'Team is not found.'
         render :new
       end
     end

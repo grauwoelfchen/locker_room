@@ -19,7 +19,7 @@ module LockerRoom
           flash[:notice] = 'You have signed up successfully.'
           redirect_to locker_room.root_url
         else
-          flash[:alert] = 'Your user account could not be created.'
+          flash.now[:alert] = 'Your user account could not be created.'
           render :new
         end
       end
