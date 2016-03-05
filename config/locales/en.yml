@@ -9,7 +9,7 @@ en:
         updated_at: Updated
       locker_room/user:
         <<: *base
-        email: E-Mail
+        email: Email
       locker_room/team:
         <<: *base
         type_id: Type
