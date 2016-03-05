@@ -59,7 +59,7 @@ end
 
   def authorize_owner
     unless owner?
-      flash[:error] = 'You are not allowed to do that.'
+      flash[:alert] = 'You are not allowed to do that.'
       redirect_to locker_room.root_url
     end
   end

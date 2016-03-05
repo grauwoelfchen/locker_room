@@ -19,7 +19,7 @@ module LockerRoom
             redirect_to locker_room.root_path
           end
         else
-          flash[:error] = 'Team could not be updated.'
+          flash[:alert] = 'Team could not be updated.'
           render :edit
         end
       end
@@ -62,7 +62,7 @@ module LockerRoom
             "Your team has switched to the '#{@type.name}' type."
           redirect_to locker_room.root_path
         else
-          flash[:error] = 'Something went wrong. Please try again.'
+          flash[:alert] = 'Something went wrong. Please try again.'
           render :type
         end
       end
