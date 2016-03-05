@@ -86,6 +86,34 @@ module LockerRoom
       assert_equal([message], user.errors[:email])
     end
 
+    def test_validation_without_current_password
+      user = user_with_schema(:oswald)
+      refute(user.valid?)
+      message = 'can\'t be blank'
+      assert_equal([message], user.errors[:current_password])
+    end
+
+    def test_validation_with_wrong_current_password
+      user = user_with_schema(:oswald)
+      user.current_password = 'penguin'
+      refute(user.valid?)
+      message = 'is not correct'
+      assert_equal([message], user.errors[:current_password])
+    end
+
+    def test_validation_skip_current_password
+      user = user_with_schema(:oswald)
+
+      user.skip_password = true
+      assert(user.valid?)
+      assert_empty(user.errors[:current_password])
+
+      user.current_password = false
+      user.skip_current_password = true
+      assert(user.valid?)
+      assert_empty(user.errors[:current_password])
+    end
+
     def test_validation_without_password
       attributes = {
         :password => nil
@@ -155,9 +183,51 @@ module LockerRoom
       user = team.mates.create(attributes)
       assert_equal(team, user.teams.last)
       assert(user.persisted?)
+      user.skip_current_password = true
       assert(user.valid?)
       team.mateships.reload
       assert_includes(team.mateships.pluck(:user_id), user.id)
+    end
+
+    def test_change_password_without_current_password
+      user = user_with_schema(:oswald)
+      assert(user.authenticate('secret'))
+      attributes = {
+        :password              => 'moresecret',
+        :password_confirmation => 'moresecret'
+      }
+      refute(user.change_password!(attributes))
+      message = 'is not correct'
+      assert_equal({current_password: [message]}, user.errors.messages)
+    end
+
+    def test_change_password_with_wrong_password_confirmation
+      user = user_with_schema(:oswald)
+      assert(user.authenticate('secret'))
+      attributes = {
+        :current_password      => 'secret',
+        :password              => 'moresecret',
+        :password_confirmation => 'littlesecret'
+      }
+      refute(user.change_password!(attributes))
+      message = 'doesn\'t match Password'
+      assert_equal({password_confirmation: [message]}, user.errors.messages)
+    end
+
+    def test_change_password_update_password_digest
+      user = user_with_schema(:oswald)
+      assert(user.authenticate('secret'))
+
+      old_digest = user.password_digest
+
+      attributes = {
+        :current_password      => 'secret',
+        :password              => 'moresecret',
+        :password_confirmation => 'moresecret'
+      }
+      assert(user.change_password!(attributes))
+      new_digest = user.password_digest
+      assert_not_equal(old_digest, new_digest)
     end
   end
 end
