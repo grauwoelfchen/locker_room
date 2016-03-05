@@ -83,7 +83,7 @@ module LockerRoom
         private
 
         def check_current_password
-          errors.add(:current_password, 'is not correct') \
+          errors.add(:current_password, ' is not correct') \
             unless authenticate(current_password)
         end
       end
