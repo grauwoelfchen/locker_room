@@ -1,10 +1,19 @@
 en:
   activerecord:
     models:
-      locker_room/team: 'Team'
-      locker_room/user: 'User'
+      locker_room/team: Team
+      locker_room/user: User
     attributes:
+      base: &base
+        created_at: Created
+        updated_at: Updated
+      locker_room/user:
+        <<: *base
+        email: E-Mail
+      locker_room/team:
+        <<: *base
+        type_id: Type
       locker_room/account/owners:
-        email: 'Email'
-        password: 'Password'
-        password_confirmation: 'Password confirmation'
+        email: Email
+        password: Password
+        password_confirmation: Password confirmation
