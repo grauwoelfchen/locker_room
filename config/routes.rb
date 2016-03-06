@@ -15,19 +15,23 @@ LockerRoom::Engine.routes.draw do
 
     scope module: 'settings', path: 'settings' do
       # user
-      get :user, to: 'users#edit', as: :user_settings
-      resource :user, only: [:update], as: :user_settings
-      resource :password, only: [:edit, :update]
+      get      :user, to: 'users#edit', as: :user_settings
+      resource :user, only: [:update],  as: :user_settings
+      get      :password, to: 'passwords#edit', as: :password_settings
+      resource :password, only: [:update],      as: :password_settings
 
       # team
-      get :team, to: 'teams#edit', as: :team_settings
-      resource :team, only: [:update], as: :team_settings
+      get      :team, to: 'teams#edit', as: :team_settings
+      resource :team, only: [:update],  as: :team_settings
 
       scope path: 'team' do
         get  '/subscribe',     to: 'teams#subscribe',    as: :subscribe_team
         get  '/type/:type_id', to: 'teams#type',         as: :team_type
         post '/confirm_type',  to: 'teams#confirm_type', as: :confirm_team_type
       end
+
+      # mates
+      get :mates, to: 'mates#index', path: 'mates', as: :mate_settings
     end
   end
 

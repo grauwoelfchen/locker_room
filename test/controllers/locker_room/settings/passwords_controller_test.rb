@@ -36,7 +36,7 @@ module LockerRoom
           message = 'Password has been updated successfully.'
           assert_equal(message, flash[:notice])
           assert_response(:redirect)
-          assert_redirected_to(edit_password_path)
+          assert_redirected_to(password_settings_url)
         end
         logout_user
       end
