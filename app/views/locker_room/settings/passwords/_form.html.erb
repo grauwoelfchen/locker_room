@@ -1,4 +1,4 @@
-<%= form_for user, url: password_path, html: {novalidate: 'novalidate'} do |f| %>
+<%= form_for user, url: password_settings_path, html: {novalidate: 'novalidate'} do |f| %>
 <% if user.errors.any? %>
 <%= render 'locker_room/shared/errors', resource: user %>
 <% end %>
