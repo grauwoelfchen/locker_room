@@ -2,7 +2,7 @@
 
 <p>Team: <%= current_team.name %></p>
 
-<%= form_tag login_path, method: :post, novalidate: 'novalidate' do %>
+<%= form_tag locker_room.login_path, method: :post, novalidate: 'novalidate' do %>
 <p>
   <%= label_tag :email %><br>
   <%= email_field_tag :email %>
@@ -15,6 +15,6 @@
 <% end %>
 
 <ul>
-  <li><%= link_to 'New Member?', registration_path %></li>
-  <li><%= link_to 'Create new Team?', registration_url(subdomain: false) %></li>
+  <li><%= link_to 'New Member?', locker_room.registration_path %></li>
+  <li><%= link_to 'Create new Team?', locker_room.registration_url(subdomain: false) %></li>
 </ul>

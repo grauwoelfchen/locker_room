@@ -1,6 +1,6 @@
 <h2>Signin</h2>
 
-<%= form_tag login_path, method: :post do %>
+<%= form_tag locker_room.login_path, method: :post do %>
 <p>
 <%= label_tag :subdomain %><br>
 <%= text_field_tag :subdomain %>
@@ -11,5 +11,5 @@
 <% end %>
 
 <ul>
-  <li><%= link_to 'Create new Team?', registration_path %></li>
+  <li><%= link_to 'Create new Team?', locker_room.registration_path %></li>
 </ul>

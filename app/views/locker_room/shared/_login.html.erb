@@ -3,10 +3,10 @@
   <p>
     <%= link_to 'Top', locker_room.root_path %>
     &middot;
-    <%= link_to 'Account Settings', locker_room.user_settings_path %>
+    <%= link_to 'Account Settings', locker_room.edit_user_path %>
     <% if current_team && owner? %>
       &middot;
-      <%= link_to 'Team Settings', locker_room.team_settings_path %>
+      <%= link_to 'Team Settings', locker_room.edit_team_path %>
     <% end %>
     &middot;
     <%= link_to 'Signout', locker_room.logout_path %>
