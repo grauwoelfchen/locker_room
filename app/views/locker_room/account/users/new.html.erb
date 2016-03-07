@@ -2,7 +2,7 @@
 
 <p>Team: <%= current_team.name %></p>
 
-<%= form_for @user, url: registration_path, method: :post, html: {novalidate: 'novalidate'} do |f| %>
+<%= form_for @user, url: locker_room.registration_path, method: :post, html: {novalidate: 'novalidate'} do |f| %>
 <% if @user.errors.any? %>
 <%= render 'locker_room/shared/errors', resource: @user %>
 <% end %>

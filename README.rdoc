@@ -44,12 +44,19 @@ TODO ;)
        registration GET    /signup(.:format)                      locker_room/account/users#new
                     POST   /signup(.:format)                      locker_room/account/users#create
                root GET    /                                      locker_room/account/storages#show
-      team_settings GET    /settings/team(.:format)               locker_room/settings/teams#edit
-                    PATCH  /settings/team(.:format)               locker_room/settings/teams#update
+          edit_user GET    /settings/user(.:format)               locker_room/settings/users#edit
+               user PATCH  /settings/user(.:format)               locker_room/settings/users#update
+                    PUT    /settings/user(.:format)               locker_room/settings/users#update
+      edit_password GET    /settings/password(.:format)           locker_room/settings/passwords#edit
+           password PATCH  /settings/password(.:format)           locker_room/settings/passwords#update
+                    PUT    /settings/password(.:format)           locker_room/settings/passwords#update
+          edit_team GET    /settings/team(.:format)               locker_room/settings/teams#edit
+               team PATCH  /settings/team(.:format)               locker_room/settings/teams#update
                     PUT    /settings/team(.:format)               locker_room/settings/teams#update
      subscribe_team GET    /settings/team/subscribe(.:format)     locker_room/settings/teams#subscribe
           team_type GET    /settings/team/type/:type_id(.:format) locker_room/settings/teams#type
-  confirm_team_type POST   /settings/team/confirm_type(.:format)  locker_room/settings/teams#confirm_type
+  confirm_team_type POST   /settings/team/type/confirm(.:format)  locker_room/settings/teams#confirm_type
+              mates GET    /settings/mates(.:format)              locker_room/settings/mates#index
                     GET    /signin(.:format)                      locker_room/sessions#new
                     POST   /signin(.:format)                      locker_room/sessions#create
                     GET    /signup(.:format)                      locker_room/teams#new

@@ -11,7 +11,7 @@ module LockerRoom
       def update
         if @user.change_password!(user_params)
           flash[:notice] = 'Password has been updated successfully.'
-          redirect_to locker_room.password_settings_url
+          redirect_to locker_room.edit_password_url
         else
           flash.now[:alert] = 'Password could not be updated.'
           render :edit

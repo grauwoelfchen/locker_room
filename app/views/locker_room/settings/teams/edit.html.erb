@@ -1,6 +1,6 @@
 <h2>Ehit Team</h2>
 
-<%= form_for(current_team, url: locker_room.team_settings_path) do |f| %>
+<%= form_for(current_team, url: locker_room.team_path) do |f| %>
   <% if current_team.errors.any? %>
   <%= render 'locker_room/shared/errors', resource: current_team %>
   <% end %>

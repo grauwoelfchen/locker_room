@@ -12,7 +12,7 @@ module LockerRoom
         @user.skip_password = true unless user_params[:password].present?
         if @user.update_attributes(user_params)
           flash[:notice] = 'Account has been updated successfully.'
-          redirect_to locker_room.root_path
+          redirect_to locker_room.user_url
         else
           flash.now[:alert] = 'Account could not be updated.'
           render :edit

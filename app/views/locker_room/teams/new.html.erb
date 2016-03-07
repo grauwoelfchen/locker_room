@@ -1,6 +1,6 @@
 <h2>Signup</h2>
 
-<%= form_for @team, url:  registration_path, method: :post, html: {novalidate: 'novalidate'} do |team_form| %>
+<%= form_for @team, url:  locker_room.registration_path, method: :post, html: {novalidate: 'novalidate'} do |team_form| %>
 <% if @team.errors.any? %>
 <%= render 'locker_room/shared/errors', resource: @team %>
 <% end %>

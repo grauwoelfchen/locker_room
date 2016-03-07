@@ -1,11 +1,11 @@
 <ul>
   <li>Account</li>
-  <li><%= link_to 'Change Password', password_settings_path %></li>
+  <li><%= link_to 'Change Password', locker_room.edit_password_path %></li>
 </ul>
 
 <h2>Account</h2>
 
-<%= form_for @user, url: user_settings_path, html: {novalidate: 'novalidate'} do |f| %>
+<%= form_for @user, url: locker_room.user_path, html: {novalidate: 'novalidate'} do |f| %>
 <% if @user.errors.any? %>
 <%= render 'locker_room/shared/errors', resource: @user %>
 <% end %>

@@ -14,7 +14,7 @@ class SettingsUpdateTeamTest < Capybara::Rails::TestCase
   def test_updating_team_settings_as_user
     login_user(@team.members.first, @team.subdomain)
     within_subdomain(@team.subdomain) do
-      visit(locker_room.team_settings_url)
+      visit(locker_room.team_url)
       assert_content('You are not allowed to do that.')
     end
   end
