@@ -18,15 +18,19 @@ module AuthenticationHelpers
   def logout_user(route=nil, http_method=:get)
     # subdomain route support
     if page && !route
-      host = Capybara.app_host.sub(/^https?:\/\//, '')
-      subdomain = page.driver.request.env['HTTP_HOST'].sub(".#{host}", '')
-      if subdomain.present? &&
-         team = LockerRoom::Team.find_by(subdomain: subdomain)
-        route = locker_room.logout_url(:subdomain => team.subdomain)
-      end
+      route = detect_logout_url
     end
     route ||= locker_room.logout_url
     page.driver.send(http_method, route)
+  end
+
+  def detect_logout_url
+    host = Capybara.app_host.sub(/^https?:\/\//, '')
+    subdomain = page.driver.request.env['HTTP_HOST'].sub(".#{host}", '')
+    return nil unless subdomain.present?
+    team = LockerRoom::Team.find_by(subdomain: subdomain)
+    return nil unless team
+    locker_room.logout_url(:subdomain => team.subdomain)
   end
 
   def click_logout
