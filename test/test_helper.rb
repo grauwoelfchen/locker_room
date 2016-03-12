@@ -71,9 +71,10 @@ class ActionController::TestCase
 end
 
 ENV['BRAINTREE_GATEWAY_PORT'] ||= '45678'
+ENV['TEST_HOST'] ||= 'example.org'
 
 Capybara.configure do |config|
-  config.app_host              = 'http://example.org'
+  config.app_host              = "http://#{ENV['TEST_HOST']}"
   config.run_server            = false
   config.server_port           = 3001
   config.default_max_wait_time = 6 # seconds (default: 2)
