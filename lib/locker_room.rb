@@ -9,4 +9,11 @@ require 'locker_room/models/type'
 require 'locker_room/testing/helpers'
 
 module LockerRoom
+  class << self
+    attr_accessor :app_name
+
+    def configure
+      yield self if block_given?
+    end
+  end
 end
