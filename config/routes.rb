@@ -13,38 +13,50 @@ LockerRoom::Engine.routes.draw do
       root 'storages#show', as: :root
     end
 
-    scope module: 'recovery', path: 'recovery', controller: 'passwords' do
+    scope module: :recovery, path: 'recovery' do
       # password
-      post '/password', action: 'create', as: :password_recoveries
-      get  '/password', action: 'new',    as: :new_password_recovery
-      scope constraints: {token: /[A-z0-9]+/} do
-        get   '/password/:token', action: 'edit',   as: :edit_password_recovery
-        put   '/password/:token', action: 'update', as: :password_recovery
-        patch '/password/:token', action: 'update'
+      scope controller: 'passwords' do
+        post '/password', action: 'create', as: :password_recovery
+        get  '/password', action: 'new',    as: nil
+        scope constraints: {token: /[A-z0-9]+/} do
+          get   '/password/:token', action: 'edit',   as: nil
+          put   '/password/:token', action: 'update', as: nil
+          patch '/password/:token', action: 'update', as: nil
+        end
       end
     end
 
-    scope module: 'settings', path: 'settings' do
+    scope module: :settings, path: 'settings' do
       # user
-      get      :user, to: 'users#edit', as: :edit_user
-      resource :user, only: :update
+      get   :user, to: 'users#edit',   as: :user_settings
+      put   :user, to: 'users#update', as: nil
+      patch :user, to: 'users#update', as: nil
 
       # password
-      get      :password, to: 'passwords#edit', as: :edit_password
-      resource :password, only: :update
+      get   :password, to: 'passwords#edit',   as: :password_settings
+      put   :password, to: 'passwords#update', as: nil
+      patch :password, to: 'passwords#update', as: nil
 
       # team
-      get      :team, to: 'teams#edit', as: :edit_team
-      resource :team, only: :update
+      get   :team, to: 'teams#edit',   as: :team_settings
+      put   :team, to: 'teams#update', as: nil
+      patch :team, to: 'teams#update', as: nil
 
+      # team:type
       scope path: 'team' do
-        get  '/subscribe',     to: 'teams#subscribe',    as: :subscribe_team
-        get  '/type/:type_id', to: 'teams#type',         as: :team_type
-        post '/type/confirm',  to: 'teams#confirm_type', as: :confirm_team_type
+        scope constraints: {type_id: /[0-9]+/} do
+          get   '/type/:type_id', to: 'teams#type',     as: :team_type_settings
+          put   '/type/:type_id', to: 'teams#exchange', as: nil
+          patch '/type/:type_id', to: 'teams#exchange', as: nil
+        end
+        get '/subscribe', to: 'teams#subscribe',
+          as: :team_subscription_settings
       end
 
-      # mates
-      resources :mates, only: :index
+      # team:mates
+      scope path: 'team' do
+        resources :mates, only: :index, as: :team_mates_settings
+      end
     end
   end
 

@@ -4,11 +4,13 @@ module LockerRoom
 
     def reset_password_email(user)
       @user = user
-      attrs = {
+      @url  = locker_room.password_recovery_url(
         :token => user.reset_password_token
-      }
-      @url = locker_room.edit_password_recovery_url(attrs)
-      mail to: user.email, subject: 'Your password has been reset'
+      )
+      mail(
+        :to      => user.email,
+        :subject => 'Your password has been reset'
+      )
     end
   end
 end

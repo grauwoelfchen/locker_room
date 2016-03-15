@@ -14,7 +14,7 @@ class SettingsUpdateTeamTest < Capybara::Rails::TestCase
   def test_updating_team_settings_as_user
     login_user(@team.members.first, @team.subdomain)
     within_subdomain(@team.subdomain) do
-      visit(locker_room.team_url)
+      visit(locker_room.team_settings_url)
       assert_content('You are not allowed to do that.')
     end
   end
@@ -43,7 +43,7 @@ class SettingsUpdateTeamTest < Capybara::Rails::TestCase
       fill_in('Name', :with => 'New name')
       click_button('Update Team')
       assert_content('Team has been updated successfully.')
-      assert_equal(locker_room.root_url, page.current_url)
+      assert_equal(locker_room.team_settings_url, page.current_url)
       @team.reload
       assert_equal(@team.name, 'New name')
     end
@@ -70,9 +70,10 @@ class SettingsUpdateTeamTest < Capybara::Rails::TestCase
       select('Extreme', :from => 'Type')
       click_button('Update Team')
       # at type
-      type_url = locker_room.team_type_url(:type_id => extreme_type.id)
-      assert_equal(type_url, page.current_url)
-      assert_content('Team has been updated successfully.')
+      assert_equal(
+        locker_room.team_type_settings_url(:type_id => extreme_type.id),
+        page.current_url
+      )
       assert_content('You are changing to the \'Extreme\' type')
       assert_content('This type costs $18.0 per month')
       # at type form
@@ -105,9 +106,10 @@ class SettingsUpdateTeamTest < Capybara::Rails::TestCase
       select('Extreme', :from => 'Type')
       click_button('Update Team')
       # at type
-      type_url = locker_room.team_type_url(:type_id => extreme_type.id)
-      assert_equal(type_url, page.current_url)
-      assert_content('Team has been updated successfully.')
+      assert_equal(
+        locker_room.team_type_settings_url(:type_id => extreme_type.id),
+        page.current_url
+      )
       assert_content('You are changing to the \'Extreme\' type')
       assert_content('This type costs $18.0 per month')
       # at type form
@@ -120,7 +122,7 @@ class SettingsUpdateTeamTest < Capybara::Rails::TestCase
       click_button('Change type')
       # at root
       assert_content('Your team is now on the \'Extreme\' type.')
-      assert_equal(locker_room.root_url, page.current_url)
+      assert_equal(locker_room.team_settings_url, page.current_url)
       @team.reload
       assert_equal(@team.type, extreme_type)
       assert_equal(@team.subscription_id, 'foo123')
@@ -139,17 +141,20 @@ class SettingsUpdateTeamTest < Capybara::Rails::TestCase
       select('Extreme', :from => 'Type')
       click_button('Update Team')
       # at type
-      type_url = locker_room.team_type_url(:type_id => extreme_type.id)
-      assert_equal(type_url, page.current_url)
-      assert_content('Team has been updated successfully.')
+      assert_equal(
+        locker_room.team_type_settings_url(:type_id => extreme_type.id),
+        page.current_url
+      )
       assert_content('You are changing to the \'Extreme\' type')
       assert_content('This type costs $18.0 per month')
       # at type form
       click_button('Change type')
       # at root
       assert_content('Something went wrong. Please try again.')
-      type_url = locker_room.confirm_team_type_url(:type_id => extreme_type.id)
-      assert_equal(type_url, page.current_url)
+      assert_equal(
+        locker_room.team_type_settings_url(:type_id => extreme_type.id),
+        page.current_url
+      )
       @team.reload
       assert_not_equal(@team.type, extreme_type)
     end
@@ -171,16 +176,17 @@ class SettingsUpdateTeamTest < Capybara::Rails::TestCase
       select('Extreme', :from => 'Type')
       click_button('Update Team')
       # at type
-      type_url = locker_room.team_type_url(:type_id => extreme_type.id)
-      assert_equal(type_url, page.current_url)
-      assert_content('Team has been updated successfully.')
+      assert_equal(
+        locker_room.team_type_settings_url(:type_id => extreme_type.id),
+        page.current_url
+      )
       assert_content('You are changing to the \'Extreme\' type')
       assert_content('This type costs $18.0 per month')
       # at type form
       click_button('Change type')
       # at root
       assert_content('Your team has switched to the \'Extreme\' type.')
-      assert_equal(locker_room.root_url, page.current_url)
+      assert_equal(locker_room.team_settings_url, page.current_url)
       @team.reload
       assert_equal(@team.type, extreme_type)
       assert_equal(@team.subscription_id, subscription_id)

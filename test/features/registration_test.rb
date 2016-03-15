@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class RegistrationTest < Capybara::Rails::TestCase
-  locker_room_fixtures(:teams, :users, :mateships)
+  locker_room_fixtures(:teams, :users, :mateships, :types)
 
   def test_subdomain_uniqueness_ensuring
     penguin = locker_room_teams(:penguin_patrol)

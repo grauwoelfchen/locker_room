@@ -37,36 +37,50 @@ TODO ;)
 
   % rake routes
   Routes for LockerRoom::Engine:
-                  logout GET    /signout(.:format)                     locker_room/account/sessions#destroy
-                         DELETE /signout(.:format)                     locker_room/account/sessions#destroy
-                   login GET    /signin(.:format)                      locker_room/account/sessions#new
-                         POST   /signin(.:format)                      locker_room/account/sessions#create
-            registration GET    /signup(.:format)                      locker_room/account/users#new
-                         POST   /signup(.:format)                      locker_room/account/users#create
-                    root GET    /                                      locker_room/account/storages#show
-     password_recoveries POST   /recovery/password(.:format)           locker_room/recovery/passwords#create
-   new_password_recovery GET    /recovery/password(.:format)           locker_room/recovery/passwords#new
-  edit_password_recovery GET    /recovery/password/:token(.:format)    locker_room/recovery/passwords#edit {:token=>/[A-z0-9]+/}
-       password_recovery PUT    /recovery/password/:token(.:format)    locker_room/recovery/passwords#update {:token=>/[A-z0-9]+/}
-                         PATCH  /recovery/password/:token(.:format)    locker_room/recovery/passwords#update {:token=>/[A-z0-9]+/}
-               edit_user GET    /settings/user(.:format)               locker_room/settings/users#edit
-                    user PATCH  /settings/user(.:format)               locker_room/settings/users#update
-                         PUT    /settings/user(.:format)               locker_room/settings/users#update
-           edit_password GET    /settings/password(.:format)           locker_room/settings/passwords#edit
-                password PATCH  /settings/password(.:format)           locker_room/settings/passwords#update
-                         PUT    /settings/password(.:format)           locker_room/settings/passwords#update
-               edit_team GET    /settings/team(.:format)               locker_room/settings/teams#edit
-                    team PATCH  /settings/team(.:format)               locker_room/settings/teams#update
-                         PUT    /settings/team(.:format)               locker_room/settings/teams#update
-          subscribe_team GET    /settings/team/subscribe(.:format)     locker_room/settings/teams#subscribe
-               team_type GET    /settings/team/type/:type_id(.:format) locker_room/settings/teams#type
-       confirm_team_type POST   /settings/team/type/confirm(.:format)  locker_room/settings/teams#confirm_type
-                   mates GET    /settings/mates(.:format)              locker_room/settings/mates#index
-                         GET    /signin(.:format)                      locker_room/sessions#new
-                         POST   /signin(.:format)                      locker_room/sessions#create
-                         GET    /signup(.:format)                      locker_room/teams#new
-                         POST   /signup(.:format)                      locker_room/teams#create
-                         GET    /                                      locker_room/entrance#index
+    # within subdomain
+                      logout GET    /signout(.:format)                     locker_room/account/sessions#destroy
+                             DELETE /signout(.:format)                     locker_room/account/sessions#destroy
+                       login GET    /signin(.:format)                      locker_room/account/sessions#new
+                             POST   /signin(.:format)                      locker_room/account/sessions#create
+                registration GET    /signup(.:format)                      locker_room/account/users#new
+                             POST   /signup(.:format)                      locker_room/account/users#create
+                        root GET    /                                      locker_room/account/storages#show
+
+    # reset password
+           password_recovery POST   /recovery/password(.:format)           locker_room/recovery/passwords#create
+                             GET    /recovery/password(.:format)           locker_room/recovery/passwords#new
+                             GET    /recovery/password/:token(.:format)    locker_room/recovery/passwords#edit {:token=>/[A-z0-9]+/}
+                             PUT    /recovery/password/:token(.:format)    locker_room/recovery/passwords#update {:token=>/[A-z0-9]+/}
+                             PATCH  /recovery/password/:token(.:format)    locker_room/recovery/passwords#update {:token=>/[A-z0-9]+/}
+
+    # user settings
+               user_settings GET    /settings/user(.:format)               locker_room/settings/users#edit
+                             PUT    /settings/user(.:format)               locker_room/settings/users#update
+                             PATCH  /settings/user(.:format)               locker_room/settings/users#update
+    # change password
+           password_settings GET    /settings/password(.:format)           locker_room/settings/passwords#edit
+                             PUT    /settings/password(.:format)           locker_room/settings/passwords#update
+                             PATCH  /settings/password(.:format)           locker_room/settings/passwords#update
+
+    # team settings
+               team_settings GET    /settings/team(.:format)               locker_room/settings/teams#edit
+                             PUT    /settings/team(.:format)               locker_room/settings/teams#update
+                             PATCH  /settings/team(.:format)               locker_room/settings/teams#update
+
+    # team subscription
+          team_type_settings GET    /settings/team/type/:type_id(.:format) locker_room/settings/teams#type {:type_id=>/[0-9]+/}
+                             PUT    /settings/team/type/:type_id(.:format) locker_room/settings/teams#exchange {:type_id=>/[0-9]+/}
+                             PATCH  /settings/team/type/:type_id(.:format) locker_room/settings/teams#exchange {:type_id=>/[0-9]+/}
+  team_subscription_settings GET    /settings/team/subscribe(.:format)     locker_room/settings/teams#subscribe
+         team_mates_settings GET    /settings/team/mates(.:format)         locker_room/settings/mates#index
+
+    # without subdomain
+                             GET    /signin(.:format)                      locker_room/sessions#new
+                             POST   /signin(.:format)                      locker_room/sessions#create
+                             GET    /signup(.:format)                      locker_room/teams#new
+                             POST   /signup(.:format)                      locker_room/teams#create
+                             GET    /                                      locker_room/entrance#index
+
 
 
 == Test

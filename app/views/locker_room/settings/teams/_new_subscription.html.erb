@@ -24,7 +24,7 @@
       <%= _f.text_field :cvv %>
     </p>
   <% end %>
-  <% tr_data = Braintree::TransparentRedirect.create_customer_data(redirect_url:  locker_room.subscribe_team_url(type_id: params[:type_id])) %>
+  <% tr_data = Braintree::TransparentRedirect.create_customer_data(redirect_url:  locker_room.team_subscription_settings_url(type_id: params[:type_id])) %>
   <%= hidden_field_tag 'tr_data', tr_data %>
   <%= f.submit 'Change type' %>
 <% end %>
