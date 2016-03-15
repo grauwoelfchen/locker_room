@@ -13,6 +13,17 @@ LockerRoom::Engine.routes.draw do
       root 'storages#show', as: :root
     end
 
+    scope module: 'recovery', path: 'recovery', controller: 'passwords' do
+      # password
+      post '/password', action: 'create', as: :password_recoveries
+      get  '/password', action: 'new',    as: :new_password_recovery
+      scope constraints: {token: /[A-z0-9]+/} do
+        get   '/password/:token', action: 'edit',   as: :edit_password_recovery
+        put   '/password/:token', action: 'update', as: :password_recovery
+        patch '/password/:token', action: 'update'
+      end
+    end
+
     scope module: 'settings', path: 'settings' do
       # user
       get      :user, to: 'users#edit', as: :edit_user

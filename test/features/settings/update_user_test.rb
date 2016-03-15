@@ -29,20 +29,6 @@ class SettingsUpdateUserTest < Capybara::Rails::TestCase
     end
   end
 
-  def test_updating_user_settings_with_invalid_password_fails
-    within_subdomain(@team.subdomain) do
-      visit(locker_room.root_url)
-      assert_equal(locker_room.root_url, page.current_url)
-      click_link('Account Settings')
-      assert_equal(locker_room.edit_user_url, page.current_url)
-      fill_in('user_password',              :with => 'iwillbepenguin')
-      fill_in('user_password_confirmation', :with => 'iamnotapenguin')
-      click_button('Update Account')
-      assert_equal(locker_room.edit_user_url, page.current_url)
-      assert_content('Password confirmation doesn\'t match Password')
-    end
-  end
-
   def test_updating_user_settings
     within_subdomain(@team.subdomain) do
       visit(locker_room.root_url)

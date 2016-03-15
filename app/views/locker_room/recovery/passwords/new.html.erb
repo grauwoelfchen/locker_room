@@ -1,0 +1,18 @@
+<h2>Reset Password</h2>
+
+<%= form_for @user, url: locker_room.password_recoveries_path, html: {id: :new_password_recovery, class: 'new_password_recovery', method: :post} do |f| %>
+<% if @user.errors.any? %>
+<%= render 'locker_room/shared/errors', resource: @user %>
+<% end %>
+<p>
+<%= f.label :email %><br>
+<%= f.text_field :email %>
+</p>
+<p>
+<%= f.submit 'Send' %>
+</p>
+<% end %>
+
+<ul>
+  <li><%= link_to 'Back to Signin', locker_room.login_path %></li>
+</ul>

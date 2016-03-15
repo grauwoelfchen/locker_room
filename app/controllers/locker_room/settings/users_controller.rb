@@ -9,7 +9,7 @@ module LockerRoom
       end
 
       def update
-        @user.skip_password = true unless user_params[:password].present?
+        @user.skip_password = true
         if @user.update_attributes(user_params)
           flash[:notice] = 'Account has been updated successfully.'
           redirect_to locker_room.user_url
@@ -26,11 +26,7 @@ module LockerRoom
       end
 
       def user_params
-        params.require(:user).permit(
-          :username, :name, :email,
-          # optional
-          :password, :password_confirmation
-        )
+        params.require(:user).permit(:username, :name, :email)
       end
     end
   end
