@@ -20,13 +20,13 @@ DESCRIPTION
   s.files = Dir['{app,config,db,lib}/**/*', 'LICENSE', 'Rakefile', 'README']
   s.test_files = Dir['test/**/*']
 
-  s.add_dependency 'rails', '~> 4.2.1'
-  s.add_dependency 'pg', '~> 0.18'
-  s.add_dependency 'apartment', '~> 1.0.2'
-  s.add_dependency 'enum_accessor', '~> 2.1'
+  s.add_dependency 'rails', '>= 4.2.1'
+  s.add_dependency 'pg', '>= 0.18'
+  s.add_dependency 'apartment', '>= 1.0.2'
+  s.add_dependency 'enum_accessor', '>= 2.1'
   s.add_dependency 'bcrypt', '3.1.10'
-  s.add_dependency 'warden', '~> 1.2.3'
-  s.add_dependency 'houser', '~> 2.0'
+  s.add_dependency 'warden', '>= 1.2.3'
+  s.add_dependency 'houser', '>= 2.0'
   s.add_dependency 'braintree', '2.49.0'
 
   s.add_development_dependency 'foreman'
