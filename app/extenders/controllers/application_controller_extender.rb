@@ -32,7 +32,7 @@ module LockerRoom::AuthenticationMethods
   end
 
   def warden
-    env['warden'] || request.env['warden']
+    request.env['warden']
   end
 end
 
@@ -42,12 +42,12 @@ end
   private
 
   def current_subdomain
-    @current_subdomain ||= env['Houser-Subdomain']
+    @current_subdomain ||= request.env['Houser-Subdomain']
   end
   helper_method :current_subdomain
 
   def current_team
-    @current_team ||= env['Houser-Object']
+    @current_team ||= request.env['Houser-Object']
   end
   helper_method :current_team
 

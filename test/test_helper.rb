@@ -1,5 +1,5 @@
-require 'codeclimate-test-reporter'
-CodeClimate::TestReporter.start
+require 'simplecov'
+SimpleCov.start
 
 ENV['RAILS_ENV'] ||= 'test'
 
@@ -10,6 +10,9 @@ ActiveRecord::Migrator.migrations_paths = [
 ]
 
 require 'rails/test_help'
+
+require 'rails-controller-testing'
+Rails::Controller::Testing.install
 
 require 'minitest/unit'
 require 'minitest/mock'
@@ -60,13 +63,20 @@ class ActiveSupport::TestCase
 end
 
 class ActionController::TestCase
+  # include Warden::Test::Helpers
+  # include Warden::Test::Mock
   include LockerRoom::Testing::Controller::WardenHelpers
+
   include LockerRoom::Testing::Controller::SubdomainHelpers
   include LockerRoom::Testing::Controller::AuthenticationHelpers
 
   def setup
     @routes = LockerRoom::Engine.routes
     super
+  end
+
+  def teardown
+    Warden.test_reset!
   end
 end
 

@@ -26,7 +26,7 @@ module LockerRoom
               :email => '#foobar'
             }
           }
-          post(:create, params)
+          post(:create, params: params)
           assert_kind_of(LockerRoom::User, assigns[:user])
           refute(assigns[:user].persisted?)
           assert_nil(flash[:notice])
@@ -44,7 +44,7 @@ module LockerRoom
               :email => 'unknown@example.org'
             }
           }
-          post(:create, params)
+          post(:create, params: params)
           assert_nil(assigns[:user])
           assert_nil(flash[:notice])
           assert_response(:redirect)
@@ -61,7 +61,7 @@ module LockerRoom
               :email => user.email
             }
           }
-          post(:create, params)
+          post(:create, params: params)
           assert_equal(user, assigns[:user])
           message = 'Password reset instruction has been sent.'
           assert_equal(message, flash[:notice])
@@ -77,7 +77,7 @@ module LockerRoom
           params = {
             :token => 'unknown'
           }
-          get(:edit, params)
+          get(:edit, params: params)
           assert_nil(assigns[:user])
           message = 'Token is invalid.'
           assert_equal(message, flash[:alert])
@@ -99,7 +99,7 @@ module LockerRoom
           params = {
             :token => 'token'
           }
-          get(:edit, params)
+          get(:edit, params: params)
           assert_equal(user, assigns[:user])
           assert_template(:edit)
           assert_response(:success)
@@ -117,7 +117,7 @@ module LockerRoom
               :password_confirmation => 'secure'
             }
           }
-          put(:update, params)
+          put(:update, params: params)
           assert_nil(assigns[:user])
           message = 'Token is invalid.'
           assert_equal(message, flash[:alert])
@@ -143,7 +143,7 @@ module LockerRoom
               :password_confirmation => 'badpassword'
             }
           }
-          put(:update, params)
+          put(:update, params: params)
           assert_equal(user, assigns[:user])
           message = 'Password could not be updated.'
           assert_equal(message, flash[:alert])
@@ -170,7 +170,7 @@ module LockerRoom
               :password_confirmation => 'secure'
             }
           }
-          put(:update, params)
+          put(:update, params: params)
           assert_equal(user, assigns[:user])
           assert_nil(flash[:alert])
           message = 'Password has been updated successfully.'

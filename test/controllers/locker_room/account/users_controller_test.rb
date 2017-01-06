@@ -29,7 +29,7 @@ module LockerRoom
               :password_confirmation => ''
             }
           }
-          post(:create, params)
+          post(:create, params: params)
           refute(assigns(:user).persisted?)
           assert([assigns(:current_team)], assigns(:user).teams)
           assert_equal(assigns(:user).mateships, [])

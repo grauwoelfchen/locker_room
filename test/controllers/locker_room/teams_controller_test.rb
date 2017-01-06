@@ -25,7 +25,7 @@ module LockerRoom
         LockerRoom::Mateship.count
       )
       assert_no_difference(expression, 1) do
-        post(:create, params)
+        post(:create, params: params)
       end
       assert_instance_of(LockerRoom::Team, assigns(:team))
       refute(assigns(:team).persisted?)
@@ -53,7 +53,7 @@ module LockerRoom
             :name => 'Unicycle',
           }
         }
-        post(:create, params)
+        post(:create, params: params)
         assert_equal(flash[:notice], 'Team has been successfully created.')
         assert_response(:redirect)
         assert_redirected_to(root_url(:subdomain => 'unicycle'))

@@ -4,6 +4,7 @@ module LockerRoom
 module WardenHelpers
   def self.included(klass)
     klass.class_eval do
+      ::Warden.test_mode!
       setup :warden
     end
   end

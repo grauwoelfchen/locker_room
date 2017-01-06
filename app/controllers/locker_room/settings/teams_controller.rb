@@ -3,7 +3,8 @@ require_dependency 'locker_room/application_controller'
 module LockerRoom
   module Settings
     class TeamsController < ApplicationController
-      before_filter :authorize_owner, only: [:edit, :update, :type]
+      before_action :authorize_owner, only: [:edit, :update, :type]
+
       before_action :set_type, only: [:type, :subscribe, :confirm_type]
       before_action :set_team
 

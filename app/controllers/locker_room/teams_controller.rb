@@ -2,7 +2,7 @@ require_dependency 'locker_room/application_controller'
 
 module LockerRoom
   class TeamsController < ApplicationController
-    skip_filter :authenticate_user!, only: [:new, :create]
+    skip_before_action :authenticate_user!, only: [:new, :create]
 
     # Renders new team form
     def new

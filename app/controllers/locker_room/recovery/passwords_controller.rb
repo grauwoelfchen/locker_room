@@ -3,7 +3,7 @@ require_dependency 'locker_room/application_controller'
 module LockerRoom
   module Recovery
     class PasswordsController < ApplicationController
-      skip_filter :authenticate_user!
+      skip_before_action :authenticate_user!
       before_action :set_user_from_token, only: [:edit, :update]
 
       def new

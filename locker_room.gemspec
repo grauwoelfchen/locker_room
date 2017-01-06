@@ -20,23 +20,26 @@ DESCRIPTION
   s.files = Dir['{app,config,db,lib}/**/*', 'LICENSE', 'Rakefile', 'README']
   s.test_files = Dir['test/**/*']
 
-  s.add_dependency 'rails', '>= 4.2.1'
+  s.add_dependency 'rails', '>= 5.0.1'
   s.add_dependency 'pg', '>= 0.18'
-  s.add_dependency 'apartment', '>= 1.0.2'
-  s.add_dependency 'enum_accessor', '>= 2.1'
+  s.add_dependency 'apartment', '>= 1.2.0'
+  s.add_dependency 'enum_accessor', '>= 2.3.0'
   s.add_dependency 'bcrypt', '3.1.10'
-  s.add_dependency 'warden', '>= 1.2.3'
-  s.add_dependency 'houser', '>= 2.0'
-  s.add_dependency 'braintree', '2.49.0'
+  s.add_dependency 'warden', '>= 1.2.6'
+  s.add_dependency 'houser', '>= 2.0.0'
+  s.add_dependency 'braintree', '>= 2.70.0'
 
   s.add_development_dependency 'foreman'
-  s.add_development_dependency 'minitest', '~> 5.5'
-  s.add_development_dependency 'capybara', '~> 2.6.2'
-  s.add_development_dependency 'minitest-rails', '~> 2.1.1'
-  s.add_development_dependency 'minitest-rails-capybara', '~> 2.1.0'
+  s.add_development_dependency 'minitest', '~> 5.10.1'
+  s.add_development_dependency 'capybara', '~> 2.11.0'
+
+  s.add_development_dependency 'minitest-rails',          '~> 3.0.0'
+  s.add_development_dependency 'minitest-rails-capybara', '~> 3.0.0'
+
+  s.add_development_dependency 'rails-controller-testing'
   s.add_development_dependency 'mocha'
   s.add_development_dependency 'database_cleaner'
-  s.add_development_dependency 'quiet_assets'
+  s.add_development_dependency 'sinatra', '~> 2.0.0.beta2'
   s.add_development_dependency 'fake_braintree'
   s.add_development_dependency 'travis'
   s.add_development_dependency 'codeclimate-test-reporter'

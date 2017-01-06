@@ -3,7 +3,7 @@ require_dependency 'locker_room/application_controller'
 module LockerRoom
   module Account
     class SessionsController < ApplicationController
-      skip_filter :authenticate_user!, only: [:new, :create]
+      skip_before_action :authenticate_user!, only: [:new, :create]
 
       # Renders user signin form
       def new

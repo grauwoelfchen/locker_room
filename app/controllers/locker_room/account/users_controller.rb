@@ -3,7 +3,7 @@ require_dependency 'locker_room/application_controller'
 module LockerRoom
   module Account
     class UsersController < ApplicationController
-      skip_filter :authenticate_user!, only: [:new, :create]
+      skip_before_action :authenticate_user!, only: [:new, :create]
 
       def new
         @user = LockerRoom::User.new

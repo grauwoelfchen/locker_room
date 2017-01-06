@@ -30,7 +30,7 @@ module LockerRoom
               password_confirmation: 'newsecret'
             }
           }
-          put(:update, params)
+          put(:update, params: params)
           assert(assigns(:user).persisted?)
           assert_empty(assigns[:user].errors)
           message = 'Password has been updated successfully.'

@@ -35,12 +35,12 @@ module LockerRoom
     ]
 
     initializer 'locker_room.middleware.apartment' do
-      Rails.application.config.middleware.use \
-        'Apartment::Elevators::UnderscoreSubdomain'
+      Rails.application.config.middleware.use(
+        Apartment::Elevators::UnderscoreSubdomain)
     end
 
     initializer 'locker_room.middleware.warden' do
-      Rails.application.config.middleware.use Warden::Manager do |config|
+      Rails.application.config.middleware.use(Warden::Manager) do |config|
         config.default_strategies :password
 
         config.serialize_into_session do |user|
@@ -55,12 +55,14 @@ module LockerRoom
     # If you change tld_length, set
     # config.action_dispatch.tld_length in environments/{env}.rb
     initializer 'locker_room.middleware.houser' do
-      Rails.application.config.middleware.use 'Houser::Middleware',
+      Rails.application.config.middleware.use(
+        Houser::Middleware,
         :class_name => 'LockerRoom::Team',
         :tld_length => (
           Rails.application.config.action_dispatch.tld_length ||
           ActionDispatch::Http::URL.tld_length
         ).to_i
+      )
     end
 
     config.to_prepare do

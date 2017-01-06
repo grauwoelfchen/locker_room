@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -22,10 +21,9 @@ ActiveRecord::Schema.define(version: 20160312160948) do
     t.integer  "role",       limit: 2, default: 1
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
+    t.index ["team_id"], name: "index_locker_room_mateships_on_team_id", using: :btree
+    t.index ["user_id"], name: "index_locker_room_mateships_on_user_id", using: :btree
   end
-
-  add_index "locker_room_mateships", ["team_id"], name: "index_locker_room_mateships_on_team_id", using: :btree
-  add_index "locker_room_mateships", ["user_id"], name: "index_locker_room_mateships_on_user_id", using: :btree
 
   create_table "locker_room_teams", force: :cascade do |t|
     t.string   "name"
@@ -34,11 +32,10 @@ ActiveRecord::Schema.define(version: 20160312160948) do
     t.string   "subscription_id"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.index ["subdomain"], name: "index_locker_room_teams_on_subdomain", using: :btree
+    t.index ["subscription_id"], name: "index_locker_room_teams_on_subscription_id", using: :btree
+    t.index ["type_id"], name: "index_locker_room_teams_on_type_id", using: :btree
   end
-
-  add_index "locker_room_teams", ["subdomain"], name: "index_locker_room_teams_on_subdomain", using: :btree
-  add_index "locker_room_teams", ["subscription_id"], name: "index_locker_room_teams_on_subscription_id", using: :btree
-  add_index "locker_room_teams", ["type_id"], name: "index_locker_room_teams_on_type_id", using: :btree
 
   create_table "locker_room_types", force: :cascade do |t|
     t.string   "plan_id"
@@ -46,9 +43,8 @@ ActiveRecord::Schema.define(version: 20160312160948) do
     t.float    "price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["plan_id"], name: "index_locker_room_types_on_plan_id", using: :btree
   end
-
-  add_index "locker_room_types", ["plan_id"], name: "index_locker_room_types_on_plan_id", using: :btree
 
   create_table "locker_room_users", force: :cascade do |t|
     t.string   "username"
@@ -59,11 +55,10 @@ ActiveRecord::Schema.define(version: 20160312160948) do
     t.datetime "updated_at",                      null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_token_expires_at"
+    t.index ["email"], name: "index_locker_room_users_on_email", unique: true, using: :btree
+    t.index ["reset_password_token"], name: "index_locker_room_users_on_reset_password_token", using: :btree
+    t.index ["username"], name: "index_locker_room_users_on_username", unique: true, using: :btree
   end
-
-  add_index "locker_room_users", ["email"], name: "index_locker_room_users_on_email", unique: true, using: :btree
-  add_index "locker_room_users", ["reset_password_token"], name: "index_locker_room_users_on_reset_password_token", using: :btree
-  add_index "locker_room_users", ["username"], name: "index_locker_room_users_on_username", unique: true, using: :btree
 
   create_table "talks", force: :cascade do |t|
     t.string   "theme"
